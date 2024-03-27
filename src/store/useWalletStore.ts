@@ -6,7 +6,9 @@ interface WalletState {
   // selectedWallet: EIP6963ProviderDetail | null;
   userAccount: string;
   // setSelectedWallet: (wallet: EIP6963ProviderDetail | null) => void;
+  urbitIds: number[];
   setUserAccount: (account: string) => void;
+  setUrbitIds: (urbitIds: number[]) => void;
 }
 
 const useWalletStore = create<WalletState>()(
@@ -15,9 +17,11 @@ const useWalletStore = create<WalletState>()(
       (set) => ({
         // selectedWallet: null,
         userAccount: "",
+        urbitIds: [],
         // setSelectedWallet: (wallet: EIP6963ProviderDetail | null) =>
         //   set({ selectedWallet: wallet }),
         setUserAccount: (account: string) => set({ userAccount: account }),
+        setUrbitIds: (urbitIds: number[]) => set({ urbitIds }),
       }),
       {
         name: "wallet-storage",

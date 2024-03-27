@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@tlon/sigil-js": "^1.4.5",
+    "@urbit/roller-api": "^0.1.16",
     "azimuth-js": "^0.23.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",

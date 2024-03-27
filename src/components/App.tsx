@@ -1,4 +1,5 @@
 import "../App.css";
+import "../fonts.css";
 import AppRoutes from "../AppRoutes.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";

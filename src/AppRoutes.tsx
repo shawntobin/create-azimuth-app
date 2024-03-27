@@ -3,11 +3,15 @@ import Login from "./routes/Login";
 import Wallet from "./routes/Wallet";
 import Operations from "./routes/Operations";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import Manage from "./routes/Manage";
+import CodeLogin from "./routes/CodeLogin";
 
 const routeConfigs = [
   { path: "/", element: <Login />, protected: false },
   { path: "/wallet", element: <Wallet />, protected: true },
+  { path: "/manage/:patp", element: <Manage />, protected: true },
   { path: "/operations", element: <Operations />, protected: true },
+  { path: "/code-login", element: <CodeLogin />, protected: false },
 ];
 
 const AppRoutes = () => {
