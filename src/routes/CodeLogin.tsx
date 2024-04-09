@@ -1,9 +1,13 @@
+import { useState } from "react";
+
 import planetWhite from "../assets/planet-white.png";
 import starWhite from "../assets/star-white.png";
 import galaxyWhite from "../assets/galaxy-white.png";
 import Container from "../components/Container";
 
 const CodeLogin = () => {
+  const [seedInput, setSeedInput] = useState("");
+
   const renderCodeLoginForm = () => {
     return (
       <>
@@ -56,9 +60,7 @@ const CodeLogin = () => {
         </div>
 
         <div className="text-center my-4">
-          <span className="text-white text-base mb-2 inline-block text-[30px]">
-            or
-          </span>
+          <span className="text-white mb-2 inline-block text-[30px]">or</span>
           <div className="border-b border-white border-opacity-50 mx-auto w-80" />
         </div>
 
@@ -72,9 +74,14 @@ const CodeLogin = () => {
               placeholder="example crew supreme gesture quantum web media hazard theory mercy wing kitten"
               className="flex-1 px-4 py-2 bg-transparent outline-none text-black resize-none text-[25px]"
               rows={3}
+              value={seedInput}
+              onChange={(e) => setSeedInput(e.currentTarget.value)}
             ></textarea>
 
-            <button className="bg-light-green px-0 py-0 rounded-r-lg h-[100%] w-[30px] font-bold text-black text-[50px] font-[300]">
+            <button
+              className="bg-light-green px-0 py-0 rounded-r-lg h-[100%] w-[30px] text-black text-[50px] font-[300]"
+              onClick={() => {}}
+            >
               &gt;
             </button>
           </div>

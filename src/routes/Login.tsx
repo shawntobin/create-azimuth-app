@@ -2,26 +2,31 @@ import { useEffect, useState } from "react";
 import useWalletStore from "../store/useWalletStore";
 import { useSyncProviders } from "../hooks/useSyncProviders";
 import toast from "react-hot-toast";
-
 import planetGreen from "../assets/planet-green.png";
 import starGreen from "../assets/star-green.png";
 import galaxyGreen from "../assets/galaxy-green.png";
-
 import { getPoints } from "../utils/azimuth";
-
 import Container from "../components/Container";
-
 import Button from "../components/Button";
+import * as azimuth from "azimuth-js";
+import Web3 from "web3";
+import * as c from "../constants";
+import { useNavigate } from "react-router-dom";
 
 // metamask SDK react ?
 
-import { Form, useLoaderData, redirect, useNavigate } from "react-router-dom";
-
 const Login = () => {
-  const { setUserAccount, setUrbitIds } = useWalletStore();
-
-  const providers = useSyncProviders();
+  const { setWalletAddress, setUrbitIds } = useWalletStore();
   const navigate = useNavigate();
+  const providers = useSyncProviders();
+
+  // try / catch
+
+  const metamaskProvider = providers.find(
+    (provider) => provider.info.name === "MetaMask"
+  );
+
+  console.log("metamask provider", metamaskProvider);
 
   const renderMainLogin = () => {
     return (
@@ -35,7 +40,7 @@ const Login = () => {
         </div>
 
         <Button
-          handleClick={() => handleConnect(providers[0])}
+          handleClick={() => handleConnect(metamaskProvider)}
           text="Connect Metamask"
           className="mt-7 mb-7 w-[274px] h-[53px] text-[1.25rem]"
         />
@@ -58,21 +63,18 @@ const Login = () => {
       });
 
       if (accounts?.[0]) {
-        setUserAccount(accounts[0]); // set in global state
-
         toast.success("Connected to Metamask");
 
         const urbitIds = await getPoints(accounts[0]);
 
-        console.log("shawn urbitids", urbitIds);
-
-        setUrbitIds(urbitIds); // set in global state
+        setWalletAddress(accounts[0]);
+        setUrbitIds(urbitIds);
 
         // single urbit Id - go to manage
         if (urbitIds.length === 1) {
           navigate(`/manage`);
         } else {
-          // multiple urbit Ids - go to wallet
+          // multiple urbit Ids - go to wallet view
           navigate(`/wallet`);
         }
       }

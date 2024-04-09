@@ -3,7 +3,7 @@ import Sigil from "./Sigil";
 
 const UrbitIdSmall = (props: {
   urbitId: number;
-  handleClick: (patp: string) => void;
+  handleClick: (patp: string, id: number) => void;
 }) => {
   const { urbitId, handleClick } = props;
 
@@ -13,7 +13,7 @@ const UrbitIdSmall = (props: {
     <button
       className="w-[120px] flex flex-col items-center justify-center bg-transparent p-2 rounded-lg transition-colors duration-200 ease-in-out hover:border-[#AAE68C] "
       onClick={() => {
-        handleClick(patp);
+        handleClick(patp, urbitId);
       }}
     >
       <div className="m-[10px] rounded-[20px] overflow-hidden w-[100px]">

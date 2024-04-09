@@ -7,9 +7,9 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { userAccount } = useWalletStore();
+  const { walletAddress } = useWalletStore();
 
-  if (!userAccount) {
+  if (!walletAddress) {
     return <Navigate to="/" replace />;
   }
 

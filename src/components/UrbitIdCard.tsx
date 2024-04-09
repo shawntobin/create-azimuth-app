@@ -8,18 +8,31 @@ const UrbitIdCard = (props: { patp: string }) => {
   const { patp } = props;
 
   const id = ob.patp2dec(patp);
+  const parent = ob.sein(patp);
 
   return (
-    <div className="w-[500px] h-[312.5px] bg-white text-black p-2.5 rounded-lg">
-      <img src={planetBlack} alt="urbit planet" className="w-10 h-10" />
-
-      <div className="flex items-center justify-center">
-        <Sigil id={patp} size={40} colors={["white", "black"]} />
-
-        <div className="text-3xl">{patp}</div>
-      </div>
+    <div className="w-[500px] h-[312.5px] bg-white text-black p-2.5 rounded-[30px] flex flex-col justify-between">
       <div>
-        Azimuth Point: <span>{id}</span>
+        <img src={planetBlack} alt="urbit planet" className="w-10 h-10" />
+
+        <div className="flex items-center justify-center">
+          <Sigil id={patp} size={50} colors={["white", "black"]} />
+
+          <div className="text-[30px] ml-1">{patp}</div>
+        </div>
+        <div
+          style={{ fontFamily: "monospace" }}
+          className="text-[10px] text-medium-gray mt-2"
+        >
+          Azimuth Point: <span>{id}</span> | Key revisions: <span>{1}</span> |
+          Owners: <span>{1}</span> | L1
+        </div>
+      </div>
+
+      <div className="text-medium-gray">
+        {`${ob.sein(parent)} ->
+        ${ob.sein(patp)} ->
+        ${patp}`}
       </div>
     </div>
   );

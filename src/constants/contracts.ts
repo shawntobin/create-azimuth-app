@@ -1,3 +1,5 @@
+import { NETWORK } from "./config";
+
 const ENVIRONMENTS = {
   MAINNET: "MAINNET",
   GOERLI: "GOERLI",
@@ -12,7 +14,7 @@ type Environment = keyof typeof ENVIRONMENTS;
 
 let currentEnvironment: Environment;
 
-switch (process.env.REACT_APP_NETWORK) {
+switch (NETWORK) {
   case "mainnet":
     currentEnvironment = ENVIRONMENTS.MAINNET;
     break;
