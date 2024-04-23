@@ -5,7 +5,7 @@ import { ecliptic, azimuth, initContractsPartial } from "azimuth-js";
 import Web3 from "web3";
 import toast from "react-hot-toast";
 import { useSyncProviders } from "../hooks/useSyncProviders";
-import { INFURA_URL } from "../constants";
+import { PROVIDER_URL } from "../constants";
 // import { submitL2Transaction } from "../lib/roller";
 import { transferPoint } from "../utils/azimuth";
 
@@ -29,7 +29,7 @@ const Transfer = () => {
   const handleTransferL1 = async () => {
     // Layer 1
 
-    const provider = new Web3.providers.HttpProvider(INFURA_URL);
+    const provider = new Web3.providers.HttpProvider(PROVIDER_URL);
     const web3 = new Web3(provider);
     const contracts = await initContractsPartial(web3, azimuth.mainnet);
 

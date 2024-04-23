@@ -70,6 +70,8 @@ const Login = () => {
         setWalletAddress(accounts[0]);
         setUrbitIds(urbitIds);
 
+        // Case when no IDs?
+
         // single urbit Id - go to manage
         if (urbitIds.length === 1) {
           navigate(`/manage`);

@@ -1,28 +1,33 @@
-import bip39 from "bip39";
-import * as bip32 from "bip32";
-// import * as bip39 from 'bip39';
-
-// import * as bitcoin from "bitcoinjs-lib";
+import * as bip39 from "bip39";
+import BIP32Factory from "bip32";
+import * as ecc from "tiny-secp256k1";
+import { BIP32Interface } from "bip32";
+import { publicToAddress } from "../utils";
+import { DEFAULT_HD_PATH } from "../constants/constants";
 
 export const walletFromMnemonic = (
   mnemonic: string,
-  hdpath: string,
+  hdpath: string = DEFAULT_HD_PATH,
   passphrase?: string
 ) => {
+  if (!bip39.validateMnemonic(mnemonic)) {
+    throw new Error("Invalid mnemonic"); // toast alert ?
+  }
+
   const seed = bip39.mnemonicToSeedSync(mnemonic, passphrase);
 
-  const toWallet = (sd: Buffer, path: string) => {
-    console.log("sd", sd);
-    console.log("path", path);
+  const bip32 = BIP32Factory(ecc);
 
-    const hd = bip32.fromSeed(sd);
-    const wal = hd.derivePath(path);
-    wal.address = publicToAddress(wal.publicKey);
-    wal.passphrase = passphrase || "";
-    return wal;
+  const root: BIP32Interface = bip32.fromSeed(seed);
+  const node: BIP32Interface = root.derivePath(hdpath);
+
+  const publicKey = node.publicKey;
+  const address = publicToAddress(publicKey);
+
+  const wallet = {
+    address: address,
+    publicKey: publicKey.toString("hex"),
   };
-
-  const wallet = seed.chain((sd: Buffer) => toWallet(sd, hdpath));
 
   return wallet;
 };

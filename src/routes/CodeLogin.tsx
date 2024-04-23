@@ -4,9 +4,33 @@ import planetWhite from "../assets/planet-white.png";
 import starWhite from "../assets/star-white.png";
 import galaxyWhite from "../assets/galaxy-white.png";
 import Container from "../components/Container";
+import { walletFromMnemonic } from "../lib/wallet";
+import { getPoints } from "../utils/azimuth";
+import { useNavigate } from "react-router-dom";
+import useWalletStore from "../store/useWalletStore";
 
 const CodeLogin = () => {
   const [seedInput, setSeedInput] = useState("");
+  const navigate = useNavigate();
+  const { setWalletAddress, setUrbitIds } = useWalletStore();
+
+  const handleSeedLogin = async () => {
+    const wallet = walletFromMnemonic(seedInput, "m/44'/60'/0'/0/0");
+    console.log("wallet", wallet);
+    setWalletAddress(wallet.address);
+
+    const urbitIds = await getPoints(wallet.address);
+
+    setUrbitIds(urbitIds);
+
+    // single urbit Id - go to manage
+    if (urbitIds.length === 1) {
+      navigate(`/manage`);
+    } else {
+      // multiple urbit Ids - go to wallet view
+      navigate(`/wallet`);
+    }
+  };
 
   const renderCodeLoginForm = () => {
     return (
@@ -80,7 +104,7 @@ const CodeLogin = () => {
 
             <button
               className="bg-light-green px-0 py-0 rounded-r-lg h-[100%] w-[30px] text-black text-[50px] font-[300]"
-              onClick={() => {}}
+              onClick={handleSeedLogin}
             >
               &gt;
             </button>
