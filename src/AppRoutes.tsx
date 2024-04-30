@@ -1,21 +1,21 @@
 import { Routes, Route } from "react-router-dom";
-import Login from "./routes/Login";
+import SeedLogin from "./routes/SeedLogin";
 import Wallet from "./routes/Wallet";
 import Operations from "./routes/Operations";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Manage from "./routes/Manage";
-import CodeLogin from "./routes/CodeLogin";
+import MainLogin from "./routes/MainLogin";
 import Advanced from "./routes/Advanced";
 import Sponsor from "./routes/Sponsor";
 import ManagementKey from "./routes/ManagementKey";
 import Transfer from "./routes/Transfer";
 
 const routeConfigs = [
-  { path: "/", element: <Login />, protected: false },
+  { path: "/", element: <MainLogin />, protected: false },
+  { path: "/seed-login", element: <SeedLogin />, protected: false },
   { path: "/wallet", element: <Wallet />, protected: true },
   { path: "/manage", element: <Manage />, protected: true },
   { path: "/operations", element: <Operations />, protected: true },
-  { path: "/code-login", element: <CodeLogin />, protected: false },
   { path: "/manage/advanced", element: <Advanced />, protected: true },
   { path: "/manage/sponsor", element: <Sponsor />, protected: true },
   { path: "/manage/transfer", element: <Transfer />, protected: true },

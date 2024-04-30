@@ -9,13 +9,11 @@ import Ship from "../types/Ship";
 interface WalletState {
   walletAddress: string;
   urbitIds: number[];
-
   selectedShip: Ship;
   currentUrbitId: string;
   currentIdNum: number;
   setWalletAddress: (account: string) => void;
   setUrbitIds: (urbitIds: number[]) => void;
-  setCurrentUrbitId: (urbitId: string) => void;
   setSelectedShip: (ship: Ship) => void;
 }
 
@@ -27,25 +25,9 @@ const useWalletStore = create<WalletState>()(
         urbitIds: [],
         currentUrbitId: "",
         currentIdNum: 0,
-        selectedShip: {
-          patp: "",
-          point: 0,
-          layer: "",
-          owner: "",
-          hasSponsor: false,
-          sponsor: "",
-          keyRevisionNumber: "",
-          managementProxy: "",
-          spawnProxy: "",
-          transferProxy: "",
-          votingProxy: "",
-        },
+        selectedShip: {} as Ship,
         setWalletAddress: (account: string) => set({ walletAddress: account }),
         setUrbitIds: (urbitIds: number[]) => set({ urbitIds }),
-        setCurrentUrbitId: (urbitId: string) => {
-          set({ currentUrbitId: urbitId });
-          set({ currentIdNum: ob.patp2dec(urbitId) });
-        },
         setSelectedShip: (ship: Ship) => set({ selectedShip: ship }),
       }),
       {

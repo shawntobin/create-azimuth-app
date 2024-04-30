@@ -20,7 +20,7 @@ const Transfer = () => {
 
   const handleTransfer = async () => {
     if (layer === "l1") {
-      handleTransferL1();
+      handleTransferL2();
     } else {
       handleTransferL2();
     }
@@ -90,7 +90,7 @@ const Transfer = () => {
 
   return (
     <Container>
-      {/* <div className="text-[40px] mb-7 text-white">Transfer Urbit ID</div> */}
+      <div className="text-[40px] mb-7 text-white">Transfer Urbit ID</div>
       <div className="relative flex items-center mb-3 w-[500px]">
         <input
           type="text"

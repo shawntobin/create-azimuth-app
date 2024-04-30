@@ -8,9 +8,8 @@ export const generateHashAndSign = async (
   type: string,
   data: any
 ) => {
+  // metamask
   const hash = await api.prepareForSigning(nonce, from, type, data);
-
-  console.log("hash", hash);
 
   let sig;
 
@@ -24,6 +23,13 @@ export const generateHashAndSign = async (
     console.log("no window.ethereum");
     // sig = await web3.eth.personal.sign(hash, wallet.address, "");
   }
+
+  // seed phrase etc
+  // else {
+  //   const hash = await api.getUnsignedTx(nonce, from, type, data);
+  //   const sig = await signTransactionHash(hash, wallet.privateKey);
+  //   return sig;
+  // }
 
   return sig;
 };

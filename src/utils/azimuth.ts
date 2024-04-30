@@ -15,6 +15,7 @@ import {
   PendingTransaction,
   Options,
 } from "@urbit/roller-api";
+import * as ob from "urbit-ob";
 
 const callRoller = async (method: string, params: any) => {
   const requestId = Date.now().toString();
@@ -70,9 +71,9 @@ export const transferPoint = async (
 
   const options: Options = {
     transport: {
-      type: "https",
-      host: "roller.urbit.org",
-      port: 443,
+      type: "http",
+      host: "localhost",
+      port: 8080,
       path: "/v1/roller",
     },
   };
@@ -92,33 +93,60 @@ export const transferPoint = async (
   const nonce = await api.getNonce({ ship: patp, proxy: "own" });
 
   console.log("nonce", nonce);
+  console.log("walletAddress", walletAddress);
+  console.log("patp", patp);
+  console.log("from", from);
+  console.log("to", to);
 
-  // const signedMessage = await generateHashAndSign(
-  //   api,
-  //   walletAddress,
-  //   nonce,
-  //   from,
-  //   "transferPoint",
-  //   {
-  //     address: to,
-  //     reset: false,
-  //   }
-  // );
+  const signedMessage = await generateHashAndSign(
+    api,
+    walletAddress,
+    nonce,
+    from,
+    "transferPoint",
+    {
+      address: to,
+      reset: false,
+    }
+  );
 
-  // const params = {
-  //   address: from,
-  //   sig: signedMessage,
-  //   from: {
-  //     ship: patp,
-  //     proxy: "own",
-  //   },
-  //   data: {
-  //     address: to,
-  //     reset: false,
-  //   },
-  // };
+  console.log("signedMessage", signedMessage);
 
-  // const res = await callRoller("transferPoint", params);
+  const params = {
+    address: from,
+    sig: signedMessage,
+    from: {
+      ship: patp,
+      proxy: "own",
+    },
+    data: {
+      address: to,
+      reset: false,
+    },
+  };
 
-  // return res;
+  const res = await callRoller("transferPoint", params);
+
+  return res;
+};
+
+export const getShip = async (patp: string) => {
+  const _ship = await getPoint(patp);
+  const id = ob.patp2dec(patp);
+
+  const ship: Ship = {
+    patp: patp,
+    point: id,
+    layer: _ship.dominion,
+    owner: _ship.ownership.owner.address,
+    keyRevisionNumber: _ship.network.keys.life,
+    hasSponsor: _ship.network.sponsor.has,
+    sponsor: _ship.network.sponsor.who,
+    spawnProxy: _ship.ownership.spawnProxy.address,
+    managementProxy: _ship.ownership.managementProxy.address,
+    transferProxy: _ship.ownership.transferProxy.address,
+    votingProxy: _ship.ownership.votingProxy.address,
+  };
+
+  return ship;
 };

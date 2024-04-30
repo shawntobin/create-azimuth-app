@@ -1,13 +1,28 @@
-import { defineConfig } from "vite";
 import wasm from "vite-plugin-wasm";
+import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import GlobalPolyFill from "@esbuild-plugins/node-globals-polyfill";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), wasm()],
-  define: {
-    // By default, Vite doesn't include shims for NodeJS/
-    // necessary for azimuth-js lib to work
-    global: {},
+  optimizeDeps: {
+    include: ["urbit-key-generation"],
+    esbuildOptions: {
+      define: {
+        global: "globalThis",
+      },
+      plugins: [
+        GlobalPolyFill({
+          process: true,
+          buffer: true,
+        }),
+      ],
+    },
+  },
+
+  resolve: {
+    alias: {
+      stream: "stream-browserify",
+    },
   },
 });

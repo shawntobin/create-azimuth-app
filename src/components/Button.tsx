@@ -3,28 +3,19 @@ import React, { ButtonHTMLAttributes } from "react";
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   handleClick: () => void;
   text: string;
-  secondaryText?: string;
-  secondaryColor?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
   handleClick,
   text,
-  secondaryText = "",
   className = "",
-  secondaryColor = false,
   ...rest
 }) => {
-  const buttonClassName = `flex flex-col items-center justify-center px-8 py-2.5 rounded-full text-lg ${
-    secondaryColor ? "bg-light-gray" : "bg-light-green"
-  }  border-0 text-black ${className}`;
+  const buttonClassName = `flex items-center justify-center rounded-full border border-light-green text-light-green text-[20px] h-[36px] bg-transparent ${className} m-[3px]`;
 
   return (
     <button onClick={handleClick} className={buttonClassName} {...rest}>
       <div className="mb-0 pb-0">{text}</div>
-      {secondaryText && (
-        <div className="text-sm mt-0 pt-0">{secondaryText}</div>
-      )}
     </button>
   );
 };

@@ -4,14 +4,16 @@ import planetBlack from "../assets/planet-black.png";
 import * as ob from "urbit-ob";
 import Sigil from "../components/Sigil";
 
-const UrbitIdCard = (props: { patp: string }) => {
-  const { patp } = props;
+const UrbitIdCard = (props: { patp: string; className?: string }) => {
+  const { patp, className } = props;
 
   const id = ob.patp2dec(patp);
   const parent = ob.sein(patp);
 
   return (
-    <div className="w-[500px] h-[312.5px] bg-white text-black p-2.5 rounded-[30px] flex flex-col justify-between">
+    <div
+      className={`w-[500px] h-[312.5px] bg-white text-black p-2.5 rounded-[30px] flex flex-col justify-between ${className}`}
+    >
       <div>
         <img src={planetBlack} alt="urbit planet" className="w-10 h-10" />
 

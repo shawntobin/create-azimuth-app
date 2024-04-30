@@ -4,6 +4,7 @@ import * as ecc from "tiny-secp256k1";
 import { BIP32Interface } from "bip32";
 import { publicToAddress } from "../utils";
 import { DEFAULT_HD_PATH } from "../constants/constants";
+import * as kg from "urbit-key-generation";
 
 export const walletFromMnemonic = (
   mnemonic: string,
@@ -30,4 +31,16 @@ export const walletFromMnemonic = (
   };
 
   return wallet;
+};
+
+export const urbitWalletFromTicket = async (
+  ticket: string,
+  point: number,
+  passphrase?: string
+) => {
+  return await kg.generateWallet({
+    ticket: ticket,
+    ship: point,
+    passphrase: passphrase,
+  });
 };
