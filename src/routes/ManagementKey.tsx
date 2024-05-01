@@ -4,8 +4,6 @@ import useWalletStore from "../store/useWalletStore";
 import Container from "../components/Container";
 
 const ManagementKey = () => {
-  const { currentUrbitId } = useWalletStore();
-
   return (
     <Container>
       <div className="text-[40px] mb-7 text-white">Set Management Key</div>

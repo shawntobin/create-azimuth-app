@@ -1,7 +1,4 @@
 import { useState } from "react";
-import planetWhite from "../assets/planet-white.png";
-import starWhite from "../assets/star-white.png";
-import galaxyWhite from "../assets/galaxy-white.png";
 import Container from "../components/Container";
 import { useNavigate } from "react-router-dom";
 import { useSyncProviders } from "../hooks/useSyncProviders";
@@ -9,6 +6,7 @@ import toast from "react-hot-toast";
 import useLogin from "../hooks/useLogin";
 import { urbitWalletFromTicket } from "../lib/wallet";
 import * as ob from "urbit-ob";
+import UrbitSymbols from "../components/UrbitSymbols";
 
 const MainLogin = () => {
   const [urbitIdInput, setUrbitIdInput] = useState("");
@@ -63,7 +61,7 @@ const MainLogin = () => {
   const renderCodeLoginForm = () => {
     return (
       <>
-        <div className="text-[20px] mb-2 text-white text-left font-[500]">
+        <div className="text-[20px] mb-2 text-light-green text-left font-[500]">
           Urbit ID / Log In
         </div>
 
@@ -71,12 +69,12 @@ const MainLogin = () => {
           <input
             type="text"
             placeholder="~sampel-palnet"
-            className="pl-4 pr-20 py-2 rounded-full border border-white text-light-gray w-[433px] text-[20px] h-[36px] bg-transparent"
+            className="pl-4 pr-20 py-2 rounded-full border border-light-green text-light-gray w-[433px] text-[20px] h-[36px] bg-transparent placeholder-medium-green"
             onChange={(e) => setUrbitIdInput(e.currentTarget.value)}
             value={urbitIdInput}
           />
 
-          <button className="absolute inset-y-0 right-0 flex items-center justify-center bg-transparent border-white rounded-full p-2 h-[36px] w-[36px]">
+          <button className="absolute inset-y-0 right-0 flex items-center justify-center bg-transparent border-light-green rounded-full p-2 h-[36px] w-[36px]">
             <img src="src/assets/sigil-button-white.png" alt="urbit sigil" />
           </button>
         </div>
@@ -85,13 +83,13 @@ const MainLogin = () => {
           <input
             type="text"
             placeholder="~sigtyc-balnyr-nalrus-wolsul"
-            className="pl-4 pr-20 py-2 rounded-full border border-white text-light-gray w-[433px] text-[20px] h-[36px] bg-transparent"
+            className="pl-4 pr-20 py-2 rounded-full border border-light-green text-light-gray w-[433px] text-[20px] h-[36px] bg-transparent placeholder-medium-green"
             onChange={(e) => setMasterTicket(e.currentTarget.value)}
             value={masterTicket}
           />
 
           <button
-            className="text-white border-white absolute inset-y-0 right-0 flex items-center justify-center bg-transparent rounded-full h-[36px] w-[36px] text-[40px] p-2 pt-0 font-[300]"
+            className="text-light-green border-light-green absolute inset-y-0 right-0 flex items-center justify-center bg-transparent rounded-full h-[36px] w-[36px] text-[40px] p-2 pt-0 font-[300]"
             onClick={() => handleTicketLogin()}
           >
             &gt;
@@ -99,32 +97,18 @@ const MainLogin = () => {
         </div>
 
         <div className="mx-auto w-[433px] mt-2">
-          <div className="flex flex-row justify-between">
+          <div className="flex flex-row justify-between items-center">
             <button
-              className="flex items-center justify-center rounded-full border border-white text-white w-[125px] text-[20px] h-[36px] bg-transparent"
+              className="flex items-center justify-center rounded-full border border-light-green text-light-green w-[125px] text-[20px] h-[36px] bg-transparent"
               onClick={() => handleMetamaskLogin()}
             >
               Metamask
             </button>
-            <div className="flex flex-row justify-center space-x-3">
-              <img
-                src={planetWhite}
-                alt="urbit planet symbol"
-                className="w-[22.4px] h-[22.4px]"
-              />
-              <img
-                src={starWhite}
-                alt="urbit star symbol"
-                className="w-[22.4px] h-[22.4px]"
-              />
-              <img
-                src={galaxyWhite}
-                alt="urbit galaxy symbol"
-                className="w-[22.4px] h-[22.4px]"
-              />
-            </div>
+
+            <UrbitSymbols />
+
             <button
-              className="flex items-center justify-center rounded-full border border-white text-white w-[125px] text-[20px] h-[36px] bg-transparent whitespace-nowrap"
+              className="flex items-center justify-center rounded-full border border-light-green text-light-green w-[125px] text-[20px] h-[36px] bg-transparent whitespace-nowrap"
               onClick={() => navigate("/seed-login")}
             >
               Seed phrase
@@ -135,7 +119,11 @@ const MainLogin = () => {
     );
   };
 
-  return <Container>{renderCodeLoginForm()}</Container>;
+  return (
+    <Container symbols={false} back={false}>
+      {renderCodeLoginForm()}
+    </Container>
+  );
 };
 
 export default MainLogin;

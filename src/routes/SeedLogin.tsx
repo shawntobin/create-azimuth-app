@@ -2,6 +2,9 @@ import { useState } from "react";
 import Container from "../components/Container";
 import { walletFromMnemonic } from "../lib/wallet";
 import useLogin from "../hooks/useLogin";
+import { Cog8ToothIcon } from "@heroicons/react/24/solid";
+import BackButton from "../components/BackButton";
+import ControlBox from "../components/ControlBox";
 
 const SeedLogin = () => {
   const [seedInput, setSeedInput] = useState("");
@@ -21,28 +24,29 @@ const SeedLogin = () => {
 
   return (
     <Container>
-      <div className="w-[500px]">
-        <div className="text-md mb-2 mt-6 text-white text-left text-[30px]">
-          Seed Phrase
-        </div>
-
-        <div className="flex items-center bg-white rounded-lg overflow-hidden h-[132px]">
-          <textarea
-            placeholder="example crew supreme gesture quantum web media hazard theory mercy wing kitten"
-            className="flex-1 px-4 py-2 bg-transparent outline-none text-black resize-none text-[25px]"
-            rows={3}
-            value={seedInput}
-            onChange={(e) => setSeedInput(e.currentTarget.value)}
-          ></textarea>
-
-          <button
-            className="bg-light-green px-0 py-0 rounded-r-lg h-[100%] w-[30px] text-black text-[50px] font-[300]"
-            onClick={handleSeedLogin}
-          >
-            &gt;
-          </button>
-        </div>
-      </div>
+      <ControlBox
+        className="h-[185px]"
+        headerContent={
+          <div className="text-left w-full flex justify-between">
+            <div className="text-[20px] font-bold">Seed Phrase</div>
+            <button onClick={() => {}} className="bg-transparent p-0 m-0">
+              <Cog8ToothIcon className="h-6 w-6" />
+            </button>
+          </div>
+        }
+        buttonTitle="Log in"
+        onSubmit={handleSeedLogin}
+      >
+        {/* <div className="flex flex-grow items-center"> */}
+        <textarea
+          className="flex-1 px-4 py-1 bg-transparent outline-none text-light-green resize-none text-[20px] placeholder-medium-green"
+          placeholder="example crew supreme gesture quantum web media hazard theory mercy wing kitten"
+          rows={3}
+          value={seedInput}
+          onChange={(e) => setSeedInput(e.currentTarget.value)}
+        ></textarea>
+        {/* </div> */}
+      </ControlBox>
     </Container>
   );
 };

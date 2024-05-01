@@ -14,7 +14,7 @@ const Advanced = () => {
           <div className="w-[484px]">
             <div className="text-left font-bold">ID Settings</div>
             <Button
-              handleClick={() => navigate(`/manage/transfer`)}
+              handleClick={() => navigate(`/manage/ownership`)}
               text="Ownership Address"
               className="w-full flex"
             />

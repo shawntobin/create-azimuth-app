@@ -5,8 +5,6 @@ import Container from "../components/Container";
 import { ecliptic } from "azimuth-js";
 
 const Sponsor = () => {
-  const { currentUrbitId, urbitContracts } = useWalletStore();
-
   const [newSponsor, setNewSponsor] = useState("");
 
   return (

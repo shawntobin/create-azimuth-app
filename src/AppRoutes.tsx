@@ -9,6 +9,7 @@ import Advanced from "./routes/Advanced";
 import Sponsor from "./routes/Sponsor";
 import ManagementKey from "./routes/ManagementKey";
 import Transfer from "./routes/Transfer";
+import Ownership from "./routes/Ownership";
 
 const routeConfigs = [
   { path: "/", element: <MainLogin />, protected: false },
@@ -19,6 +20,7 @@ const routeConfigs = [
   { path: "/manage/advanced", element: <Advanced />, protected: true },
   { path: "/manage/sponsor", element: <Sponsor />, protected: true },
   { path: "/manage/transfer", element: <Transfer />, protected: true },
+  { path: "/manage/ownership", element: <Ownership />, protected: true },
   {
     path: "/manage/management-key",
     element: <ManagementKey />,

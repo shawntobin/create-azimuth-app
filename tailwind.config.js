@@ -6,6 +6,8 @@ export default {
       colors: {
         "light-green": "#AAE68C",
         "dark-green": "#141A13",
+        "medium-green": "#4E554B",
+
         "light-gray": "#C3C5C1",
         "medium-gray": "#7A7A7A",
       },

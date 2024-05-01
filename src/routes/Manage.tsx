@@ -14,22 +14,13 @@ const Manage = () => {
 
   return (
     <Container headerText={`Urbit Id / ${patp}`}>
-      <UrbitIdCard patp={patp} className={"mb-10"} />
+      <UrbitIdCard patp={patp} className={"mb-10 mt-20"} />
 
-      <Button
-        handleClick={() => {}}
-        text="Host your Planet"
-        // className="mt-8 mb-3 w-[500px] h-[60px]"
-      />
-      <Button
-        handleClick={() => {}}
-        text="Download your Passport"
-        // className="mb-3 w-[500px] h-[60px]"
-      />
+      <Button handleClick={() => {}} text="Host your Planet" />
+      <Button handleClick={() => {}} text="Download your Passport" />
       <Button
         handleClick={() => navigate(`/manage/advanced`)}
         text="Advanced Settings"
-        // className="mb-3 w-[500px] h-[60px]"
       />
     </Container>
   );
