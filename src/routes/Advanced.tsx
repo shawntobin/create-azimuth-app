@@ -1,10 +1,26 @@
 import Container from "../components/Container";
-import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
+import SettingsItem from "../components/SettingsItem";
+import useWalletStore from "../store/useWalletStore";
+import * as ob from "urbit-ob";
+import { formatAddress } from "../utils";
 
 const Advanced = () => {
   const navigate = useNavigate();
+
+  const { selectedShip } = useWalletStore();
+
+  const {
+    owner,
+    spawnProxy,
+    managementProxy,
+    keyRevisionNumber,
+    layer,
+    sponsor,
+  } = selectedShip;
+
+  const sponsorPatp = ob.patp(sponsor);
 
   return (
     <Container headerText={`Urbit Id / Advanced Settings`}>
@@ -13,46 +29,50 @@ const Advanced = () => {
         <div className="flex gap-x-8">
           <div className="w-[484px]">
             <div className="text-left font-bold">ID Settings</div>
-            <Button
-              handleClick={() => navigate(`/manage/ownership`)}
-              text="Ownership Address"
-              className="w-full flex"
-            />
-            <Button
-              handleClick={() => navigate(`/manage/management-key`)}
-              text="Management Address"
-              className="w-full flex text-green"
-            />
-            <Button
-              handleClick={() => {}}
-              text="Master Ticket"
-              className="w-full flex"
-            />
-
-            <Button
-              handleClick={() => {}}
-              text="Sigil Generator"
-              className="w-full flex"
-            />
+            <div className="flex flex-col gap-y-1">
+              {" "}
+              <SettingsItem
+                handleClick={() => navigate(`/manage/ownership`)}
+                title="Ownership Address"
+                text={formatAddress(owner)}
+              />
+              <SettingsItem
+                handleClick={() => navigate(`/manage/management-key`)}
+                title="Management Address"
+                text={formatAddress(managementProxy)}
+              />
+              <SettingsItem
+                handleClick={() => navigate(`/manage/master-ticket`)}
+                title="Master Ticket"
+                text="Transfer to Master Ticket"
+              />
+              <SettingsItem
+                handleClick={() => {}}
+                title="Sigil Generator"
+                text="Modify or download your sigil"
+              />
+            </div>
           </div>
           <div className="w-[484px]">
             <div className="text-left font-bold">OS Settings</div>
-            <Button
-              handleClick={() => navigate(`/manage/sponsor`)}
-              text="Sponsor"
-              className="w-full flex"
-            />
-            <Button
-              handleClick={() => {}}
-              text="Network Keys"
-              className="w-full flex"
-            />
+            <div className="flex flex-col gap-y-1">
+              <SettingsItem
+                handleClick={() => navigate(`/manage/sponsor`)}
+                title="Sponsor"
+                text={sponsorPatp}
+              />
+              <SettingsItem
+                handleClick={() => navigate(`/manage/network-keys`)}
+                title="Network Keys"
+                text={`Revision ${keyRevisionNumber}`}
+              />
 
-            <Button
-              handleClick={() => {}}
-              text="Spawn Planets"
-              className="w-full flex"
-            />
+              <SettingsItem
+                handleClick={() => {}}
+                title="Spawn Planets"
+                text="Spawn planets from your star"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Container from "../components/Container";
 import { useNavigate } from "react-router-dom";
 import { useSyncProviders } from "../hooks/useSyncProviders";
@@ -18,6 +18,8 @@ const MainLogin = () => {
   // try / catch
   // react-hook-form ?
   // metamask SDK react ?
+
+  // clear any existing state
 
   const handleMetamaskLogin = async () => {
     const providerWithInfo: EIP6963ProviderDetail | undefined = providers.find(
@@ -89,7 +91,7 @@ const MainLogin = () => {
           />
 
           <button
-            className="text-light-green border-light-green absolute inset-y-0 right-0 flex items-center justify-center bg-transparent rounded-full h-[36px] w-[36px] text-[40px] p-2 pt-0 font-[300]"
+            className="text-light-green border-light-green absolute inset-y-0 right-0 flex items-center justify-center bg-transparent rounded-full h-[36px] w-[36px] text-[40px] p-2 pt-0 font-[300] focus:outline-none focus:ring-2 focus:ring-light-green"
             onClick={() => handleTicketLogin()}
           >
             &gt;

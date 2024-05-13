@@ -1,21 +1,30 @@
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import useWalletStore from "../store/useWalletStore";
-import { getPoints, getShip } from "../utils/azimuth";
+import * as L2 from "../utils/transactionL2";
+import * as L1 from "../utils/transactionL1";
+import * as txn from "../utils/transaction";
 import * as ob from "urbit-ob";
 
-function useLogin() {
+const useLogin = () => {
   const navigate = useNavigate();
-  const { setWalletAddress, setUrbitIds, setSelectedShip } = useWalletStore();
+  const { setWalletAddress, setUrbitIds, setSelectedShip, resetState } =
+    useWalletStore();
 
   const loginCommon = async (walletAddress: string) => {
     try {
-      const ids = await getPoints(walletAddress); // note if master ticket then could just use getPoint
+      resetState();
+
+      const ids = await txn.getPoints(walletAddress); // note if master ticket then could just use getPoint
       setWalletAddress(walletAddress);
       setUrbitIds(ids);
 
+      console.log("urbit ids", ids);
+
       if (ids.length === 1) {
-        const ship = await getShip(ob.patp(ids[0]));
+        const ship = await txn.getShip(ob.patp(ids[0]));
+
+        console.log("ship to be set to state", ship);
         setSelectedShip(ship);
         navigate(`/manage`); // include urbit id in route ?
       } else if (ids.length > 1) {
@@ -30,6 +39,6 @@ function useLogin() {
   };
 
   return { loginCommon };
-}
+};
 
 export default useLogin;

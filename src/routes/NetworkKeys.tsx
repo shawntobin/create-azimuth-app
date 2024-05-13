@@ -6,7 +6,7 @@ import useWalletStore from "../store/useWalletStore";
 import toast from "react-hot-toast";
 import * as ob from "urbit-ob";
 
-const Sponsor = () => {
+const NetworkKeys = () => {
   const { walletAddress, selectedShip } = useWalletStore();
   const [newSponsor, setNewSponsor] = useState("");
 
@@ -14,39 +14,30 @@ const Sponsor = () => {
 
   const sponsorPatp = ob.patp(sponsor);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(walletAddress);
-    toast.success("Copied to clipboard");
-  };
-
   return (
-    <Container headerText={`Urbit Id / Advanced Settings / Change Sponsor`}>
+    <Container headerText={`Urbit Id / Advanced Settings / Network Keys`}>
       <ControlBox
         headerContent={
           <div className="text-left w-full flex justify-between">
             <div className="items-center justify-center flex text-[20px] ">
-              <div className="font-bold">Sponsor</div>
-              <div className="font-[200] ml-3">{sponsorPatp}</div>
+              <div className="font-bold">Set Network Keys</div>
             </div>
-            <button onClick={handleCopy} className="bg-transparent p-0 m-0">
-              <DocumentDuplicateIcon className="h-6 w-6" />
-            </button>
           </div>
         }
-        buttonTitle="Request New Sponsor"
+        buttonTitle="Reset Network Keys"
         onSubmit={() => {}}
         className="h-[217px]"
       >
         <div className="justify-start flex flex-col items-start pl-2 border-b border-light-green">
-          <div className="text-[20px] font-bold ">{`Your sponsor is blah blah...`}</div>
-          <div className="text-[20px] mt-[20px] mb-1">New sponsor:</div>
+          <div className="text-[20px] font-bold ">Factory Reset:</div>
+          <div className="text-[20px] font-bold ">Custom Network Seed:</div>
         </div>
         <div className="flex h-full items-center">
           <input
             type="text"
             placeholder="~sampel"
             className="pl-4 pr-4 py-0 w-full h-full font-[500] text-[20px] bg-transparent placeholder-medium-green-2"
-            onChange={(e) => setNewSponsor(e.currentTarget.value)}
+            onChange={() => {}}
             value={newSponsor}
           />
         </div>
@@ -55,4 +46,4 @@ const Sponsor = () => {
   );
 };
 
-export default Sponsor;
+export default NetworkKeys;

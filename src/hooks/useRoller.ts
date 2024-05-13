@@ -1,7 +1,6 @@
 import { submitL2Transaction } from "../lib/roller";
 
 import useWalletStore from "../store/useWalletStore";
-import useAzimuthStore from "../store/useAzimuthStore";
 import Point, { PointField, Points } from "../types/Point";
 
 import {

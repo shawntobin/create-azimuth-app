@@ -7,9 +7,10 @@ import Manage from "./routes/Manage";
 import MainLogin from "./routes/MainLogin";
 import Advanced from "./routes/Advanced";
 import Sponsor from "./routes/Sponsor";
-import ManagementKey from "./routes/ManagementKey";
-import Transfer from "./routes/Transfer";
+import ManagementAddress from "./routes/ManagementAddress";
 import Ownership from "./routes/Ownership";
+import MasterTicket from "./routes/MasterTicket";
+import NetworkKeys from "./routes/NetworkKeys";
 
 const routeConfigs = [
   { path: "/", element: <MainLogin />, protected: false },
@@ -19,11 +20,12 @@ const routeConfigs = [
   { path: "/operations", element: <Operations />, protected: true },
   { path: "/manage/advanced", element: <Advanced />, protected: true },
   { path: "/manage/sponsor", element: <Sponsor />, protected: true },
-  { path: "/manage/transfer", element: <Transfer />, protected: true },
   { path: "/manage/ownership", element: <Ownership />, protected: true },
+  { path: "manage/master-ticket", element: <MasterTicket />, protected: true },
+  { path: "/manage/network-keys", element: <NetworkKeys />, protected: true },
   {
     path: "/manage/management-key",
-    element: <ManagementKey />,
+    element: <ManagementAddress />,
     protected: true,
   },
 ];

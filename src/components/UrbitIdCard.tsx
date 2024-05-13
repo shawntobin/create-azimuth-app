@@ -5,7 +5,9 @@ import * as ob from "urbit-ob";
 import Sigil from "../components/Sigil";
 
 const UrbitIdCard = (props: { patp: string; className?: string }) => {
-  const { patp, className } = props;
+  const { ship, className } = props;
+
+  const { patp, layer } = ship;
 
   const id = ob.patp2dec(patp);
   const parent = ob.sein(patp);
@@ -27,7 +29,7 @@ const UrbitIdCard = (props: { patp: string; className?: string }) => {
           className="text-[10px] text-medium-gray mt-2"
         >
           Azimuth Point: <span>{id}</span> | Key revisions: <span>{1}</span> |
-          Owners: <span>{1}</span> | L1
+          Owners: <span>{1}</span> | {layer}
         </div>
       </div>
 

@@ -3,8 +3,9 @@ import Container from "../components/Container";
 import { walletFromMnemonic } from "../lib/wallet";
 import useLogin from "../hooks/useLogin";
 import { Cog8ToothIcon } from "@heroicons/react/24/solid";
-import BackButton from "../components/BackButton";
 import ControlBox from "../components/ControlBox";
+
+import { DEFAULT_HD_PATH } from "../constants/constants";
 
 const SeedLogin = () => {
   const [seedInput, setSeedInput] = useState("");
@@ -12,7 +13,7 @@ const SeedLogin = () => {
 
   const handleSeedLogin = async () => {
     // clean this input btw
-    const wallet = walletFromMnemonic(seedInput, "m/44'/60'/0'/0/0");
+    const wallet = walletFromMnemonic(seedInput, DEFAULT_HD_PATH);
     console.log("wallet", wallet);
 
     if (wallet.address) {

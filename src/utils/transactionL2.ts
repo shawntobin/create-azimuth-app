@@ -17,10 +17,40 @@ import {
 } from "@urbit/roller-api";
 import * as ob from "urbit-ob";
 
+// Roller options
+const options: Options = {
+  transport: {
+    type: "http",
+    host: "localhost",
+    port: 8080,
+    path: "/v1/roller",
+  },
+};
+
+// L2 Opcodes
+
+// 00: transfer-point
+// 01: spawn
+// 02: configure-keys
+// 03: escape
+// 04: cancel-escape
+// 05: adopt
+// 06: reject
+// 07: detach
+// 08: set-management-proxy
+// 09: set-spawn-proxy
+// 10: set-transfer-proxy
+
+// type: "websocket" | "http" | "https" | "postmessagewindow" | "postmessageiframe";
+// host: string;
+// port: number;
+// path?: string;
+// protocol?: string;
+
+// read transactions
+
 const callRoller = async (method: string, params: any) => {
   const requestId = Date.now().toString();
-
-  console.log("callRoller", method, params);
 
   try {
     const rawResponse = await fetch(ROLLER_URL, {
@@ -49,85 +79,9 @@ export const getPoints = async (addr: string) => {
   // Note - may need to also check L1
 
   const res = await callRoller("getOwnedPoints", { address: addr });
-
   const allPoints = res.result;
 
   return allPoints;
-};
-
-export const getPoint = async (patp: string) => {
-  const res = await callRoller("getPoint", { ship: patp });
-
-  return res.result;
-};
-
-export const transferPoint = async (
-  walletAddress: string,
-  patp: string,
-  from: From,
-  to: string
-) => {
-  // to be moved, just for initial development
-
-  const options: Options = {
-    transport: {
-      type: "http",
-      host: "localhost",
-      port: 8080,
-      path: "/v1/roller",
-    },
-  };
-
-  console.log("options", options);
-
-  // type: "websocket" | "http" | "https" | "postmessagewindow" | "postmessageiframe";
-  // host: string;
-  // port: number;
-  // path?: string;
-  // protocol?: string;
-
-  const api = new RollerRPCAPI(options);
-
-  console.log("api", api);
-
-  const nonce = await api.getNonce({ ship: patp, proxy: "own" });
-
-  console.log("nonce", nonce);
-  console.log("walletAddress", walletAddress);
-  console.log("patp", patp);
-  console.log("from", from);
-  console.log("to", to);
-
-  const signedMessage = await generateHashAndSign(
-    api,
-    walletAddress,
-    nonce,
-    from,
-    "transferPoint",
-    {
-      address: to,
-      reset: false,
-    }
-  );
-
-  console.log("signedMessage", signedMessage);
-
-  const params = {
-    address: from,
-    sig: signedMessage,
-    from: {
-      ship: patp,
-      proxy: "own",
-    },
-    data: {
-      address: to,
-      reset: false,
-    },
-  };
-
-  const res = await callRoller("transferPoint", params);
-
-  return res;
 };
 
 export const getShip = async (patp: string) => {
@@ -149,4 +103,87 @@ export const getShip = async (patp: string) => {
   };
 
   return ship;
+};
+
+export const getPoint = async (patp: string) => {
+  const res = await callRoller("getPoint", { ship: patp });
+
+  return res.result;
+};
+
+// Write transactions
+
+export const transferPoint = async (
+  walletAddress: string,
+  patp: string,
+  from: string,
+  to: string
+) => {
+  const api = new RollerRPCAPI(options);
+  const nonce = await api.getNonce({ ship: patp, proxy: "own" });
+
+  const signedMessage = await generateHashAndSign(
+    api,
+    walletAddress,
+    nonce,
+    from,
+    "transferPoint",
+    {
+      address: to,
+      reset: false,
+    }
+  );
+
+  const params = {
+    address: from,
+    sig: signedMessage,
+    from: {
+      ship: patp,
+      proxy: "own",
+    },
+    data: {
+      address: to,
+      reset: false,
+    },
+  };
+
+  const res = await callRoller("transferPoint", params);
+
+  return res;
+};
+
+export const setManagementProxy = async (
+  walletAddress: string,
+  patp: string,
+  from: string,
+  managerAddress: string
+) => {
+  const api = new RollerRPCAPI(options);
+  const nonce = await api.getNonce({ ship: patp, proxy: "own" });
+  const signedMessage = await generateHashAndSign(
+    api,
+    walletAddress,
+    nonce,
+    from,
+    "set-management-proxy",
+    {
+      address: managerAddress,
+    }
+  );
+
+  const params = {
+    address: from,
+    sig: signedMessage,
+    from: {
+      ship: patp,
+      proxy: "own",
+    },
+    data: {
+      address: managerAddress,
+    },
+  };
+
+  const res = await callRoller("set-management-proxy", params);
+
+  return res;
 };

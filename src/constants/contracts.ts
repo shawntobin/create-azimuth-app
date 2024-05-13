@@ -2,7 +2,7 @@ import { NETWORK } from "./config";
 
 const ENVIRONMENTS = {
   MAINNET: "MAINNET",
-  GOERLI: "GOERLI",
+  SEPOLIA: "SEPOLIA",
   LOCAL: "LOCAL",
 } as const;
 
@@ -18,14 +18,14 @@ switch (NETWORK) {
   case "mainnet":
     currentEnvironment = ENVIRONMENTS.MAINNET;
     break;
-  case "goerli":
-    currentEnvironment = ENVIRONMENTS.GOERLI;
+  case "sepolia":
+    currentEnvironment = ENVIRONMENTS.SEPOLIA;
     break;
   case "local":
     currentEnvironment = ENVIRONMENTS.LOCAL;
     break;
   default:
-    currentEnvironment = ENVIRONMENTS.GOERLI;
+    currentEnvironment = ENVIRONMENTS.SEPOLIA;
 }
 
 const CONTRACT_ADDRESSES: { [env: string]: ContractAddresses } = {
@@ -38,11 +38,11 @@ const CONTRACT_ADDRESSES: { [env: string]: ContractAddresses } = {
     conditionalStarRelease: "0x8c241098c3d3498fe1261421633fd57986d74aea",
     urbit_L2: "0x1111111111111111111111111111111111111111",
   },
-  [ENVIRONMENTS.GOERLI]: {
-    azimuth: "0x75ac673682d6A699a0a7F1E3616535E8865d29Fd",
-    ecliptic: "0x78eC6D601A88489bDe5AbDbFA748aBe9487703ce",
-    polls: "0x1Af17980878439013a39f9B6715519610B7a9D77",
-    claims: "0x6EB93da65d19a3e4501210C1B289A0734487ed84",
+  [ENVIRONMENTS.SEPOLIA]: {
+    azimuth: "0x6EB93da65d19a3e4501210C1B289A0734487ed84",
+    ecliptic: "0xf81109BE13862261234c24659aF412Fe70a683e4",
+    polls: "0x78eC6D601A88489bDe5AbDbFA748aBe9487703ce",
+    claims: "0xA769ec2433A95DBaC11d36e1d015e9e982F0067a",
     linearStarRelease: "0x0",
     conditionalStarRelease: "0x0",
     urbit_L2: "0x0",
