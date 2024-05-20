@@ -3,7 +3,7 @@ import Container from "../components/Container";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import ControlBox from "../components/ControlBox";
 import useWalletStore from "../store/useWalletStore";
-import { formatAddress } from "../utils";
+import { formatAddress } from "../utils/helper";
 import toast from "react-hot-toast";
 import * as txn from "../utils/transaction";
 import { copy } from "../utils/helper";
@@ -24,7 +24,6 @@ const Ownership = () => {
       newOwnerAddress
     );
 
-    res && console.log("txn", txn);
     res && toast.success("Transfer successful!");
   };
 
@@ -49,7 +48,7 @@ const Ownership = () => {
         onSubmit={handleTransfer}
         className="h-[217px]"
       >
-        <div className="justify-start flex flex-col items-start pl-2 border-b border-light-green">
+        <div className="justify-start flex flex-col items-start pl-2 border-b border-primary-color">
           <div className="text-[20px] font-bold ">{`Transfer ${patp} to a new owner.`}</div>
           <div className="text-[20px] mt-[20px] mb-1">Ethereum Address:</div>
         </div>
@@ -57,7 +56,7 @@ const Ownership = () => {
           <input
             type="text"
             placeholder="0x..."
-            className="pl-4 pr-4 py-0 w-full h-full font-[500] text-[20px] bg-transparent placeholder-medium-green-2"
+            className="pl-4 pr-4 py-0 w-full h-full font-[500] text-[20px] bg-transparent placeholder-secondary-color"
             onChange={(e) => setNewOwnerAddress(e.currentTarget.value)}
             value={newOwnerAddress}
           />

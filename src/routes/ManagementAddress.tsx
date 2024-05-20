@@ -4,9 +4,10 @@ import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import ControlBox from "../components/ControlBox";
 import useWalletStore from "../store/useWalletStore";
 import toast from "react-hot-toast";
-import { formatAddress } from "../utils";
+import { formatAddress } from "../utils/helper";
 import { copy } from "../utils/helper";
 import * as txn from "../utils/transaction";
+import GasDropdown from "../components/GasDropdown";
 
 const ManagementAddress = () => {
   const { walletAddress, selectedShip } = useWalletStore();
@@ -15,14 +16,13 @@ const ManagementAddress = () => {
   const { patp, managementProxy } = selectedShip;
 
   const handleTransaction = async () => {
-    const res = await txn.setManagementProxy(
+    const res = await txn.changeManagementProxy(
       walletAddress,
       patp,
       walletAddress,
       managerAddress
     );
 
-    res && console.log("txn", txn);
     res && toast.success("Transfer successful!");
   };
 
@@ -49,15 +49,30 @@ const ManagementAddress = () => {
         onSubmit={handleTransaction}
         className="h-[319px]"
       >
-        <div className="justify-start flex flex-col items-start pl-2 border-b border-light-green h-full">
-          <div className="text-[20px] font-bold text-left ">{`Your management key can configure networking settings (network keys and sponsorship).`}</div>
-          <div className="text-[20px] mt-[20px] mb-1">New address:</div>
+        <div className="text-[20px] justify-start flex flex-col items-start pl-2 border-b border-primary-color h-full">
+          <div className="font-bold text-left pb-4 ">{`Your management key can configure networking settings (network keys and sponsorship).`}</div>
+
+          <div className="flex justify-between w-full pr-4 mr-0">
+            <div className="text-[20px] text-left ">Gas Fee</div>
+            <div className="border-solid border-width-1">
+              <GasDropdown />
+            </div>
+          </div>
+
+          <div className="flex justify-between w-full pr-4 mr-0">
+            <div className="text-[20px] text-left ">Max Transaction Cost</div>
+            <div className="border-solid border-width-1">0.0029</div>
+          </div>
+
+          <div className="text-[20px] mt-[20px] mb-1">
+            New Management Address:
+          </div>
         </div>
         <div className="flex items-center">
           <input
             type="text"
             placeholder="0x..."
-            className="pl-4 pr-4 py-0 w-full h-[39px] font-[500] text-[20px] bg-transparent placeholder-medium-green-2"
+            className="pl-4 pr-4 py-0 w-full h-[39px] font-[500] text-[20px] bg-transparent placeholder-secondary-color"
             onChange={(e) => setManagerAddress(e.currentTarget.value)}
             value={managerAddress}
           />

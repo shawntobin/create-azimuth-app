@@ -11,6 +11,10 @@ export default {
 
         "light-gray": "#C3C5C1",
         "medium-gray": "#7A7A7A",
+
+        "primary-color": "#FFFFFF", //"#F5F5F5",
+        "secondary-color": "#878787",
+        "base-color": "#000000", //"#141A14",
       },
     },
   },

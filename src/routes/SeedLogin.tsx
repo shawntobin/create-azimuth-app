@@ -14,7 +14,6 @@ const SeedLogin = () => {
   const handleSeedLogin = async () => {
     // clean this input btw
     const wallet = walletFromMnemonic(seedInput, DEFAULT_HD_PATH);
-    console.log("wallet", wallet);
 
     if (wallet.address) {
       await loginCommon(wallet.address);
@@ -40,7 +39,7 @@ const SeedLogin = () => {
       >
         {/* <div className="flex flex-grow items-center"> */}
         <textarea
-          className="flex-1 px-4 py-1 bg-transparent outline-none text-light-green resize-none text-[20px] placeholder-medium-green"
+          className="flex-1 px-4 py-1 bg-transparent outline-none text-primary-color resize-none text-[20px] placeholder-secondary-color"
           placeholder="example crew supreme gesture quantum web media hazard theory mercy wing kitten"
           rows={3}
           value={seedInput}

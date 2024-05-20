@@ -28,7 +28,7 @@ const NetworkKeys = () => {
         onSubmit={() => {}}
         className="h-[217px]"
       >
-        <div className="justify-start flex flex-col items-start pl-2 border-b border-light-green">
+        <div className="justify-start flex flex-col items-start pl-2 border-b border-primary-color">
           <div className="text-[20px] font-bold ">Factory Reset:</div>
           <div className="text-[20px] font-bold ">Custom Network Seed:</div>
         </div>
@@ -36,7 +36,7 @@ const NetworkKeys = () => {
           <input
             type="text"
             placeholder="~sampel"
-            className="pl-4 pr-4 py-0 w-full h-full font-[500] text-[20px] bg-transparent placeholder-medium-green-2"
+            className="pl-4 pr-4 py-0 w-full h-full font-[500] text-[20px] bg-transparent placeholder-secondary-color"
             onChange={() => {}}
             value={newSponsor}
           />

@@ -60,10 +60,10 @@ const MainLogin = () => {
     }
   };
 
-  const renderCodeLoginForm = () => {
+  const renderLoginForm = () => {
     return (
       <>
-        <div className="text-[20px] mb-2 text-light-green text-left font-[500]">
+        <div className="text-[20px] mb-2 text-primary-color text-left font-[500]">
           Urbit ID / Log In
         </div>
 
@@ -71,12 +71,12 @@ const MainLogin = () => {
           <input
             type="text"
             placeholder="~sampel-palnet"
-            className="pl-4 pr-20 py-2 rounded-full border border-light-green text-light-gray w-[433px] text-[20px] h-[36px] bg-transparent placeholder-medium-green"
+            className="pl-4 pr-20 py-2 rounded-full border border-primary-color text-light-gray w-[433px] text-[20px] h-[36px] bg-transparent placeholder-secondary-color"
             onChange={(e) => setUrbitIdInput(e.currentTarget.value)}
             value={urbitIdInput}
           />
 
-          <button className="absolute inset-y-0 right-0 flex items-center justify-center bg-transparent border-light-green rounded-full p-2 h-[36px] w-[36px]">
+          <button className="absolute inset-y-0 right-0 flex items-center justify-center bg-transparent border-primary-color rounded-full p-2 h-[36px] w-[36px]">
             <img src="src/assets/sigil-button-white.png" alt="urbit sigil" />
           </button>
         </div>
@@ -85,13 +85,13 @@ const MainLogin = () => {
           <input
             type="text"
             placeholder="~sigtyc-balnyr-nalrus-wolsul"
-            className="pl-4 pr-20 py-2 rounded-full border border-light-green text-light-gray w-[433px] text-[20px] h-[36px] bg-transparent placeholder-medium-green"
+            className="pl-4 pr-20 py-2 rounded-full border border-primary-color text-light-gray w-[433px] text-[20px] h-[36px] bg-transparent placeholder-secondary-color"
             onChange={(e) => setMasterTicket(e.currentTarget.value)}
             value={masterTicket}
           />
 
           <button
-            className="text-light-green border-light-green absolute inset-y-0 right-0 flex items-center justify-center bg-transparent rounded-full h-[36px] w-[36px] text-[40px] p-2 pt-0 font-[300] focus:outline-none focus:ring-2 focus:ring-light-green"
+            className="text-primary-color border-primary-color absolute inset-y-0 right-0 flex items-center justify-center bg-transparent rounded-full h-[36px] w-[36px] text-[40px] p-2 pt-0 font-[300] focus:outline-none focus:ring-2 focus:ring-primary-color"
             onClick={() => handleTicketLogin()}
           >
             &gt;
@@ -101,7 +101,7 @@ const MainLogin = () => {
         <div className="mx-auto w-[433px] mt-2">
           <div className="flex flex-row justify-between items-center">
             <button
-              className="flex items-center justify-center rounded-full border border-light-green text-light-green w-[125px] text-[20px] h-[36px] bg-transparent"
+              className="flex items-center justify-center rounded-full border border-primary-color text-primary-color w-[125px] text-[20px] h-[36px] bg-transparent"
               onClick={() => handleMetamaskLogin()}
             >
               Metamask
@@ -110,7 +110,7 @@ const MainLogin = () => {
             <UrbitSymbols />
 
             <button
-              className="flex items-center justify-center rounded-full border border-light-green text-light-green w-[125px] text-[20px] h-[36px] bg-transparent whitespace-nowrap"
+              className="flex items-center justify-center rounded-full border border-primary-color text-primary-color w-[125px] text-[20px] h-[36px] bg-transparent whitespace-nowrap"
               onClick={() => navigate("/seed-login")}
             >
               Seed phrase
@@ -121,11 +121,7 @@ const MainLogin = () => {
     );
   };
 
-  return (
-    <Container symbols={false} back={false}>
-      {renderCodeLoginForm()}
-    </Container>
-  );
+  return <Container symbols={false}>{renderLoginForm()}</Container>;
 };
 
 export default MainLogin;

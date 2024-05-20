@@ -5,7 +5,7 @@ export const NETWORK = import.meta.env.VITE_REACT_APP_NETWORK;
 // refactor
 export const ROLLER_URL =
   NETWORK === "local"
-    ? "http://localhost:8080/v1/roller"
+    ? "http://localhost:80/v1/roller"
     : "https://roller.urbit.org:443/v1/roller";
 
 export const PROVIDER_URL =

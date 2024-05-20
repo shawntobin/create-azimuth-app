@@ -11,7 +11,7 @@ const Wallet = () => {
 
   const handleSelectUrbitId = async (patp: string) => {
     const ship = await txn.getShip(patp);
-    console.log("ship", ship);
+
     setSelectedShip(ship);
     navigate(`/manage`, { state: { ship } });
   };

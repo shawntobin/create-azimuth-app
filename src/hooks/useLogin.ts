@@ -19,12 +19,9 @@ const useLogin = () => {
       setWalletAddress(walletAddress);
       setUrbitIds(ids);
 
-      console.log("urbit ids", ids);
-
       if (ids.length === 1) {
         const ship = await txn.getShip(ob.patp(ids[0]));
 
-        console.log("ship to be set to state", ship);
         setSelectedShip(ship);
         navigate(`/manage`); // include urbit id in route ?
       } else if (ids.length > 1) {

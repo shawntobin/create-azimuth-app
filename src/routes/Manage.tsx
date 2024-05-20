@@ -8,12 +8,9 @@ const Manage = () => {
   const navigate = useNavigate();
   const { selectedShip } = useWalletStore();
 
-  // show different depending on whether it's a planet/star/galaxy
-
   return (
-    <Container headerText={`Urbit Id / ${selectedShip.patp}`}>
+    <Container headerText={`Urbit ID  /`} dropdown>
       <UrbitIdCard ship={selectedShip} className={"mb-10 mt-20"} />
-
       <Button handleClick={() => {}} text="Host your Planet" />
       <Button handleClick={() => {}} text="Download your Passport" />
       <Button

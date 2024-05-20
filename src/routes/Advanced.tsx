@@ -4,23 +4,25 @@ import BackButton from "../components/BackButton";
 import SettingsItem from "../components/SettingsItem";
 import useWalletStore from "../store/useWalletStore";
 import * as ob from "urbit-ob";
-import { formatAddress } from "../utils";
+import { formatAddress } from "../utils/helper";
 
 const Advanced = () => {
   const navigate = useNavigate();
 
   const { selectedShip } = useWalletStore();
 
+  // disable Sponsor for galaxies
+
   const {
     owner,
     spawnProxy,
     managementProxy,
     keyRevisionNumber,
-    layer,
     sponsor,
+    hasSponsor,
   } = selectedShip;
 
-  const sponsorPatp = ob.patp(sponsor);
+  const sponsorPatp = hasSponsor ? ob.patp(sponsor) : "None";
 
   return (
     <Container headerText={`Urbit Id / Advanced Settings`}>
@@ -34,12 +36,12 @@ const Advanced = () => {
               <SettingsItem
                 handleClick={() => navigate(`/manage/ownership`)}
                 title="Ownership Address"
-                text={formatAddress(owner)}
+                text={owner}
               />
               <SettingsItem
                 handleClick={() => navigate(`/manage/management-key`)}
                 title="Management Address"
-                text={formatAddress(managementProxy)}
+                text={managementProxy}
               />
               <SettingsItem
                 handleClick={() => navigate(`/manage/master-ticket`)}
@@ -47,7 +49,7 @@ const Advanced = () => {
                 text="Transfer to Master Ticket"
               />
               <SettingsItem
-                handleClick={() => {}}
+                handleClick={() => navigate(`/manage/sigil-generator`)}
                 title="Sigil Generator"
                 text="Modify or download your sigil"
               />
@@ -67,11 +69,11 @@ const Advanced = () => {
                 text={`Revision ${keyRevisionNumber}`}
               />
 
-              <SettingsItem
+              {/* <SettingsItem
                 handleClick={() => {}}
                 title="Spawn Planets"
                 text="Spawn planets from your star"
-              />
+              /> */}
             </div>
           </div>
         </div>

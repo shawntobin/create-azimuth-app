@@ -1,5 +1,7 @@
 import React from "react";
 import BackButton from "./BackButton";
+import { copy } from "../utils/helper";
+import { isAddress, formatAddress } from "../utils/helper";
 
 interface ControlBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -22,14 +24,14 @@ const ControlBox: React.FC<ControlBoxProps> = ({
     <div>
       {!hideBackButton && <BackButton />}
       <div
-        className={`flex flex-col w-[500px] rounded-[18px] overflow-hidden border border-light-green ${className}`}
+        className={`flex flex-col w-[500px] rounded-[18px] overflow-hidden border border-primary-color ${className}`}
       >
-        <div className="mb-2 text-left w-full flex justify-between p-2 border-b border-light-green">
+        <div className="mb-2 text-left w-full flex justify-between px-3 py-1 border-b border-primary-color">
           {headerContent}
         </div>
         {children}
         <button
-          className="bg-light-green mt-auto p-0 m-0 rounded-b-[18px] w-full h-[38px] text-black text-[20px] font-bold"
+          className="bg-primary-color mt-auto p-0 m-0 rounded-b-[18px] w-full h-[38px] text-black text-[20px] font-bold"
           onClick={onSubmit}
         >
           {buttonTitle}

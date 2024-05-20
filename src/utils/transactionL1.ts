@@ -3,6 +3,7 @@ import Web3 from "web3";
 import { PROVIDER_URL } from "../constants";
 import { CONTRACT } from "../constants/contracts";
 import * as ob from "urbit-ob";
+import { isGalaxy } from "./helper";
 
 // Using patp instead of point number for parameters since that's what L2 uses, then convert using ob.patp2dec
 
@@ -37,8 +38,8 @@ export const getShip = async (patp: string) => {
     layer: "l1",
     owner: _ship.owner,
     keyRevisionNumber: Number(_ship.keyRevisionNumber),
-    hasSponsor: _ship.sponsor ? true : false, // zod issue?
-    sponsor: _ship.sponsor ? Number(_ship.sponsor) : null,
+    hasSponsor: !isGalaxy(patp),
+    sponsor: !isGalaxy(patp) ? Number(_ship.sponsor) : null,
     spawnProxy: _ship.spawnProxy,
     managementProxy: _ship.managementProxy,
     transferProxy: _ship.transferProxy,
@@ -74,8 +75,7 @@ export const transferPoint = async (
     });
 };
 
-// Write txns
-export const setManagementProxy = async (
+export const changeManagementProxy = async (
   walletAddress: string,
   patp: string,
   from: string,
@@ -88,6 +88,32 @@ export const setManagementProxy = async (
     point,
     managerAddress
   );
+
+  txParams.from = from;
+  txParams.gasLimit = Web3.utils.toHex(150000); // change this to accurate value
+  // txParams.maxPriorityFeePerGas = "0x3b9aca00";
+  // txParams.maxFeePerGas = "0x2540be400";
+
+  window.ethereum
+    .request({
+      method: "eth_sendTransaction",
+      params: [txParams],
+    })
+    .then((txHash) => {
+      return txHash;
+    });
+};
+
+export const requestNewSponsor = async (
+  walletAddress: string,
+  patp: string,
+  from: string,
+  newSponsorPatp: string
+) => {
+  const point = ob.patp2dec(patp);
+  const contracts = await azimuthConnection();
+  const newSponsorPoint = ob.patp2dec(newSponsorPatp);
+  const txParams = ecliptic.escape(contracts, point, newSponsorPoint);
 
   txParams.from = from;
   txParams.gasLimit = Web3.utils.toHex(150000); // change this to accurate value

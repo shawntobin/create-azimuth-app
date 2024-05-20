@@ -11,6 +11,7 @@ import ManagementAddress from "./routes/ManagementAddress";
 import Ownership from "./routes/Ownership";
 import MasterTicket from "./routes/MasterTicket";
 import NetworkKeys from "./routes/NetworkKeys";
+import SigilGenerator from "./components/SigilGenerator";
 
 const routeConfigs = [
   { path: "/", element: <MainLogin />, protected: false },
@@ -23,6 +24,11 @@ const routeConfigs = [
   { path: "/manage/ownership", element: <Ownership />, protected: true },
   { path: "manage/master-ticket", element: <MasterTicket />, protected: true },
   { path: "/manage/network-keys", element: <NetworkKeys />, protected: true },
+  {
+    path: "manage/sigil-generator",
+    element: <SigilGenerator />,
+    protected: true,
+  },
   {
     path: "/manage/management-key",
     element: <ManagementAddress />,

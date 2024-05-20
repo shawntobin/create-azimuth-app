@@ -22,7 +22,7 @@ const options: Options = {
   transport: {
     type: "http",
     host: "localhost",
-    port: 8080,
+    port: 80,
     path: "/v1/roller",
   },
 };
@@ -124,9 +124,13 @@ export const transferPoint = async (
 
   const signedMessage = await generateHashAndSign(
     api,
+    {},
     walletAddress,
     nonce,
-    from,
+    {
+      ship: patp,
+      proxy: "own",
+    },
     "transferPoint",
     {
       address: to,
@@ -152,7 +156,7 @@ export const transferPoint = async (
   return res;
 };
 
-export const setManagementProxy = async (
+export const changeManagementProxy = async (
   walletAddress: string,
   patp: string,
   from: string,
@@ -162,10 +166,14 @@ export const setManagementProxy = async (
   const nonce = await api.getNonce({ ship: patp, proxy: "own" });
   const signedMessage = await generateHashAndSign(
     api,
+    {},
     walletAddress,
     nonce,
-    from,
-    "set-management-proxy",
+    {
+      ship: patp,
+      proxy: "own",
+    },
+    "setManagementProxy",
     {
       address: managerAddress,
     }
@@ -184,6 +192,48 @@ export const setManagementProxy = async (
   };
 
   const res = await callRoller("set-management-proxy", params);
+
+  return res;
+};
+
+export const requestNewSponsor = async (
+  walletAddress: string,
+  patp: string,
+  from: string,
+  newSponsorPatp: string
+) => {
+  const api = new RollerRPCAPI(options);
+  const nonce = await api.getNonce({ ship: patp, proxy: "own" });
+  const newSponsorPoint = ob.patp2dec(newSponsorPatp);
+
+  const signedMessage = await generateHashAndSign(
+    api,
+    {},
+    walletAddress,
+    nonce,
+    {
+      ship: patp,
+      proxy: "own",
+    },
+    "escape",
+    {
+      ship: newSponsorPatp,
+    }
+  );
+
+  const params = {
+    address: from,
+    sig: signedMessage,
+    from: {
+      ship: patp,
+      proxy: "own",
+    },
+    data: {
+      ship: newSponsorPatp,
+    },
+  };
+
+  const res = await callRoller("escape", params);
 
   return res;
 };

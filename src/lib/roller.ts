@@ -12,7 +12,7 @@ export const generateHashAndSign = async (
 ) => {
   // metamask
 
-  const metamask = false;
+  const metamask = true;
   let sig;
 
   // if metamask

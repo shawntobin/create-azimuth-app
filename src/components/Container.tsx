@@ -2,13 +2,16 @@ import React from "react";
 import { BellIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import UrbitSymbols from "./UrbitSymbols";
 import BackButton from "./BackButton";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import IdDropdown from "./IdDropdown";
+import * as ob from "urbit-ob";
 
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
-  headerText?: string; // to be changed to automatically get the header text from the route
+  headerText?: string; // to be changed to automatically get the header text from the route?
   symbols?: boolean;
-  back?: boolean;
+  dropdown?: boolean;
 }
 
 const Container: React.FC<ContainerProps> = ({
@@ -16,17 +19,21 @@ const Container: React.FC<ContainerProps> = ({
   className = "",
   headerText = "",
   symbols = true,
-  back = true,
+  dropdown = false,
   ...rest
 }) => {
   return (
-    <div className="fixed bg-dark-green text-light-green top-0 left-0 h-screen w-screen">
+    <div className="fixed bg-base-color text-primary-color top-0 left-0 h-screen w-screen">
       <div className="absolute top-0 left-0 right-0 flex justify-between items-center m-8 font-bold">
-        <div className="hover:bg-light-green hover:text-dark-green p-2 rounded-full">
+        <div className="hover:bg-primary-color hover:text-base-color p-2 rounded-full">
           <QuestionMarkCircleIcon className="h-6 w-6" />
         </div>
-        <div className="flex-grow text-center">{headerText}</div>
-        <div className="hover:bg-light-green hover:text-dark-green p-2 rounded-full">
+        <div className="flex-grow text-center justify-center items-center flex">
+          {headerText}
+          {dropdown && <IdDropdown />}
+        </div>
+
+        <div className="hover:bg-primary-color hover:text-base-color p-2 rounded-full">
           <BellIcon className="h-6 w-6" />
         </div>
       </div>

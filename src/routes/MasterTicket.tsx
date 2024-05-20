@@ -4,10 +4,9 @@ import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import ControlBox from "../components/ControlBox";
 import useWalletStore from "../store/useWalletStore";
 import toast from "react-hot-toast";
-import { formatAddress } from "../utils";
 import { copy } from "../utils/helper";
 import { ecliptic, azimuth, initContractsPartial } from "azimuth-js";
-import { setManagementProxy } from "../utils/transactionL2";
+import { changeManagementProxy } from "../utils/transactionL2";
 import Web3 from "web3";
 import { PROVIDER_URL } from "../constants";
 import { CONTRACT } from "../constants/contracts";
@@ -72,7 +71,7 @@ const MasterTicket = () => {
         onSubmit={() => setStep(step + 1)}
         // className="h-[250px]"
       >
-        <div className="justify-start flex flex-col items-start pl-2 border-b border-light-green h-full">
+        <div className="justify-start flex flex-col items-start pl-2 border-b border-primary-color h-full">
           <div className="text-[20px] font-bold text-left ">{`Reticketing is the process of generating a completely fresh wallet and transferring ownership of your point to that wallet.`}</div>
           <div className="text-[20px] mt-[20px] mb-1 text-left">
             Beware, this resets your proxy addresses; if you're using smart
@@ -102,7 +101,7 @@ const MasterTicket = () => {
           onSubmit={handleDownloadTicket}
           // className="h-[250px]"
         >
-          <div className="justify-start flex flex-col items-start pl-2 border-b border-light-green h-full">
+          <div className="justify-start flex flex-col items-start pl-2 border-b border-primary-color h-full">
             <div className="text-[20px] h-[50px] font-bold text-left ">{`Download the new passport, and keep it somewhere safe!`}</div>
           </div>
         </ControlBox>
@@ -128,7 +127,7 @@ const MasterTicket = () => {
           onSubmit={handleVerifyReticket}
           // className="h-[250px]"
         >
-          <div className="justify-between flex flex-col items-start pl-2 border-b border-light-green h-full">
+          <div className="justify-between flex flex-col items-start pl-2 border-b border-primary-color h-full">
             <div className="text-[20px] font-bold ">{`Verify New Master Ticket`}</div>
 
             <div className="text-[20px] mt-[20px] mb-1 flex justify-between w-full pr-2">
@@ -146,7 +145,7 @@ const MasterTicket = () => {
                     htmlFor="customCheckbox"
                     className="flex items-center cursor-pointer"
                   >
-                    <span className="block w-4 h-4 bg-black border border-light-green rounded-sm"></span>
+                    <span className="block w-4 h-4 bg-black border border-primary-color rounded-sm"></span>
                   </label>
                 </div>
               </span>
@@ -175,7 +174,7 @@ const MasterTicket = () => {
           onSubmit={() => navigate(`/`)}
           // className="h-[250px]"
         >
-          <div className="justify-start flex flex-col items-start pl-2 border-b border-light-green h-full">
+          <div className="justify-start flex flex-col items-start pl-2 border-b border-primary-color h-full">
             <div className="text-[20px] font-bold text-left ">{`Download the new passport, and keep it somewhere safe!`}</div>
             <div className="text-[20px] mt-[20px] mb-1 text-left"></div>
           </div>

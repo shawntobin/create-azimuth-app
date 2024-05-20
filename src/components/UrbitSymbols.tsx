@@ -9,17 +9,17 @@ const UrbitSymbols = () => {
   return (
     <div className="flex flex-row justify-center space-x-3">
       <img
-        src={planetGreen}
+        src={planetWhite}
         alt="urbit planet symbol"
         className="w-[22.4px] h-[22.4px]"
       />
       <img
-        src={starGreen}
+        src={starWhite}
         alt="urbit star symbol"
         className="w-[22.4px] h-[22.4px]"
       />
       <img
-        src={galaxyGreen}
+        src={galaxyWhite}
         alt="urbit galaxy symbol"
         className="w-[22.4px] h-[22.4px]"
       />
