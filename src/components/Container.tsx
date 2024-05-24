@@ -5,6 +5,7 @@ import BackButton from "./BackButton";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import IdDropdown from "./IdDropdown";
 import * as ob from "urbit-ob";
+import { useNavigate } from "react-router-dom";
 
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -22,6 +23,7 @@ const Container: React.FC<ContainerProps> = ({
   dropdown = false,
   ...rest
 }) => {
+  const navigate = useNavigate();
   return (
     <div className="fixed bg-base-color text-primary-color top-0 left-0 h-screen w-screen">
       <div className="absolute top-0 left-0 right-0 flex justify-between items-center m-8 font-bold">
@@ -33,7 +35,10 @@ const Container: React.FC<ContainerProps> = ({
           {dropdown && <IdDropdown />}
         </div>
 
-        <div className="hover:bg-primary-color hover:text-base-color p-2 rounded-full">
+        <div
+          className="hover:bg-primary-color hover:text-base-color p-2 rounded-full"
+          onClick={() => navigate("/history")}
+        >
           <BellIcon className="h-6 w-6" />
         </div>
       </div>

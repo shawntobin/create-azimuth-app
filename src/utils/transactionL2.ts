@@ -20,9 +20,9 @@ import * as ob from "urbit-ob";
 // Roller options
 const options: Options = {
   transport: {
-    type: "http",
-    host: "localhost",
-    port: 80,
+    type: "https", //http
+    host: "roller.urbit.org", // localhost
+    port: 443,
     path: "/v1/roller",
   },
 };

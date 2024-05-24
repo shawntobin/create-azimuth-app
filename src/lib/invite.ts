@@ -1,4 +1,4 @@
-// import * as wg from './passport';
+import * as wg from "./walletgen";
 
 import JSZip from "jszip";
 import saveAs from "file-saver";

@@ -22,3 +22,7 @@ export const formatAddress = (address: string) => {
 export const publicToAddress = (publicKey: Buffer): string => {
   return "0x" + pubToAddress(publicKey, true).toString("hex");
 };
+
+export const stripHexPrefix = (hex: string) => {
+  return hex.startsWith("0x") ? hex.slice(2) : hex;
+};

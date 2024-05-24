@@ -4,7 +4,8 @@ import BackButton from "../components/BackButton";
 import SettingsItem from "../components/SettingsItem";
 import useWalletStore from "../store/useWalletStore";
 import * as ob from "urbit-ob";
-import { formatAddress } from "../utils/helper";
+import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
+import { copy } from "../utils/helper";
 
 const Advanced = () => {
   const navigate = useNavigate();
@@ -28,11 +29,10 @@ const Advanced = () => {
     <Container headerText={`Urbit Id / Advanced Settings`}>
       <div className="w-[968px]">
         <BackButton />
-        <div className="flex gap-x-8">
+        <div className="flex gap-x-8 h-[141px]">
           <div className="w-[484px]">
-            <div className="text-left font-bold">ID Settings</div>
+            <div className="text-left font-bold pb-1">ID Settings</div>
             <div className="flex flex-col gap-y-1">
-              {" "}
               <SettingsItem
                 handleClick={() => navigate(`/manage/ownership`)}
                 title="Ownership Address"
@@ -56,8 +56,8 @@ const Advanced = () => {
             </div>
           </div>
           <div className="w-[484px]">
-            <div className="text-left font-bold">OS Settings</div>
-            <div className="flex flex-col gap-y-1">
+            <div className="text-left font-bold  pb-1">OS Settings</div>
+            <div className="flex flex-col gap-y-1 h-full">
               <SettingsItem
                 handleClick={() => navigate(`/manage/sponsor`)}
                 title="Sponsor"
@@ -68,12 +68,21 @@ const Advanced = () => {
                 title="Network Keys"
                 text={`Revision ${keyRevisionNumber}`}
               />
-
-              {/* <SettingsItem
-                handleClick={() => {}}
-                title="Spawn Planets"
-                text="Spawn planets from your star"
-              /> */}
+            </div>
+            <div className="flex justify-between items-end">
+              <button
+                className="inline-flex items-center justify-center rounded-full border border-primary-color text-primary-color text-[20px] h-[36px] bg-transparent whitespace-nowrap"
+                onClick={() => {}}
+              >
+                Download Keyfile
+              </button>
+              <button
+                className="inline-flex items-center justify-center rounded-full border border-primary-color text-primary-color text-[20px] h-[36px] bg-transparent whitespace-nowrap"
+                onClick={() => copy("Access Key")}
+              >
+                <DocumentDuplicateIcon className="h-6 w-6 pr-1" />
+                Copy Access Key
+              </button>
             </div>
           </div>
         </div>

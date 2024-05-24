@@ -11,6 +11,7 @@ import Web3 from "web3";
 import { PROVIDER_URL } from "../constants";
 import { CONTRACT } from "../constants/contracts";
 import { useNavigate } from "react-router-dom";
+import { downloadWallet } from "../lib/invite";
 
 const MasterTicket = () => {
   const { walletAddress, selectedShip } = useWalletStore();
@@ -48,6 +49,7 @@ const MasterTicket = () => {
 
   const handleDownloadTicket = () => {
     // Download passport
+    downloadWallet(newWallet.value.paper);
     setStep(step + 1);
   };
 

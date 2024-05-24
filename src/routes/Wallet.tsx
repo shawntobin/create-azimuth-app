@@ -11,9 +11,16 @@ const Wallet = () => {
 
   const handleSelectUrbitId = async (patp: string) => {
     const ship = await txn.getShip(patp);
-
     setSelectedShip(ship);
-    navigate(`/manage`, { state: { ship } });
+    const keysSet = ship.keyRevisionNumber > 0;
+
+    if (!keysSet) {
+      navigate(`/manage`); // change to 'onboarding' once implemented
+      return;
+    } else {
+      navigate(`/manage`);
+      return;
+    }
   };
 
   const renderWallet = () => {

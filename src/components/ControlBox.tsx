@@ -6,9 +6,9 @@ import { isAddress, formatAddress } from "../utils/helper";
 interface ControlBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   headerContent: React.ReactNode;
-  buttonTitle: string;
+  buttonTitle?: string;
   className?: string;
-  onSubmit: () => void;
+  onSubmit?: () => void;
   hideBackButton?: boolean;
 }
 
@@ -30,12 +30,14 @@ const ControlBox: React.FC<ControlBoxProps> = ({
           {headerContent}
         </div>
         {children}
-        <button
-          className="bg-primary-color mt-auto p-0 m-0 rounded-b-[18px] w-full h-[38px] text-black text-[20px] font-bold"
-          onClick={onSubmit}
-        >
-          {buttonTitle}
-        </button>
+        {buttonTitle && (
+          <button
+            className="bg-primary-color mt-auto p-0 m-0 rounded-b-[18px] w-full h-[38px] text-black text-[20px] font-bold"
+            onClick={onSubmit}
+          >
+            {buttonTitle}
+          </button>
+        )}
       </div>
     </div>
   );

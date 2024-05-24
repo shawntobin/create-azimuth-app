@@ -46,7 +46,7 @@ const Sponsor = () => {
         className="h-[217px]"
       >
         <div className="justify-start flex flex-col items-start pl-2 border-b border-primary-color">
-          <div className="text-[20px] font-bold ">{`Your sponsor is blah blah...`}</div>
+          <div className="text-[20px] font-bold ">{`Some copy about finding a new sponsor here.`}</div>
           <div className="text-[20px] mt-[20px] mb-1">New sponsor:</div>
         </div>
         <div className="flex h-full items-center">

@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import SeedLogin from "./routes/SeedLogin";
 import Wallet from "./routes/Wallet";
-import Operations from "./routes/Operations";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Manage from "./routes/Manage";
 import MainLogin from "./routes/MainLogin";
@@ -11,19 +10,26 @@ import ManagementAddress from "./routes/ManagementAddress";
 import Ownership from "./routes/Ownership";
 import MasterTicket from "./routes/MasterTicket";
 import NetworkKeys from "./routes/NetworkKeys";
-import SigilGenerator from "./components/SigilGenerator";
+import SigilGenerator from "./routes/SigilGenerator";
+import Onboarding from "./routes/Onboarding";
+import TransactionHistory from "./routes/TransactionHistory";
 
 const routeConfigs = [
   { path: "/", element: <MainLogin />, protected: false },
   { path: "/seed-login", element: <SeedLogin />, protected: false },
   { path: "/wallet", element: <Wallet />, protected: true },
+  { path: "/onboarding", element: <Onboarding />, protected: true },
   { path: "/manage", element: <Manage />, protected: true },
-  { path: "/operations", element: <Operations />, protected: true },
   { path: "/manage/advanced", element: <Advanced />, protected: true },
   { path: "/manage/sponsor", element: <Sponsor />, protected: true },
   { path: "/manage/ownership", element: <Ownership />, protected: true },
   { path: "manage/master-ticket", element: <MasterTicket />, protected: true },
   { path: "/manage/network-keys", element: <NetworkKeys />, protected: true },
+  {
+    path: "/manage/history",
+    element: <TransactionHistory />,
+    protected: true,
+  },
   {
     path: "manage/sigil-generator",
     element: <SigilGenerator />,
