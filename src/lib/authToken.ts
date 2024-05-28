@@ -3,7 +3,7 @@ import { ecdsaSign } from "secp256k1";
 import Web3 from "web3";
 import { hexToBytes } from "web3-utils";
 import { hashPersonalMessage } from "@ethereumjs/util";
-import BridgeWallet from "./types/BridgeWallet";
+import BridgeWallet from "../types/BridgeWallet";
 import { Hash } from "@urbit/roller-api";
 
 const MESSAGE = "Bridge Authentication Token";

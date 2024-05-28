@@ -39,11 +39,14 @@
     "folktale": "^2.3.2",
     "jszip": "^3.10.1",
     "localforage": "^1.10.0",
+    "lodash": "^4.17.21",
     "match-sorter": "^6.3.4",
     "more-entropy": "^0.0.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
+    "react-motion": "^0.5.2",
+    "react-paginate": "^8.2.0",
     "react-router-dom": "^6.22.3",
     "sort-by": "^1.2.0",
     "tiny-secp256k1": "^2.2.3",
@@ -52,6 +55,7 @@
     "vite-plugin-wasm": "^3.3.0",
     "web3": "^4.6.0",
     "web3-utils": "^4.2.2",
+    "web3-validator": "^2.0.6",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

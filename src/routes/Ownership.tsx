@@ -3,7 +3,7 @@ import Container from "../components/Container";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import ControlBox from "../components/ControlBox";
 import useWalletStore from "../store/useWalletStore";
-import { formatAddress } from "../utils/helper";
+import { formatAddress } from "../utils/address";
 import toast from "react-hot-toast";
 import * as txn from "../utils/transaction";
 import { copy } from "../utils/helper";
@@ -28,7 +28,7 @@ const Ownership = () => {
   };
 
   return (
-    <Container headerText={`Urbit Id / Advanced Settings / Ownership`}>
+    <Container headerText={`Urbit ID / Advanced Settings / Ownership`}>
       <ControlBox
         headerContent={
           <div className="text-left w-full flex justify-between">

@@ -4,10 +4,11 @@ import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import ControlBox from "../components/ControlBox";
 import useWalletStore from "../store/useWalletStore";
 import toast from "react-hot-toast";
-import { formatAddress } from "../utils/helper";
+import { formatAddress } from "../utils/address";
 import { copy } from "../utils/helper";
 import * as txn from "../utils/transaction";
 import GasDropdown from "../components/GasDropdown";
+import { ETH_ZERO_ADDR } from "../constants/constants";
 
 const ManagementAddress = () => {
   const { walletAddress, selectedShip } = useWalletStore();
@@ -27,22 +28,24 @@ const ManagementAddress = () => {
   };
 
   return (
-    <Container headerText={`Urbit Id / Advanced Settings / Management Address`}>
+    <Container headerText={`Urbit ID / Advanced Settings / Management Address`}>
       <ControlBox
         headerContent={
           <div className="text-left w-full flex justify-between">
             <div className="items-center justify-center flex text-[20px] ">
               <div className="font-bold">Management Address</div>
               <div className="font-[200] ml-3">
-                {formatAddress(managementProxy)}
+                {!ETH_ZERO_ADDR ? formatAddress(managementProxy) : "None"}
               </div>
             </div>
-            <button
-              onClick={() => copy(managementProxy)}
-              className="bg-transparent p-0 m-0"
-            >
-              <DocumentDuplicateIcon className="h-6 w-6" />
-            </button>
+            {!ETH_ZERO_ADDR && (
+              <button
+                onClick={() => copy(managementProxy)}
+                className="bg-transparent p-0 m-0"
+              >
+                <DocumentDuplicateIcon className="h-6 w-6" />
+              </button>
+            )}
           </div>
         }
         buttonTitle="Set Management Proxy"

@@ -17,6 +17,9 @@ const useLogin = () => {
       setWalletAddress(walletAddress);
       setUrbitIds(ids);
 
+      console.log(walletAddress, "walletAddress");
+      console.log(ids, "ids");
+
       if (ids.length === 1) {
         const ship = await txn.getShip(ob.patp(ids[0]));
         setSelectedShip(ship);

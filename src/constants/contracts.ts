@@ -1,35 +1,30 @@
 import { NETWORK } from "./config";
-
-const ENVIRONMENTS = {
-  MAINNET: "MAINNET",
-  SEPOLIA: "SEPOLIA",
-  LOCAL: "LOCAL",
-} as const;
+import { ETHEREUM_NETWORK } from "./constants";
 
 type ContractAddresses = {
   [key: string]: string;
 };
 
-type Environment = keyof typeof ENVIRONMENTS;
+type Environment = keyof typeof ETHEREUM_NETWORK;
 
 let currentEnvironment: Environment;
 
 switch (NETWORK) {
   case "mainnet":
-    currentEnvironment = ENVIRONMENTS.MAINNET;
+    currentEnvironment = ETHEREUM_NETWORK.MAINNET;
     break;
   case "sepolia":
-    currentEnvironment = ENVIRONMENTS.SEPOLIA;
+    currentEnvironment = ETHEREUM_NETWORK.SEPOLIA;
     break;
   case "local":
-    currentEnvironment = ENVIRONMENTS.LOCAL;
+    currentEnvironment = ETHEREUM_NETWORK.LOCAL;
     break;
   default:
-    currentEnvironment = ENVIRONMENTS.SEPOLIA;
+    currentEnvironment = ETHEREUM_NETWORK.SEPOLIA;
 }
 
 const CONTRACT_ADDRESSES: { [env: string]: ContractAddresses } = {
-  [ENVIRONMENTS.MAINNET]: {
+  [ETHEREUM_NETWORK.MAINNET]: {
     azimuth: "0x223c067f8cf28ae173ee5cafea60ca44c335fecb",
     ecliptic: "0x33EeCbf908478C10614626A9D304bfe18B78DD73",
     polls: "0x0",
@@ -38,7 +33,7 @@ const CONTRACT_ADDRESSES: { [env: string]: ContractAddresses } = {
     conditionalStarRelease: "0x8c241098c3d3498fe1261421633fd57986d74aea",
     urbit_L2: "0x1111111111111111111111111111111111111111",
   },
-  [ENVIRONMENTS.SEPOLIA]: {
+  [ETHEREUM_NETWORK.SEPOLIA]: {
     azimuth: "0x6EB93da65d19a3e4501210C1B289A0734487ed84",
     ecliptic: "0xf81109BE13862261234c24659aF412Fe70a683e4",
     polls: "0x78eC6D601A88489bDe5AbDbFA748aBe9487703ce",
@@ -47,7 +42,7 @@ const CONTRACT_ADDRESSES: { [env: string]: ContractAddresses } = {
     conditionalStarRelease: "0x0",
     urbit_L2: "0x0",
   },
-  [ENVIRONMENTS.LOCAL]: {
+  [ETHEREUM_NETWORK.LOCAL]: {
     azimuth: "0x0",
     ecliptic: "0x0",
     polls: "0x0",

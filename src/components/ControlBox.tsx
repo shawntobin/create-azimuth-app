@@ -1,7 +1,5 @@
 import React from "react";
 import BackButton from "./BackButton";
-import { copy } from "../utils/helper";
-import { isAddress, formatAddress } from "../utils/helper";
 
 interface ControlBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;

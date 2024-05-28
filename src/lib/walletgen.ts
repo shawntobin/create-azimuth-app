@@ -14,8 +14,8 @@ import {
   STAR_ENTROPY_BITS,
   PLANET_ENTROPY_BITS,
   ZOD,
-} from "./constants";
-import { stripHexPrefix } from "../utils/helper";
+} from "../constants/constants";
+import { stripHexPrefix } from "../utils/address";
 
 const SEED_LENGTH_BYTES = SEED_ENTROPY_BITS / 8;
 

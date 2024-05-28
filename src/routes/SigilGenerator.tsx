@@ -5,7 +5,7 @@ import useWalletStore from "../store/useWalletStore";
 import toast from "react-hot-toast";
 import Sigil from "../components/Sigil";
 import Wheel from "@uiw/react-color-wheel";
-import { hsvaToHex } from "@uiw/color-convert";
+import { hsvaToHex, hexToHsva } from "@uiw/color-convert";
 import ShadeSlider from "@uiw/react-color-shade-slider";
 import useSigilDownloader from "../hooks/useSigilDownloader";
 
@@ -14,13 +14,14 @@ const SigilGenerator = () => {
   const { patp } = selectedShip;
   const [fgColor, setFgColor] = useState({ h: 114, s: 43, v: 90, a: 1 });
   const [bgColor, setBgColor] = useState({ h: 214, s: 43, v: 90, a: 1 });
+  const [size, setSize] = useState(256);
   const canvasRef = useRef(null);
   const { downloadSigil } = useSigilDownloader(canvasRef);
 
   const colors = [hsvaToHex(fgColor), hsvaToHex(bgColor)];
 
   const handleDownload = async () => {
-    const error = await downloadSigil(selectedShip.point, colors, 256);
+    const error = await downloadSigil(selectedShip.point, colors, size);
 
     if (error) {
       toast.error("Error downloading sigil");
@@ -30,7 +31,7 @@ const SigilGenerator = () => {
   };
 
   return (
-    <Container headerText={`Urbit Id / Advanced Settings / Sigil Generator`}>
+    <Container headerText={`Urbit ID / Sigil Generator`}>
       <ControlBox
         onSubmit={handleDownload}
         headerContent={
@@ -49,46 +50,96 @@ const SigilGenerator = () => {
             <Sigil
               id={patp}
               size={125}
-              colors={[hsvaToHex(fgColor), hsvaToHex(bgColor)]}
+              colors={[hsvaToHex(bgColor), hsvaToHex(fgColor)]}
             />
-            Size
-          </div>
+            <div className="items-left flex flex-col text-left ml-5 text-[20px] font-[500]">
+              <div>Size (px)</div>
+              <input
+                placeholder="1000 (max)"
+                className="h-[33px] bg-transparent border p-1 w-[98px]"
+                onChange={(e) => setSize(parseInt(e.target.value))}
+                value={size}
+              />
 
+              <div className="flex flex-row">
+                <div className="flex flex-col">
+                  <div>Hex Code</div>
+                  <input
+                    placeholder="#0F0F0F"
+                    className="h-[33px] bg-transparent border p-1 w-[98px]"
+                    onChange={(e) => {
+                      const newColor = hexToHsva(e.target.value);
+                      setFgColor({ ...fgColor, ...newColor });
+                    }}
+                    value={hsvaToHex(fgColor)}
+                  />
+                </div>
+                <div className="flex flex-col ml-5">
+                  <div>Hex Code</div>
+                  <input
+                    placeholder="#0F0F0F"
+                    className="w-20 h-8 bg-transparent border p-1 w-[98px] h-[33px]"
+                    onChange={(e) => {
+                      const newColor = hexToHsva(e.target.value);
+                      setBgColor({ ...bgColor, ...newColor });
+                    }}
+                    value={hsvaToHex(bgColor)}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
           <canvas ref={canvasRef} style={{ display: "none" }} />
 
-          <div className="flex justify-between w-full pr-4 mr-0 pt-8">
-            <Wheel
-              id={"bg-color"}
-              color={bgColor}
-              onChange={(color) => setBgColor({ ...bgColor, ...color.hsva })}
-              width={154}
-              height={154}
-            />
-            <ShadeSlider
-              id={"bg-color"}
-              direction="vertical"
-              hsva={bgColor}
-              style={{ width: 15, height: 100 }}
-              onChange={(newShade) => {
-                setBgColor({ ...bgColor, ...newShade });
-              }}
-            />
-            <Wheel
-              id={"fg-color"}
-              color={fgColor}
-              onChange={(color) => setFgColor({ ...fgColor, ...color.hsva })}
-              width={154}
-              height={154}
-            />
-            <ShadeSlider
-              id={"fg-color"}
-              direction="vertical"
-              hsva={fgColor}
-              style={{ width: 15, height: 100 }}
-              onChange={(newShade) => {
-                setFgColor({ ...fgColor, ...newShade });
-              }}
-            />
+          <div className="flex justify-between w-full pr-4 mr-0 pt-4">
+            <div className="flex-col text-left">
+              Foreground Color
+              <div className="flex-row flex mt-3">
+                <Wheel
+                  id={"fg-color"}
+                  color={fgColor}
+                  onChange={(color) =>
+                    setFgColor({ ...fgColor, ...color.hsva })
+                  }
+                  width={154}
+                  height={154}
+                />
+                <ShadeSlider
+                  id={"fg-color"}
+                  direction="vertical"
+                  hsva={fgColor}
+                  className="ml-7"
+                  style={{ width: 15, height: 100 }}
+                  onChange={(newShade) => {
+                    setFgColor({ ...fgColor, ...newShade });
+                  }}
+                />
+              </div>
+            </div>
+            <div className="flex-col text-left">
+              Background Color
+              <div className="flex-row flex mt-3">
+                <Wheel
+                  id={"bg-color"}
+                  color={bgColor}
+                  onChange={(color) =>
+                    setBgColor({ ...bgColor, ...color.hsva })
+                  }
+                  width={154}
+                  height={154}
+                />
+                <ShadeSlider
+                  id={"bg-color"}
+                  direction="vertical"
+                  hsva={bgColor}
+                  className="ml-7"
+                  style={{ width: 15, height: 100 }}
+                  onChange={(newShade) => {
+                    setBgColor({ ...bgColor, ...newShade });
+                  }}
+                />
+              </div>
+            </div>
           </div>
         </div>
         <div className="flex items-center"></div>

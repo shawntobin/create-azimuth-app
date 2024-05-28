@@ -76,8 +76,8 @@ const MainLogin = () => {
             value={urbitIdInput}
           />
 
-          <button className="absolute inset-y-0 right-0 flex items-center justify-center bg-transparent border-primary-color rounded-full p-2 h-[36px] w-[36px]">
-            <img src="src/assets/sigil-button-white.png" alt="urbit sigil" />
+          <button className="absolute inset-y-0 right-0 flex items-center justify-center bg-primary-color border-primary-color rounded-full p-2 h-[36px] w-[36px]">
+            <img src="src/assets/sigil-button.png" alt="urbit sigil" />
           </button>
         </div>
 
@@ -91,7 +91,7 @@ const MainLogin = () => {
           />
 
           <button
-            className="text-primary-color border-primary-color absolute inset-y-0 right-0 flex items-center justify-center bg-transparent rounded-full h-[36px] w-[36px] text-[40px] p-2 pt-0 font-[300] focus:outline-none focus:ring-2 focus:ring-primary-color"
+            className="text-base-color border-primary-color absolute inset-y-0 right-0 flex items-center justify-center bg-primary-color rounded-full h-[36px] w-[36px] text-[40px] p-2 pt-0 font-[300] focus:outline-none focus:ring-2 focus:ring-primary-color"
             onClick={() => handleTicketLogin()}
           >
             &gt;
@@ -101,7 +101,7 @@ const MainLogin = () => {
         <div className="mx-auto w-[433px] mt-2">
           <div className="flex flex-row justify-between items-center">
             <button
-              className="flex items-center justify-center rounded-full border border-primary-color text-primary-color w-[125px] text-[20px] h-[36px] bg-transparent"
+              className="flex items-center justify-center rounded-full border border-primary-color text-base-color w-[125px] text-[20px] h-[36px] bg-primary-color font-bold"
               onClick={() => handleMetamaskLogin()}
             >
               Metamask
@@ -110,7 +110,7 @@ const MainLogin = () => {
             <UrbitSymbols />
 
             <button
-              className="flex items-center justify-center rounded-full border border-primary-color text-primary-color w-[125px] text-[20px] h-[36px] bg-transparent whitespace-nowrap"
+              className="flex items-center justify-center rounded-full border border-primary-color font-bold text-base-color w-[125px] text-[20px] h-[36px] bg-primary-color whitespace-nowrap"
               onClick={() => navigate("/seed-login")}
             >
               Seed phrase

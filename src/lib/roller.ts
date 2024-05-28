@@ -1,6 +1,10 @@
 import RollerRPCAPI, { From } from "@urbit/roller-api";
 import { signTransactionHash } from "./authToken";
 
+export const SECOND = 1000;
+export const MINUTE = SECOND * 60;
+export const HOUR = MINUTE * 60;
+
 export const generateHashAndSign = async (
   api: RollerRPCAPI,
   wallet: any,

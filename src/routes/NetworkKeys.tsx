@@ -13,7 +13,7 @@ const NetworkKeys = () => {
   const [customSeed, setCustomSeed] = useState(false);
 
   return (
-    <Container headerText={`Urbit Id / Advanced Settings / Network Keys`}>
+    <Container headerText={`Urbit ID / Advanced Settings / Network Keys`}>
       <ControlBox
         headerContent={
           <div className="text-left w-full flex justify-between">

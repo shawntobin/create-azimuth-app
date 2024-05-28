@@ -6,6 +6,7 @@ import useWalletStore from "../store/useWalletStore";
 import * as ob from "urbit-ob";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import { copy } from "../utils/helper";
+import { isZeroAddress } from "../utils/address";
 
 const Advanced = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Advanced = () => {
   const sponsorPatp = hasSponsor ? ob.patp(sponsor) : "None";
 
   return (
-    <Container headerText={`Urbit Id / Advanced Settings`}>
+    <Container headerText={`Urbit ID / Advanced Settings`}>
       <div className="w-[968px]">
         <BackButton />
         <div className="flex gap-x-8 h-[141px]">
@@ -41,7 +42,9 @@ const Advanced = () => {
               <SettingsItem
                 handleClick={() => navigate(`/manage/management-key`)}
                 title="Management Address"
-                text={managementProxy}
+                text={
+                  !isZeroAddress(managementProxy) ? managementProxy : "None"
+                }
               />
               <SettingsItem
                 handleClick={() => navigate(`/manage/master-ticket`)}

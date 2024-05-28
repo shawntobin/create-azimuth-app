@@ -13,6 +13,9 @@ function classNames(...classes) {
 }
 const GasDropdown = (props) => {
   const handleClick = async (point) => {};
+
+  const items = ["39 gwei (1 min)", "39 gwei (1 min)", "39 gwei (1 min)"];
+
   // px-3 py-2
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -34,7 +37,7 @@ const GasDropdown = (props) => {
       >
         <MenuItems className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1 text-center">
-            {/* {items.map((item) => {
+            {items.map((item) => {
               return (
                 <MenuItem key={item}>
                   {({ active }) => (
@@ -46,12 +49,12 @@ const GasDropdown = (props) => {
                         "block px-4 py-2"
                       )}
                     >
-                      {(item)}
+                      {item}
                     </a>
                   )}
                 </MenuItem>
               );
-            })} */}
+            })}
           </div>
         </MenuItems>
       </Transition>

@@ -186,7 +186,7 @@ const MasterTicket = () => {
   };
 
   return (
-    <Container headerText={`Urbit Id / Advanced Settings / Master Ticket`}>
+    <Container headerText={`Urbit ID / Advanced Settings / Master Ticket`}>
       {renderTicketFlow()}
     </Container>
   );

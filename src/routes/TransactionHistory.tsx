@@ -1,19 +1,12 @@
-import { useState } from "react";
 import Container from "../components/Container";
-import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import ControlBox from "../components/ControlBox";
 import useWalletStore from "../store/useWalletStore";
-import toast from "react-hot-toast";
-import { formatAddress } from "../utils/helper";
-import { copy } from "../utils/helper";
-import * as txn from "../utils/transaction";
-import GasDropdown from "../components/GasDropdown";
 
 const TransactionHistory = () => {
   const { walletAddress, selectedShip } = useWalletStore();
 
   return (
-    <Container headerText={`Urbit Id / Transaction History`}>
+    <Container headerText={`Urbit ID / Transaction History`}>
       <ControlBox
         headerContent={
           <div className="text-left w-full flex justify-between">

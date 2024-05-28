@@ -1,7 +1,8 @@
 import React, { ButtonHTMLAttributes } from "react";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import { copy } from "../utils/helper";
-import { isAddress, formatAddress } from "../utils/helper";
+import { formatAddress } from "../utils/address";
+import { isAddress } from "web3-validator";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   handleClick: () => void;

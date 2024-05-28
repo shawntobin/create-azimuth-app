@@ -31,7 +31,7 @@ const Sponsor = () => {
   };
 
   return (
-    <Container headerText={`Urbit Id / Advanced Settings / Change Sponsor`}>
+    <Container headerText={`Urbit ID / Advanced Settings / Change Sponsor`}>
       <ControlBox
         headerContent={
           <div className="text-left w-full flex justify-between">
