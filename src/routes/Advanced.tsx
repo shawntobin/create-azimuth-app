@@ -30,7 +30,7 @@ const Advanced = () => {
     <Container headerText={`Urbit ID / Advanced Settings`}>
       <div className="w-[968px]">
         <BackButton />
-        <div className="flex gap-x-8 h-[141px]">
+        <div className="flex gap-x-8 h-[96px]">
           <div className="w-[484px]">
             <div className="text-left font-bold pb-1">ID Settings</div>
             <div className="flex flex-col gap-y-1">
@@ -51,11 +51,11 @@ const Advanced = () => {
                 title="Master Ticket"
                 text="Transfer to Master Ticket"
               />
-              <SettingsItem
+              {/* <SettingsItem
                 handleClick={() => navigate(`/manage/sigil-generator`)}
                 title="Sigil Generator"
                 text="Modify or download your sigil"
-              />
+              /> */}
             </div>
           </div>
           <div className="w-[484px]">

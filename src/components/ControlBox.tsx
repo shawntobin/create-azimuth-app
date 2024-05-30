@@ -24,7 +24,7 @@ const ControlBox: React.FC<ControlBoxProps> = ({
       <div
         className={`flex flex-col w-[500px] rounded-[18px] overflow-hidden border border-primary-color ${className}`}
       >
-        <div className="mb-2 text-left w-full flex justify-between px-3 py-1 border-b border-primary-color">
+        <div className="mb-0 text-left w-full flex justify-between px-3 py-1 border-b border-primary-color">
           {headerContent}
         </div>
         {children}

@@ -45,7 +45,7 @@ const SigilGenerator = () => {
         buttonTitle="Download Sigil"
         className="h-[461px] w-[484px]"
       >
-        <div className="text-[20px] justify-start flex flex-col items-start p-5 border-b border-primary-color h-full">
+        <div className="text-[20px] justify-start flex flex-col items-start p-5 border-b border-primary-color h-full mt-2">
           <div className="flex">
             <Sigil
               id={patp}
@@ -56,7 +56,7 @@ const SigilGenerator = () => {
               <div>Size (px)</div>
               <input
                 placeholder="1000 (max)"
-                className="h-[33px] bg-transparent border p-1 w-[98px]"
+                className="h-[33px] bg-transparent border p-1 w-[98px] text-dark-gray"
                 onChange={(e) => setSize(parseInt(e.target.value))}
                 value={size}
               />
@@ -66,7 +66,7 @@ const SigilGenerator = () => {
                   <div>Hex Code</div>
                   <input
                     placeholder="#0F0F0F"
-                    className="h-[33px] bg-transparent border p-1 w-[98px]"
+                    className="h-[33px] bg-transparent border p-1 w-[98px] text-dark-gray"
                     onChange={(e) => {
                       const newColor = hexToHsva(e.target.value);
                       setFgColor({ ...fgColor, ...newColor });
@@ -78,7 +78,7 @@ const SigilGenerator = () => {
                   <div>Hex Code</div>
                   <input
                     placeholder="#0F0F0F"
-                    className="w-20 h-8 bg-transparent border p-1 w-[98px] h-[33px]"
+                    className="w-20 h-8 bg-transparent border p-1 w-[98px] h-[33px] text-dark-gray"
                     onChange={(e) => {
                       const newColor = hexToHsva(e.target.value);
                       setBgColor({ ...bgColor, ...newColor });

@@ -52,7 +52,7 @@ const ManagementAddress = () => {
         onSubmit={handleTransaction}
         className="h-[319px]"
       >
-        <div className="text-[20px] justify-start flex flex-col items-start pl-2 border-b border-primary-color h-full">
+        <div className="text-[20px] justify-start flex flex-col items-start pl-2 border-b border-primary-color h-full mt-2">
           <div className="font-bold text-left pb-4 ">{`Your management key can configure networking settings (network keys and sponsorship).`}</div>
 
           <div className="flex justify-between w-full pr-4 mr-0">

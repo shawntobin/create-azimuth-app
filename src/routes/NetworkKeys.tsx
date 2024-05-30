@@ -26,7 +26,7 @@ const NetworkKeys = () => {
         onSubmit={() => {}}
         className="h-[292px]"
       >
-        <div className="justify-start flex flex-col items-start text-left p-2">
+        <div className="justify-start flex flex-col items-start text-left p-2 mt-2">
           <div className="pb-4">
             <Checkbox
               label="Factory Reset"

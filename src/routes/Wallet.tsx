@@ -61,7 +61,7 @@ const Wallet = () => {
         nextLinkClassName="text-white"
         breakClassName=""
         breakLinkClassName=""
-        containerClassName="flex justify-between items-center w-full font-bold text-lg mt-6 px-6"
+        containerClassName="flex justify-between h-full w-full font-bold text-lg mt-6 px-6"
         activeClassName=""
         renderOnZeroPageCount={null}
       />
@@ -71,7 +71,7 @@ const Wallet = () => {
   const renderWallet = () => {
     return (
       <div>
-        <div className="flex flex-row flex-wrap items-center justify-start w-[500px]">
+        <div className="flex flex-row flex-wrap items-start justify-start w-[500px] h-[500px] mb-[50px] mt-[75px]">
           {currentItems.map((id) => (
             <UrbitIdSmall
               urbitId={id}

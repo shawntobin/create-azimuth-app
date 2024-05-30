@@ -11,12 +11,17 @@ const Manage = () => {
   return (
     <Container headerText={`Urbit ID  /`} dropdown>
       <UrbitIdCard ship={selectedShip} className={"mb-10 mt-20"} />
-      <Button handleClick={() => {}} text="Host your Planet" />
-      <Button handleClick={() => {}} text="Download your Passport" />
-      <Button
-        handleClick={() => navigate(`/manage/advanced`)}
-        text="Advanced Settings"
-      />
+      <div className="flex-row flex">
+        <Button handleClick={() => {}} text="Set up Planet" />
+        <Button
+          handleClick={() => navigate("/sigil-generator")}
+          text="Sigil Generator"
+        />
+        <Button
+          handleClick={() => navigate(`/manage/advanced`)}
+          text="Control Panel"
+        />
+      </div>
     </Container>
   );
 };

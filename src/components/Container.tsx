@@ -4,6 +4,7 @@ import UrbitSymbols from "./UrbitSymbols";
 import BackButton from "./BackButton";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import IdDropdown from "./IdDropdown";
+import Dropdown from "./Dropdown";
 import * as ob from "urbit-ob";
 import { useNavigate } from "react-router-dom";
 
@@ -30,9 +31,9 @@ const Container: React.FC<ContainerProps> = ({
         <div className="hover:bg-primary-color hover:text-base-color p-2 rounded-full">
           <QuestionMarkCircleIcon className="h-6 w-6" />
         </div>
-        <div className="flex-grow text-center justify-center items-center flex">
+        <div className="text-center justify-center items-center flex text-[20px]">
           {headerText}
-          {dropdown && <IdDropdown />}
+          {dropdown && <Dropdown />}
         </div>
 
         <div

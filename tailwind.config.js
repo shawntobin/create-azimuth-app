@@ -16,6 +16,10 @@ export default {
         "primary-color": "#FFFFFF", //"#F5F5F5",
         "secondary-color": "#878787",
         "base-color": "#000000", //"#141A14",
+
+        "bright-green": "#AAE68C",
+        "bright-yellow": "#E7D42E",
+        "bright-red": "#E72E2E",
       },
     },
   },

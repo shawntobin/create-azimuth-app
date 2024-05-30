@@ -26,12 +26,12 @@ const routeConfigs = [
   { path: "manage/master-ticket", element: <MasterTicket />, protected: true },
   { path: "/manage/network-keys", element: <NetworkKeys />, protected: true },
   {
-    path: "/manage/history",
+    path: "/history",
     element: <TransactionHistory />,
     protected: true,
   },
   {
-    path: "manage/sigil-generator",
+    path: "/sigil-generator",
     element: <SigilGenerator />,
     protected: true,
   },

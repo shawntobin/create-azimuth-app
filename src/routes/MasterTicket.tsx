@@ -174,9 +174,8 @@ const MasterTicket = () => {
           }
           buttonTitle="Login With New Master Ticket"
           onSubmit={() => navigate(`/`)}
-          // className="h-[250px]"
         >
-          <div className="justify-start flex flex-col items-start pl-2 border-b border-primary-color h-full">
+          <div className="justify-start flex flex-col items-start pl-2 border-b border-primary-color h-full mt-2">
             <div className="text-[20px] font-bold text-left ">{`Download the new passport, and keep it somewhere safe!`}</div>
             <div className="text-[20px] mt-[20px] mb-1 text-left"></div>
           </div>
