@@ -37,7 +37,7 @@ const Ownership = () => {
               <div className="font-[200] ml-3">{formatAddress(owner)}</div>
             </div>
             <button
-              onClick={(e) => copy(e.currentTarget.value)}
+              onClick={() => copy(owner)}
               className="bg-transparent p-0 m-0"
             >
               <DocumentDuplicateIcon className="h-6 w-6" />

@@ -37,7 +37,7 @@ const Container: React.FC<ContainerProps> = ({
         </div>
 
         <div
-          className="hover:bg-primary-color hover:text-base-color p-2 rounded-full"
+          className="hover:bg-primary-color hover:text-base-color p-2 rounded-full cursor-pointer"
           onClick={() => navigate("/history")}
         >
           <BellIcon className="h-6 w-6" />

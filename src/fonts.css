@@ -2,3 +2,23 @@
   font-family: "UrbitSansVF";
   src: url("./fonts/UrbitSansVF-Regular.ttf") format("truetype");
 }
+
+@font-face {
+  font-family: "UrbitSansMono";
+  src: url("./fonts/UrbitSansMonoTT-Regular.ttf") format("truetype"),
+    url("./fonts/UrbitSansMonoTT-Medium.ttf") format("truetype"),
+    url("./fonts/UrbitSansMonoTT-SemiBold.ttf") format("truetype"),
+    url("./fonts/UrbitSansMonoTT-Thin.ttf") format("truetype"),
+    url("./fonts/UrbitSansMonoTT-UltraThin.ttf") format("truetype"),
+    url("./fonts/UrbitSansMonoTT-Bold.ttf") format("truetype");
+}
+
+.font-urbit-mono-thin {
+  font-weight: 300;
+  font-family: "UrbitSansMono", sans-serif;
+}
+
+.font-urbit-mono-semibold {
+  font-weight: 600;
+  font-family: "UrbitSansMono", sans-serif;
+}

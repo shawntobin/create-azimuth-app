@@ -7,6 +7,7 @@ import useLogin from "../hooks/useLogin";
 import { urbitWalletFromTicket } from "../lib/wallet";
 import * as ob from "urbit-ob";
 import UrbitSymbols from "../components/UrbitSymbols";
+import UrbitIcon from "../components/UrbitIcon";
 
 const MainLogin = () => {
   const [urbitIdInput, setUrbitIdInput] = useState("");

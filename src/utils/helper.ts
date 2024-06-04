@@ -10,3 +10,7 @@ export const copy = (text: string) => {
 export const isGalaxy = (patp: string) => {
   return ob.clan(patp) === "galaxy";
 };
+
+export const formatNumber = (num: number) => {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " . ");
+};

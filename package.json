@@ -49,6 +49,7 @@
     "react-motion": "^0.5.2",
     "react-paginate": "^8.2.0",
     "react-router-dom": "^6.22.3",
+    "react-tooltip": "^5.26.4",
     "sort-by": "^1.2.0",
     "tiny-secp256k1": "^2.2.3",
     "urbit-key-generation": "^0.20.1",
@@ -62,6 +63,7 @@
   "devDependencies": {
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@rollup/plugin-node-resolve": "^15.2.3",
+    "@svgr/rollup": "^8.1.0",
     "@types/events": "^3.0.3",
     "@types/node": "^20.12.5",
     "@types/react": "^18.2.64",

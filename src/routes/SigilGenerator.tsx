@@ -57,7 +57,7 @@ const SigilGenerator = () => {
               <input
                 placeholder="1000 (max)"
                 className="h-[33px] bg-transparent border p-1 w-[98px] text-dark-gray"
-                onChange={(e) => setSize(parseInt(e.target.value))}
+                onChange={(e) => setSize(parseInt(e.target.value))} // need to prevent NaN
                 value={size}
               />
 
