@@ -8,6 +8,7 @@ import { urbitWalletFromTicket } from "../lib/wallet";
 import * as ob from "urbit-ob";
 import UrbitSymbols from "../components/UrbitSymbols";
 import UrbitIcon from "../components/UrbitIcon";
+import Sigil from "../components/Sigil";
 
 const MainLogin = () => {
   const [urbitIdInput, setUrbitIdInput] = useState("");
@@ -23,23 +24,34 @@ const MainLogin = () => {
   // clear any existing state
 
   const handleMetamaskLogin = async () => {
-    const providerWithInfo: EIP6963ProviderDetail | undefined = providers.find(
-      (provider) => provider.info.name === "MetaMask"
-    );
+    const loadingToastId = toast.loading("Connecting to Metamask");
 
-    if (providerWithInfo) {
-      const accounts = await providerWithInfo.provider.request({
-        method: "eth_requestAccounts",
-      });
+    try {
+      const providerWithInfo = providers.find(
+        (provider) => provider.info.name === "MetaMask"
+      );
 
-      if (accounts?.[0]) {
-        toast.success("Connected to Metamask");
-        await loginCommon(accounts[0]);
+      if (providerWithInfo) {
+        const accounts = await providerWithInfo.provider.request({
+          method: "eth_requestAccounts",
+        });
+
+        if (accounts?.[0]) {
+          toast.dismiss(loadingToastId);
+          toast.success("Connected to Metamask");
+          await loginCommon(accounts[0]);
+        } else {
+          toast.dismiss(loadingToastId);
+          toast.error("No accounts found");
+        }
       } else {
-        toast.error("No accounts found");
+        toast.dismiss(loadingToastId);
+        toast.error("Provider not found");
       }
-    } else {
-      toast.error("Provider not found");
+    } catch (error) {
+      toast.dismiss(loadingToastId);
+      toast.error("An error occurred");
+      console.error(error);
     }
   };
 
@@ -71,20 +83,26 @@ const MainLogin = () => {
         <div className="relative flex items-center mb-3">
           <input
             type="text"
+            spellCheck="false"
             placeholder="~sampel-palnet"
             className="pl-4 pr-20 py-2 rounded-full border border-primary-color text-light-gray w-[433px] text-[20px] h-[36px] bg-transparent placeholder-secondary-color"
             onChange={(e) => setUrbitIdInput(e.currentTarget.value)}
             value={urbitIdInput}
           />
+          {ob.isValidPatp(urbitIdInput) && (
+            <div className="absolute right-0 flex items-center justify-center bg-primary-color border-primary-color rounded-full p-0 h-[36px] w-[36px]">
+              <Sigil id={urbitIdInput} size={25} colors={["white", "black"]} />
 
-          <button className="absolute inset-y-0 right-0 flex items-center justify-center bg-primary-color border-primary-color rounded-full p-2 h-[36px] w-[36px]">
-            <img src="src/assets/sigil-button.png" alt="urbit sigil" />
-          </button>
+              {/* <img src="src/assets/sigil-button.png" alt="urbit sigil" /> */}
+              {/* {urbitIdInput && <Sigil id={urbitIdInput} colors={["black", "white"]} size={80} />} */}
+            </div>
+          )}
         </div>
 
         <div className="relative flex items-center mb-3">
           <input
             type="text"
+            spellCheck="false"
             placeholder="~sigtyc-balnyr-nalrus-wolsul"
             className="pl-4 pr-20 py-2 rounded-full border border-primary-color text-light-gray w-[433px] text-[20px] h-[36px] bg-transparent placeholder-secondary-color"
             onChange={(e) => setMasterTicket(e.currentTarget.value)}

@@ -2,7 +2,7 @@ import React from "react";
 import { BellIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import UrbitSymbols from "./UrbitSymbols";
 import BackButton from "./BackButton";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import { ChevronDownIcon, PowerIcon } from "@heroicons/react/24/outline";
 import IdDropdown from "./IdDropdown";
 import Dropdown from "./Dropdown";
 import * as ob from "urbit-ob";
@@ -32,15 +32,26 @@ const Container: React.FC<ContainerProps> = ({
           <QuestionMarkCircleIcon className="h-6 w-6" />
         </div>
         <div className="text-center justify-center items-center flex text-[20px]">
+          <span className="text-light-gray-2 pr-0">
+            {"Urbit ID"}
+            <span className="text-white mr-1">{" /"}</span>
+          </span>
           {headerText}
           {dropdown && <Dropdown />}
         </div>
-
-        <div
-          className="hover:bg-primary-color hover:text-base-color p-2 rounded-full cursor-pointer"
-          onClick={() => navigate("/history")}
-        >
-          <BellIcon className="h-6 w-6" />
+        <div className="flex">
+          <div
+            className="border border-primary-color hover:bg-primary-color hover:text-base-color px-2 py-0 rounded-full cursor-pointer"
+            onClick={() => navigate("/history")}
+          >
+            History
+          </div>
+          <button
+            onClick={() => {}}
+            className="bg-transparent p-0 ml-3 border border-white rounded-full w-[26px] h-[26px] flex items-center justify-center hover:bg-primary-color hover:text-base-color"
+          >
+            <PowerIcon className="h-4 w-4" />
+          </button>
         </div>
       </div>
       <div className={`flex flex-col h-full ${className}`} {...rest}>

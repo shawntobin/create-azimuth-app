@@ -8,7 +8,7 @@ const Onboarding = () => {
   const { selectedShip } = useWalletStore();
 
   return (
-    <Container headerText={`Urbit ID  /`} dropdown>
+    <Container headerText={``} dropdown>
       <Button handleClick={() => {}} text="Get Hosted" />
       <Button handleClick={() => {}} text="Run it Yourself" />
     </Container>

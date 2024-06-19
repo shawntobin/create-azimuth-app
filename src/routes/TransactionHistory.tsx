@@ -14,7 +14,9 @@ const TransactionHistory = () => {
 
   useEffect(() => {
     const asyncFunction = async () => {
+      setLoading(true);
       const txns = await getEvents(selectedShip.patp);
+      // const txns = await getEvents("~dosdel-falrud");
 
       const formattedTxns = txns.map((txn) => {
         return {
@@ -30,13 +32,15 @@ const TransactionHistory = () => {
       });
 
       setEventData(sortedTxns);
+
+      setLoading(false);
     };
 
     asyncFunction();
   }, [selectedShip]);
 
   return (
-    <Container headerText={`Urbit ID / Transaction History`}>
+    <Container headerText={`Transaction History`}>
       <ControlBox
         headerContent={
           <div className="text-left w-full flex justify-between text-[20px]">
@@ -49,7 +53,11 @@ const TransactionHistory = () => {
         className="h-[519px]"
       >
         <div className="text-[20px] justify-start flex flex-col items-start border-b border-primary-color h-full overflow-y-auto custom-scrollbar">
-          {/*  */}
+          {eventData.length === 0 && !loading && (
+            <div className="text-[20px] font-bold w-full mt-6">
+              No transactions found!
+            </div>
+          )}
           {eventData.map((event, index) => (
             <HistoryItem key={index} transaction={event} />
           ))}

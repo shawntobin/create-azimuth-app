@@ -17,18 +17,32 @@ const Ownership = () => {
   // could also check if input address is diff from current owner
 
   const handleTransfer = async () => {
-    const res = await txn.transferPoint(
-      walletAddress,
-      patp,
-      walletAddress,
-      newOwnerAddress
-    );
+    try {
+      toast.loading("Transfer in progress...");
+      const res = await txn.transferPoint(
+        walletAddress,
+        patp,
+        walletAddress,
+        newOwnerAddress
+      );
 
-    res && toast.success("Transfer successful!");
+      console.log("Transaction result:", res);
+
+      if (res) {
+        toast.dismiss();
+        toast.success("Transfer successful!");
+      } else {
+        toast.dismiss();
+        toast.error("Transfer NOT successful!");
+      }
+    } catch (error) {
+      toast.dismiss();
+      toast.error(`Transfer failed: ${error.message}`);
+    }
   };
 
   return (
-    <Container headerText={`Urbit ID / Advanced Settings / Ownership`}>
+    <Container headerText={`Advanced Settings / Ownership`}>
       <ControlBox
         headerContent={
           <div className="text-left w-full flex justify-between">
@@ -55,6 +69,7 @@ const Ownership = () => {
         <div className="flex h-full items-center">
           <input
             type="text"
+            spellCheck="false"
             placeholder="0x..."
             className="pl-4 pr-4 py-0 w-full h-full font-[500] text-[20px] bg-transparent placeholder-secondary-color"
             onChange={(e) => setNewOwnerAddress(e.currentTarget.value)}

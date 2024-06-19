@@ -7,6 +7,8 @@ const layer = NETWORK === ETHEREUM_NETWORK.SEPOLIA ? L1 : L2;
 // READ transactions
 
 export const getPoints = async (walletAddress: string) => {
+  console.log("network", NETWORK);
+
   const points = await layer.getPoints(walletAddress);
 
   // for now, convert from bigInt to number

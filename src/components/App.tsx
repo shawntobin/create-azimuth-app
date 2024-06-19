@@ -16,7 +16,7 @@ function App() {
           containerClassName=""
           containerStyle={{}}
           toastOptions={{
-            className: "",
+            className: "font-[700] text-[20px]",
             duration: 5000,
             style: {
               background: "#363636",
@@ -26,8 +26,13 @@ function App() {
 
             success: {
               iconTheme: {
-                primary: "green",
+                primary: "#AAE68C",
                 secondary: "black",
+              },
+              style: {
+                background: "#AAE68C",
+                color: "black",
+                borderRadius: "99px",
               },
             },
             error: {

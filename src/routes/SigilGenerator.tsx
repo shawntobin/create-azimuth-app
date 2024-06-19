@@ -8,13 +8,16 @@ import Wheel from "@uiw/react-color-wheel";
 import { hsvaToHex, hexToHsva } from "@uiw/color-convert";
 import ShadeSlider from "@uiw/react-color-shade-slider";
 import useSigilDownloader from "../hooks/useSigilDownloader";
+import { isValidHex } from "../utils/helper";
 
 const SigilGenerator = () => {
   const { selectedShip } = useWalletStore();
   const { patp } = selectedShip;
-  const [fgColor, setFgColor] = useState({ h: 114, s: 43, v: 90, a: 1 });
-  const [bgColor, setBgColor] = useState({ h: 214, s: 43, v: 90, a: 1 });
+  const [fgColor, setFgColor] = useState({ h: 0, s: 0, v: 100, a: 1 });
+  const [bgColor, setBgColor] = useState({ h: 0, s: 0, v: 30, a: 1 });
   const [size, setSize] = useState(256);
+  const [fgHex, setFgHex] = useState(hsvaToHex(fgColor));
+  const [bgHex, setBgHex] = useState(hsvaToHex(bgColor));
   const canvasRef = useRef(null);
   const { downloadSigil } = useSigilDownloader(canvasRef);
 
@@ -30,8 +33,17 @@ const SigilGenerator = () => {
     }
   };
 
+  const handleHexInputChange = (e, setColor, setHex) => {
+    const hex = e.target.value;
+    setHex(hex);
+    if (isValidHex(hex)) {
+      const newColor = hexToHsva(hex);
+      setColor({ ...newColor, a: 1 });
+    }
+  };
+
   return (
-    <Container headerText={`Urbit ID / Sigil Generator`}>
+    <Container headerText={`Sigil Generator`}>
       <ControlBox
         onSubmit={handleDownload}
         headerContent={
@@ -56,8 +68,9 @@ const SigilGenerator = () => {
               <div>Size (px)</div>
               <input
                 placeholder="1000 (max)"
+                spellCheck="false"
                 className="h-[33px] bg-transparent border p-1 w-[98px] text-dark-gray"
-                onChange={(e) => setSize(parseInt(e.target.value))} // need to prevent NaN
+                onChange={(e) => setSize(parseInt(e.target.value) || "")}
                 value={size}
               />
 
@@ -66,24 +79,24 @@ const SigilGenerator = () => {
                   <div>Hex Code</div>
                   <input
                     placeholder="#0F0F0F"
+                    spellCheck="false"
                     className="h-[33px] bg-transparent border p-1 w-[98px] text-dark-gray"
-                    onChange={(e) => {
-                      const newColor = hexToHsva(e.target.value);
-                      setFgColor({ ...fgColor, ...newColor });
-                    }}
-                    value={hsvaToHex(fgColor)}
+                    onChange={(e) =>
+                      handleHexInputChange(e, setFgColor, setFgHex)
+                    }
+                    value={fgHex}
                   />
                 </div>
                 <div className="flex flex-col ml-5">
                   <div>Hex Code</div>
                   <input
                     placeholder="#0F0F0F"
+                    spellCheck="false"
                     className="w-20 h-8 bg-transparent border p-1 w-[98px] h-[33px] text-dark-gray"
-                    onChange={(e) => {
-                      const newColor = hexToHsva(e.target.value);
-                      setBgColor({ ...bgColor, ...newColor });
-                    }}
-                    value={hsvaToHex(bgColor)}
+                    onChange={(e) =>
+                      handleHexInputChange(e, setBgColor, setBgHex)
+                    }
+                    value={bgHex}
                   />
                 </div>
               </div>
@@ -98,9 +111,10 @@ const SigilGenerator = () => {
                 <Wheel
                   id={"fg-color"}
                   color={fgColor}
-                  onChange={(color) =>
-                    setFgColor({ ...fgColor, ...color.hsva })
-                  }
+                  onChange={(color) => {
+                    setFgColor({ ...fgColor, ...color.hsva });
+                    setFgHex(hsvaToHex(color.hsva));
+                  }}
                   width={154}
                   height={154}
                 />
@@ -112,6 +126,7 @@ const SigilGenerator = () => {
                   style={{ width: 15, height: 100 }}
                   onChange={(newShade) => {
                     setFgColor({ ...fgColor, ...newShade });
+                    setFgHex(hsvaToHex({ ...fgColor, ...newShade }));
                   }}
                 />
               </div>
@@ -122,9 +137,10 @@ const SigilGenerator = () => {
                 <Wheel
                   id={"bg-color"}
                   color={bgColor}
-                  onChange={(color) =>
-                    setBgColor({ ...bgColor, ...color.hsva })
-                  }
+                  onChange={(color) => {
+                    setBgColor({ ...bgColor, ...color.hsva });
+                    setBgHex(hsvaToHex(color.hsva));
+                  }}
                   width={154}
                   height={154}
                 />
@@ -136,6 +152,7 @@ const SigilGenerator = () => {
                   style={{ width: 15, height: 100 }}
                   onChange={(newShade) => {
                     setBgColor({ ...bgColor, ...newShade });
+                    setBgHex(hsvaToHex({ ...bgColor, ...newShade }));
                   }}
                 />
               </div>

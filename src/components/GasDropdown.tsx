@@ -14,14 +14,14 @@ function classNames(...classes) {
 const GasDropdown = (props) => {
   const handleClick = async (point) => {};
 
-  const items = ["39 gwei (1 min)", "39 gwei (1 min)", "39 gwei (1 min)"];
+  const items = ["39 gwei (1 min)", "39 gwei (2 min)", "39 gwei (3 min)"];
 
   // px-3 py-2
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <MenuButton className="inline-flex w-full justify-center gap-x-1.5 bg-base-color px-1 py-0 text-primary text-[18px]">
-          {`39 gwei (1 min)`}
+          {items[0]}
           <span>&or;</span>
         </MenuButton>
       </div>

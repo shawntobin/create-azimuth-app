@@ -9,7 +9,7 @@ const Manage = () => {
   const { selectedShip } = useWalletStore();
 
   return (
-    <Container headerText={`Urbit ID  /`} dropdown>
+    <Container headerText={``} dropdown>
       <UrbitIdCard ship={selectedShip} className={"mb-10 mt-20"} />
       <div className="flex-row flex">
         <Button handleClick={() => {}} text="Set up Planet" />

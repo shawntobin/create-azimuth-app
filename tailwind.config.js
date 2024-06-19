@@ -10,7 +10,9 @@ export default {
         "medium-green-2": "#4D733A",
 
         "light-gray": "#C3C5C1",
+        "light-gray-2": "#C7C7C7",
         "medium-gray": "#7A7A7A",
+        "medium-gray-2": "#A7A8A7",
         "dark-gray": "#838383",
 
         "primary-color": "#FFFFFF", //"#F5F5F5",

@@ -29,7 +29,10 @@ const SeedLogin = () => {
         headerContent={
           <div className="text-left w-full flex justify-between">
             <div className="text-[20px] font-bold">Seed Phrase</div>
-            <button onClick={() => {}} className="bg-transparent p-0 m-0">
+            <button
+              onClick={() => {}}
+              className="bg-transparent p-0 m-0 focus:outline-none border-none"
+            >
               <Cog8ToothIcon className="h-6 w-6" />
             </button>
           </div>

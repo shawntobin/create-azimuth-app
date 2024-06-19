@@ -140,6 +140,7 @@ const MasterTicket = () => {
                 <div className="relative ml-2">
                   <input
                     type="checkbox"
+                    spellCheck="false"
                     id="customCheckbox"
                     className="opacity-0 absolute h-4 w-4 "
                   />
@@ -185,7 +186,7 @@ const MasterTicket = () => {
   };
 
   return (
-    <Container headerText={`Urbit ID / Advanced Settings / Master Ticket`}>
+    <Container headerText={`Advanced Settings / Master Ticket`}>
       {renderTicketFlow()}
     </Container>
   );

@@ -50,6 +50,7 @@ export const getShip = async (patp: string) => {
 };
 
 // Write txns
+
 export const transferPoint = async (
   walletAddress: string,
   patp: string,
@@ -65,14 +66,37 @@ export const transferPoint = async (
   // txParams.maxPriorityFeePerGas = "0x3b9aca00";
   // txParams.maxFeePerGas = "0x2540be400";
 
-  window.ethereum
-    .request({
+  try {
+    const txHash = await window.ethereum.request({
       method: "eth_sendTransaction",
       params: [txParams],
-    })
-    .then((txHash) => {
-      return txHash;
     });
+
+    return await waitForTransactionReceipt(txHash);
+  } catch (error) {
+    throw new Error(error.message || "Transaction failed");
+  }
+};
+
+const waitForTransactionReceipt = (txHash) => {
+  return new Promise((resolve, reject) => {
+    const checkReceipt = async () => {
+      try {
+        const receipt = await window.ethereum.request({
+          method: "eth_getTransactionReceipt",
+          params: [txHash],
+        });
+        if (receipt) {
+          resolve(receipt);
+        } else {
+          setTimeout(checkReceipt, 1000); // Check again after 1 second
+        }
+      } catch (error) {
+        reject(error);
+      }
+    };
+    checkReceipt();
+  });
 };
 
 export const changeManagementProxy = async (

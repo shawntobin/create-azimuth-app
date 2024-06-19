@@ -14,11 +14,6 @@ const Sponsor = () => {
 
   const sponsorPatp = hasSponsor ? ob.patp(sponsor) : "None";
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(walletAddress);
-    toast.success("Copied to clipboard");
-  };
-
   const handleRequestSponsor = async () => {
     const res = await txn.requestNewSponsor(
       walletAddress,
@@ -31,7 +26,7 @@ const Sponsor = () => {
   };
 
   return (
-    <Container headerText={`Urbit ID / Advanced Settings / Change Sponsor`}>
+    <Container headerText={`Advanced Settings / Change Sponsor`}>
       <ControlBox
         headerContent={
           <div className="text-left w-full flex justify-between">
@@ -53,6 +48,7 @@ const Sponsor = () => {
           <input
             type="text"
             placeholder="~sampel"
+            spellCheck="false"
             className="pl-4 pr-4 py-0 w-full h-full font-[500] text-[20px] bg-transparent placeholder-secondary-color"
             onChange={(e) => setNewSponsorPatp(e.currentTarget.value)}
             value={newSponsorPatp}

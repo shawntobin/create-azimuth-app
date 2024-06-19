@@ -36,7 +36,7 @@ const SettingsItem: React.FC<ButtonProps> = ({
       )}
 
       <button
-        className="font-times text-3xl p-0 pb-1 m-0 text-primary-color border-primary-color absolute right-0 flex items-center justify-center bg-transparent rounded-full h-[36px] w-[36px] font-[400] focus:outline-none focus:ring-2 focus:ring-primary-color focus:ring-offset-0"
+        className="font-times text-3xl p-0 pb-1 m-0 bg-primary-color text-base-color border-primary-color absolute right-0 flex items-center justify-center rounded-full h-[36px] w-[36px] font-[400] focus:outline-none focus:bg-transparent hover:bg-light-gray hover:border-primary-color"
         onClick={handleClick}
       >
         {`>`}

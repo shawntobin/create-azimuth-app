@@ -28,7 +28,7 @@ const ManagementAddress = () => {
   };
 
   return (
-    <Container headerText={`Urbit ID / Advanced Settings / Management Address`}>
+    <Container headerText={`Advanced Settings / Management Address`}>
       <ControlBox
         headerContent={
           <div className="text-left w-full flex justify-between">
@@ -74,8 +74,9 @@ const ManagementAddress = () => {
         <div className="flex items-center">
           <input
             type="text"
+            spellCheck="false"
             placeholder="0x..."
-            className="pl-4 pr-4 py-0 w-full h-[39px] font-[500] text-[20px] bg-transparent placeholder-secondary-color"
+            className="pl-4 pr-4 py-0 w-full h-[39px] font-[500] text-[20px] bg-transparent placeholder-secondary-color text-secondary-color"
             onChange={(e) => setManagerAddress(e.currentTarget.value)}
             value={managerAddress}
           />

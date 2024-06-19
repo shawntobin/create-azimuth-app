@@ -1,7 +1,8 @@
 const INFURA_ID = import.meta.env.VITE_REACT_APP_INFURA_API;
 export const NETWORK = import.meta.env.VITE_REACT_APP_NETWORK;
 
-export const NETWORK_EVENTS_API = "";
+export const NETWORK_EVENTS_API =
+  "https://mt2aga2c5l.execute-api.us-east-2.amazonaws.com/get-pki-events?urbit-id=";
 
 // refactor
 export const ROLLER_URL =
