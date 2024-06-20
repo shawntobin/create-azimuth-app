@@ -24,3 +24,13 @@ export const formatNumber = (num: number) => {
 };
 
 export const isValidHex = (hex: string) => /^#([0-9A-F]{3}){1,2}$/i.test(hex);
+
+export const calculateMaxTransactionCost = (fee, gasLimit) => {
+  const maxFeePerGas = parseFloat(fee.suggestedMaxFeePerGas);
+  const maxPriorityFeePerGas = parseFloat(fee.suggestedMaxPriorityFeePerGas);
+  const maxCost = ((maxFeePerGas + maxPriorityFeePerGas) * gasLimit) / 1e9; // gwei to Ether
+  return maxCost.toFixed(6);
+};
+
+export const convertToSeconds = (milliseconds) =>
+  (milliseconds / 1000).toFixed(0);

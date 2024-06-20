@@ -6,7 +6,7 @@ const BackButton = () => {
   return (
     <button
       onClick={() => navigate(-1)}
-      className="text-[40px] flex items-center justify-center bg-transparent border-none p-2 focus:outline-none focus:bg-transparent active:bg-transparent"
+      className="text-[40px] flex items-center justify-center bg-transparent border-none p-2 focus:outline-none focus:bg-transparent active:bg-transparent hover:text-secondary-color text-light-gray"
     >
       {`<`}
     </button>

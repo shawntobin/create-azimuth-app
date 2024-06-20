@@ -24,7 +24,7 @@ const UrbitIdCard = (props) => {
 
   return (
     <div
-      className={`w-[582px] h-[363px] bg-white text-black p-[35px] rounded-[30px] flex flex-col justify-start ${className}`}
+      className={`w-[582px] h-[363px] bg-primary-color text-black p-[35px] rounded-[30px] flex flex-col justify-start ${className}`}
     >
       <div className="flex-1">
         <div className="ml-[-5px] flex justify-between items-center mr-10">

@@ -37,7 +37,9 @@ function App() {
             },
             error: {
               style: {
-                background: "#d9534f",
+                background: "#E72E2E", //"#d9534f",
+                color: "black",
+                borderRadius: "99px",
               },
             },
           }}

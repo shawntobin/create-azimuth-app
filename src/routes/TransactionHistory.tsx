@@ -50,9 +50,9 @@ const TransactionHistory = () => {
             {patp}
           </div>
         }
-        className="h-[519px]"
+        className="h-[519px] overflow-hidden"
       >
-        <div className="text-[20px] justify-start flex flex-col items-start border-b border-primary-color h-full overflow-y-auto custom-scrollbar">
+        <div className="text-[20px] justify-start flex flex-col items-start h-full overflow-y-auto custom-scrollbar">
           {eventData.length === 0 && !loading && (
             <div className="text-[20px] font-bold w-full mt-6">
               No transactions found!

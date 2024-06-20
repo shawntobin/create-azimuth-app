@@ -11,10 +11,10 @@ const Checkbox = (props) => {
         className="opacity-0 absolute h-4 w-4"
       />
       <span
-        className={`block w-4 h-4 border border-primary-color rounded-sm relative bg-transparent`}
+        className={`block w-4 h-4 border border-primary-color rounded-[3px] relative bg-transparent`}
       >
         {checked && (
-          <span className="absolute inset-0 flex items-center justify-center text-white">
+          <span className="absolute inset-0 flex items-center justify-center bg-white text-black font-[800]">
             &#10003;
           </span>
         )}

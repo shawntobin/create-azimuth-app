@@ -4,6 +4,7 @@ import { PROVIDER_URL } from "../constants";
 import { CONTRACT } from "../constants/contracts";
 import * as ob from "urbit-ob";
 import { isGalaxy } from "./helper";
+import toast from "react-hot-toast";
 
 // Using patp instead of point number for parameters since that's what L2 uses, then convert using ob.patp2dec
 
@@ -74,7 +75,11 @@ export const transferPoint = async (
 
     return await waitForTransactionReceipt(txHash);
   } catch (error) {
-    throw new Error(error.message || "Transaction failed");
+    if (error.code === 4001) {
+      throw new Error("You cancelled the transaction.");
+    } else {
+      throw new Error(error.message || "Transaction failed");
+    }
   }
 };
 

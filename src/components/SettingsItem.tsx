@@ -35,12 +35,15 @@ const SettingsItem: React.FC<ButtonProps> = ({
         </button>
       )}
 
-      <button
-        className="font-times text-3xl p-0 pb-1 m-0 bg-primary-color text-base-color border-primary-color absolute right-0 flex items-center justify-center rounded-full h-[36px] w-[36px] font-[400] focus:outline-none focus:bg-transparent hover:bg-light-gray hover:border-primary-color"
+      <div
+        className="cursor-pointer font-[600] text-[28px] pb-1 pl-0.5 -mr-0.5 bg-primary-color text-base-color border-primary-color absolute right-0 flex items-center justify-center rounded-full h-[36px] w-[36px] focus:outline-none focus:bg-transparent hover:bg-light-gray hover:border-primary-color"
         onClick={handleClick}
       >
         {`>`}
-      </button>
+      </div>
+      {/* <div className="font-[200] text-[50px] pb-2 pl-0.5 bg-primary-color text-base-color border-primary-color flex items-center justify-center rounded-full h-[36px] w-[36px]">
+        {`>`}
+      </div> */}
     </div>
   );
 };

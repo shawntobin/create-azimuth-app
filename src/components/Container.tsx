@@ -3,10 +3,12 @@ import { BellIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import UrbitSymbols from "./UrbitSymbols";
 import BackButton from "./BackButton";
 import { ChevronDownIcon, PowerIcon } from "@heroicons/react/24/outline";
-import IdDropdown from "./IdDropdown";
 import Dropdown from "./Dropdown";
 import * as ob from "urbit-ob";
 import { useNavigate } from "react-router-dom";
+import useWalletStore from "../store/useWalletStore";
+import * as txn from "../utils/transaction";
+import toast from "react-hot-toast";
 
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -25,6 +27,22 @@ const Container: React.FC<ContainerProps> = ({
   ...rest
 }) => {
   const navigate = useNavigate();
+  const { urbitIds, setSelectedShip, selectedShip } = useWalletStore();
+
+  const handleSelect = async (patp) => {
+    const loadingToastId = toast.loading("Loading");
+
+    try {
+      const ship = await txn.getShip(patp.value);
+      setSelectedShip(ship);
+      toast.dismiss(loadingToastId);
+    } catch (error) {
+      toast.error("Failed to load ship", {
+        id: loadingToastId,
+      });
+    }
+  };
+
   return (
     <div className="fixed bg-base-color text-primary-color top-0 left-0 h-screen w-screen">
       <div className="absolute top-0 left-0 right-0 flex justify-between items-center m-8 font-bold">
@@ -34,10 +52,19 @@ const Container: React.FC<ContainerProps> = ({
         <div className="text-center justify-center items-center flex text-[20px]">
           <span className="text-light-gray-2 pr-0">
             {"Urbit ID"}
-            <span className="text-white mr-1">{" /"}</span>
+            <span className="text-primary-color mr-1">{" /"}</span>
           </span>
           {headerText}
-          {dropdown && <Dropdown />}
+          {dropdown && (
+            <Dropdown
+              onSelect={handleSelect}
+              items={urbitIds.map((id) => ({
+                label: ob.patp(id),
+                value: ob.patp(id),
+              }))} // to be changed
+              focusedItem={selectedShip.patp}
+            />
+          )}
         </div>
         <div className="flex">
           <div
@@ -48,7 +75,7 @@ const Container: React.FC<ContainerProps> = ({
           </div>
           <button
             onClick={() => {}}
-            className="bg-transparent p-0 ml-3 border border-white rounded-full w-[26px] h-[26px] flex items-center justify-center hover:bg-primary-color hover:text-base-color"
+            className="bg-transparent p-0 ml-3 border border-primary-color rounded-full w-[26px] h-[26px] flex items-center justify-center hover:bg-primary-color hover:text-base-color"
           >
             <PowerIcon className="h-4 w-4" />
           </button>

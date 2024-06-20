@@ -4,6 +4,8 @@ import { NETWORK, ETHEREUM_NETWORK } from "../constants";
 
 const layer = NETWORK === ETHEREUM_NETWORK.SEPOLIA ? L1 : L2;
 
+// transaction "routing" to either L1 or L2
+
 // READ transactions
 
 export const getPoints = async (walletAddress: string) => {

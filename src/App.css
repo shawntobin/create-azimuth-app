@@ -27,6 +27,5 @@
 }
 
 *:focus {
-  outline: 2px solid rgb(171, 171, 171);
-  outline-offset: 0px;
+  outline: 0;
 }
