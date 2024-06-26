@@ -141,7 +141,7 @@ const Wallet = () => {
     return (
       <div className="mt-[75px] flex-col justify-start items-start h-full">
         <div>
-          <div className="flex justify-between mt-10">
+          <div className="flex justify-between mt-10 pr-7 pl-3">
             {searchText ? (
               <div className="text-left">
                 <div
@@ -186,11 +186,7 @@ const Wallet = () => {
       </div>
     );
   };
-  return (
-    <Container headerText={`Your IDs / ${formatAddress(walletAddress)}`}>
-      {renderWallet()}
-    </Container>
-  );
+  return <Container>{renderWallet()}</Container>;
 };
 
 export default Wallet;

@@ -185,11 +185,7 @@ const MasterTicket = () => {
     );
   };
 
-  return (
-    <Container headerText={`Advanced Settings / Master Ticket`}>
-      {renderTicketFlow()}
-    </Container>
-  );
+  return <Container>{renderTicketFlow()}</Container>;
 };
 
 export default MasterTicket;

@@ -18,9 +18,7 @@ const UrbitIdCard = (props) => {
     keysSet ? "" : "not"
   } been set.`;
 
-  const statusColor = !keysSet
-    ? "bg-red-400 border-red-200"
-    : "bg-green-400 border-green-200";
+  const statusColor = !keysSet ? "bg-[#E72E2E]" : "bg-[#AAE68C]";
 
   return (
     <div
@@ -31,17 +29,18 @@ const UrbitIdCard = (props) => {
           <Sigil id={patp} size={60} colors={["white", "black"]} />
 
           <span
-            className={`h-2.5 w-2.5 ${statusColor} rounded-full border-2`}
+            className={`h-2.5 w-2.5 ${statusColor} rounded-full`}
             data-tooltip-id="my-tooltip"
             data-tooltip-content={statusMessage}
           ></span>
           <Tooltip
             id="my-tooltip"
             style={{
-              backgroundColor: "#4E554B",
+              backgroundColor: "#212121",
               color: "white",
               fontWeight: 600,
               fontSize: "18px",
+              borderRadius: "99px",
             }}
           />
         </div>

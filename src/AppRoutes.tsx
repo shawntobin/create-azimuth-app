@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import SeedLogin from "./routes/SeedLogin";
 import Wallet from "./routes/Wallet";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -13,10 +13,13 @@ import NetworkKeys from "./routes/NetworkKeys";
 import SigilGenerator from "./routes/SigilGenerator";
 import Onboarding from "./routes/Onboarding";
 import TransactionHistory from "./routes/TransactionHistory";
+import Activation from "./routes/Activation";
 
 const routeConfigs = [
   { path: "/", element: <MainLogin />, protected: false },
+  { path: "/login", element: <MainLogin />, protected: false },
   { path: "/seed-login", element: <SeedLogin />, protected: false },
+  { path: "/activation", element: <Activation />, protected: false },
   { path: "/wallet", element: <Wallet />, protected: true },
   { path: "/onboarding", element: <Onboarding />, protected: true },
   { path: "/manage", element: <Manage />, protected: true },
@@ -45,6 +48,7 @@ const routeConfigs = [
 const AppRoutes = () => {
   return (
     <Routes>
+      {/* <Route path="/" element={<Navigate to="/login" />} /> */}
       {routeConfigs.map(({ path, element, protected: isProtected }) =>
         isProtected ? (
           <Route

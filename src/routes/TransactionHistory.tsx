@@ -40,7 +40,7 @@ const TransactionHistory = () => {
   }, [selectedShip]);
 
   return (
-    <Container headerText={`Transaction History`}>
+    <Container>
       <ControlBox
         headerContent={
           <div className="text-left w-full flex justify-between text-[20px]">

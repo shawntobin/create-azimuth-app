@@ -37,7 +37,7 @@ const Advanced = () => {
   const sponsorPatp = hasSponsor ? ob.patp(sponsor) : "None";
 
   return (
-    <Container headerText={`Advanced Settings`}>
+    <Container>
       <AlertModal isOpen={showAlert} handleClose={() => setShowAlert(false)} />
       <div className="w-[968px]">
         <BackButton />

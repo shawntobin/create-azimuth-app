@@ -36,7 +36,7 @@ const Sponsor = () => {
   };
 
   return (
-    <Container headerText={`Advanced Settings / Change Sponsor`}>
+    <Container>
       <ControlBox
         headerContent={
           <div className="text-left w-full flex justify-between">

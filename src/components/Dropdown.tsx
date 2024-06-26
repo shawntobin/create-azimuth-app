@@ -18,7 +18,7 @@ const Dropdown = (props) => {
       {({ open }) => (
         <>
           <MenuButton
-            className="inline-flex items-center bg-base-color text-primary text-[16px] rounded-full border ml-3 border-primary-color h-[26px] p-0"
+            className="inline-flex items-center bg-base-color text-primary text-[16px] rounded-full border ml-0 border-primary-color h-[26px] p-0"
             disabled={isDisabled}
           >
             <span className="px-3 py-0">

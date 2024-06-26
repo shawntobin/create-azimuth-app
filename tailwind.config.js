@@ -23,6 +23,9 @@ export default {
         "bright-yellow": "#E7D42E",
         "bright-red": "#E72E2E",
       },
+      boxShadow: {
+        "custom-green": "0px 0px 10px 2px rgb(170,230,140,1)",
+      },
     },
   },
   plugins: [],

@@ -45,7 +45,7 @@ const ManagementAddress = () => {
   };
 
   return (
-    <Container headerText={`Advanced Settings / Management Address`}>
+    <Container>
       <ControlBox
         headerContent={
           <div className="text-left w-full flex justify-between">

@@ -4,8 +4,9 @@ import classNames from "classnames";
 
 interface ControlBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
-  headerContent: React.ReactNode;
-  buttonTitle?: string;
+  headerContent?: React.ReactNode;
+  buttonTitle?: React.ReactNode;
+  buttonColor?: string;
   className?: string;
   onSubmit?: () => void;
   hideBackButton?: boolean;
@@ -16,6 +17,7 @@ const ControlBox: React.FC<ControlBoxProps> = ({
   children,
   headerContent,
   buttonTitle,
+  buttonColor = "bg-primary-color",
   className,
   onSubmit,
   hideBackButton,
@@ -27,9 +29,11 @@ const ControlBox: React.FC<ControlBoxProps> = ({
       <div
         className={`flex flex-col w-[500px] rounded-[18px] border border-primary-color ${className}`}
       >
-        <div className="mb-0 text-left w-full flex justify-between px-3 py-1 border-b border-primary-color">
-          {headerContent}
-        </div>
+        {headerContent && (
+          <div className="mb-0 text-left w-full flex justify-between px-3 py-1 border-b border-primary-color">
+            {headerContent}
+          </div>
+        )}
         {children}
         {buttonTitle && (
           <button
@@ -42,7 +46,7 @@ const ControlBox: React.FC<ControlBoxProps> = ({
             className={classNames(
               "mt-auto p-0 m-0 rounded-b-[18px] h-[38px] text-black text-[20px] font-bold",
               {
-                "bg-primary-color": !disabled,
+                [buttonColor]: !disabled,
                 "bg-gray-400": disabled,
               }
             )}

@@ -53,7 +53,7 @@ const Ownership = () => {
   };
 
   return (
-    <Container headerText={`Advanced Settings / Ownership`}>
+    <Container>
       <ControlBox
         headerContent={
           <div className="text-left w-full flex justify-between">

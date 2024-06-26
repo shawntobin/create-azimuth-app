@@ -29,3 +29,27 @@
 *:focus {
   outline: 0;
 }
+
+.breadcrumb {
+  list-style: none;
+  display: flex;
+}
+
+.breadcrumb-item {
+  margin-right: 0px;
+}
+
+.breadcrumb-item a {
+  text-decoration: none;
+  color: #c7c7c7;
+  margin-left: 5px;
+}
+
+.breadcrumb-item::after {
+  content: "/";
+  margin-left: 5px;
+}
+
+.breadcrumb-item:last-child::after {
+  content: "";
+}

@@ -43,7 +43,7 @@ const SigilGenerator = () => {
   };
 
   return (
-    <Container headerText={`Sigil Generator`}>
+    <Container>
       <ControlBox
         onSubmit={handleDownload}
         headerContent={

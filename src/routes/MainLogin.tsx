@@ -56,28 +56,30 @@ const MainLogin = () => {
   };
 
   const handleTicketLogin = async () => {
-    try {
-      const point = ob.patp2dec(urbitIdInput);
-      const urbitWallet = await urbitWalletFromTicket(masterTicket, point);
-      const walletAddress = urbitWallet.ownership.keys.address;
+    navigate("/activation");
 
-      if (urbitWallet) {
-        toast.success("Connected using Master Ticket");
-        loginCommon(walletAddress);
-      } else {
-        toast.error("Invalid wallet credentials");
-      }
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
+    // try {
+    //   const point = ob.patp2dec(urbitIdInput);
+    //   const urbitWallet = await urbitWalletFromTicket(masterTicket, point);
+    //   const walletAddress = urbitWallet.ownership.keys.address;
+
+    //   if (urbitWallet) {
+    //     toast.success("Connected using Master Ticket");
+    //     loginCommon(walletAddress);
+    //   } else {
+    //     toast.error("Invalid wallet credentials");
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    //   return null;
+    // }
   };
 
   const renderLoginForm = () => {
     return (
       <>
         <div className="text-[20px] mb-2 text-primary-color text-left font-[500]">
-          Urbit ID / Log In
+          Urbit ID / Log in
         </div>
 
         <div className="relative flex items-center mb-3">
@@ -140,7 +142,15 @@ const MainLogin = () => {
     );
   };
 
-  return <Container symbols={false}>{renderLoginForm()}</Container>;
+  return (
+    <div className="fixed bg-base-color text-primary-color top-0 left-0 h-screen w-screen">
+      <div className={`flex flex-col h-full`}>
+        <div className="flex-grow flex flex-col items-center justify-center">
+          {renderLoginForm()}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default MainLogin;
