@@ -8,10 +8,12 @@ import * as txn from "../utils/transaction";
 import useGasEstimate from "../hooks/useGasEstimate";
 import Dropdown from "../components/Dropdown";
 import { GAS_LIMITS } from "../constants";
+import useTransaction from "../hooks/useTransaction";
 
 const Sponsor = () => {
   const { walletAddress, selectedShip } = useWalletStore();
   const [newSponsorPatp, setNewSponsorPatp] = useState("");
+  const { txHash, txnLoading, executeTransaction } = useTransaction();
   const {
     gasOptions,
     loading,
@@ -20,35 +22,46 @@ const Sponsor = () => {
     selectedItem,
     handleSelect,
   } = useGasEstimate(GAS_LIMITS.ESCAPE);
-  const { patp, sponsor, hasSponsor } = selectedShip;
+  const { patp, sponsor, hasSponsor, escapeRequested, escapeRequestedTo } =
+    selectedShip;
 
   const sponsorPatp = hasSponsor ? ob.patp(sponsor) : "None";
 
-  const handleRequestSponsor = async () => {
-    const res = await txn.requestNewSponsor(
+  const handleTransaction = async () => {
+    await executeTransaction(
+      txn.requestNewSponsor,
       walletAddress,
       patp,
       walletAddress,
       newSponsorPatp
     );
-
-    res && toast.success("Transfer successful!");
   };
 
   return (
     <Container>
       <ControlBox
+        txnHash={txHash}
+        txnInProgress={txnLoading}
         headerContent={
           <div className="text-left w-full flex justify-between">
             <div className="items-center justify-center flex text-[20px] ">
               <div className="font-bold">Sponsor</div>
-              <div className="font-[200] ml-3">{sponsorPatp}</div>
+
+              <div className="flex w-full justify-center items-center">
+                <div className="font-[200] ml-3">{sponsorPatp}</div>
+
+                {escapeRequested && (
+                  <span className="pl-2 text-[16px] text-light-green">{`*pending request to ${ob.patp(
+                    escapeRequestedTo
+                  )}`}</span>
+                )}
+              </div>
             </div>
           </div>
         }
         buttonTitle="Request New Sponsor"
-        onSubmit={handleRequestSponsor}
-        className="h-[310px]"
+        onSubmit={handleTransaction}
+        className="h-[310px] w-[500px]"
         disabled={!ob.isValidPatp(newSponsorPatp)}
       >
         <div className="justify-start flex flex-col items-start pl-2 border-b border-primary-color mt-2">

@@ -16,16 +16,7 @@ import {
   Options,
 } from "@urbit/roller-api";
 import * as ob from "urbit-ob";
-
-// Roller options
-const options: Options = {
-  transport: {
-    type: "https", //http
-    host: "roller.urbit.org", // localhost
-    port: 443,
-    path: "/v1/roller",
-  },
-};
+import { ROLLER_OPTIONS } from "../constants/config";
 
 // L2 Opcodes
 
@@ -100,6 +91,8 @@ export const getShip = async (patp: string) => {
     managementProxy: _ship.ownership.managementProxy.address,
     transferProxy: _ship.ownership.transferProxy.address,
     votingProxy: _ship.ownership.votingProxy.address,
+    // escapeRequested
+    // escapeRequestedTo
   };
 
   return ship;
@@ -119,7 +112,7 @@ export const transferPoint = async (
   from: string,
   to: string
 ) => {
-  const api = new RollerRPCAPI(options);
+  const api = new RollerRPCAPI(ROLLER_OPTIONS);
   const nonce = await api.getNonce({ ship: patp, proxy: "own" });
 
   const signedMessage = await generateHashAndSign(
@@ -179,19 +172,21 @@ export const changeManagementProxy = async (
     }
   );
 
-  const params = {
-    address: from,
-    sig: signedMessage,
-    from: {
-      ship: patp,
-      proxy: "own",
-    },
-    data: {
-      address: managerAddress,
-    },
-  };
+  console.log("signedMessage", signedMessage);
 
-  const res = await callRoller("set-management-proxy", params);
+  // const params = {
+  //   address: from,
+  //   sig: signedMessage,
+  //   from: {
+  //     ship: patp,
+  //     proxy: "own",
+  //   },
+  //   data: {
+  //     address: managerAddress,
+  //   },
+  // };
+
+  // const res = await callRoller("set-management-proxy", params);
 
   return res;
 };

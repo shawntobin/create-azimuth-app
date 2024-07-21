@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Container from "../components/Container";
 import ControlBox from "../components/ControlBox";
 import useWalletStore from "../store/useWalletStore";
-import HistoryItem from "./HistoryItem";
+import HistoryItem from "../components/HistoryItem";
 import { getEvents } from "../lib/networkEvents";
 import { formatDistance } from "date-fns";
 
@@ -50,7 +50,7 @@ const TransactionHistory = () => {
             {patp}
           </div>
         }
-        className="h-[519px] overflow-hidden"
+        className="h-[519px] w-[500px] overflow-hidden"
       >
         <div className="text-[20px] justify-start flex flex-col items-start h-full overflow-y-auto custom-scrollbar">
           {eventData.length === 0 && !loading && (

@@ -8,6 +8,7 @@ import { ReactComponent as StarIcon } from "../assets/icons/regular/star.svg";
 import { ReactComponent as PlanetIcon } from "../assets/icons/regular/planet.svg";
 import { ReactComponent as AzimuthIcon } from "../assets/icons/regular/azimuth.svg";
 import { ReactComponent as AlertIcon } from "../assets/icons/regular/alert.svg";
+import { ReactComponent as DoublesIcon } from "../assets/icons/regular/doubles.svg";
 
 const icons = {
   galaxy: GalaxyIcon,
@@ -15,16 +16,30 @@ const icons = {
   planet: PlanetIcon,
   azimuth: AzimuthIcon,
   alert: AlertIcon,
+  galaxyBold: GalaxyIconBold,
+  starBold: StarIconBold,
+  planetBold: PlanetIconBold,
+  azimuthBold: AzimuthIconBold,
+  alertBold: AlertIcon,
+  doubles: DoublesIcon,
 };
 
-const UrbitIcon = ({ name, size, color = "#000000", weight }) => {
-  const Icon = icons[name];
+const UrbitIcon = ({ name, size, color = "#000000", weight, className }) => {
+  const Icon = weight === "bold" ? icons[`${name}Bold`] : icons[name];
 
   if (!Icon) {
     return null;
   }
 
-  return <Icon width={size} height={size} fill={color} weight="bold" />;
+  return (
+    <Icon
+      width={size}
+      height={size}
+      fill={color}
+      weight={weight}
+      className={className}
+    />
+  );
 };
 
 export default UrbitIcon;

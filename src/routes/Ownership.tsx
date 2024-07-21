@@ -11,10 +11,13 @@ import useGasEstimate from "../hooks/useGasEstimate";
 import Dropdown from "../components/Dropdown";
 import { isAddress } from "web3-validator";
 import { GAS_LIMITS } from "../constants";
+import useTransaction from "../hooks/useTransaction";
 
 const Ownership = () => {
   const { walletAddress, selectedShip } = useWalletStore();
   const [newOwnerAddress, setNewOwnerAddress] = useState("");
+  const { txHash, txnLoading, executeTransaction } = useTransaction();
+
   const {
     gasOptions,
     loading,
@@ -26,35 +29,28 @@ const Ownership = () => {
   const { patp, owner } = selectedShip;
 
   // could also check if input address is diff from current owner
+  // how should we display txn hash?
+  // repeat button pressing?
 
-  const handleTransfer = async () => {
-    try {
-      toast.loading("Transfer in progress...");
-      const res = await txn.transferPoint(
-        walletAddress,
-        patp,
-        walletAddress,
-        newOwnerAddress
-      );
+  const handleTransaction = async () => {
+    const result = await executeTransaction(
+      txn.transferPoint,
+      walletAddress,
+      patp,
+      walletAddress,
+      newOwnerAddress
+    );
 
-      console.log("Transaction result:", res);
-
-      if (res) {
-        toast.dismiss();
-        toast.success("Transfer successful!");
-      } else {
-        toast.dismiss();
-        toast.error("Transfer failed");
-      }
-    } catch (error) {
-      toast.dismiss();
-      toast.error(`${error.message}`);
+    if (result?.success) {
+      setNewOwnerAddress("");
     }
   };
 
   return (
     <Container>
       <ControlBox
+        txnHash={txHash}
+        txnInProgress={txnLoading}
         headerContent={
           <div className="text-left w-full flex justify-between">
             <div className="items-center justify-center flex text-[20px] ">
@@ -69,9 +65,9 @@ const Ownership = () => {
             </button>
           </div>
         }
-        buttonTitle="Transfer"
-        onSubmit={handleTransfer}
-        className="h-[310px]"
+        buttonTitle={"Transfer"}
+        onSubmit={handleTransaction}
+        className="h-[310px] w-[500px]"
         disabled={!isAddress(newOwnerAddress)}
       >
         <div className="justify-start flex flex-col items-start pl-2 border-b border-primary-color mt-2">

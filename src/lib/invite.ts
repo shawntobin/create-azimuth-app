@@ -9,7 +9,6 @@ export async function generateWallet(point, boot) {
   return wallet;
 }
 
-//TODO should be moved to lib/walletgen
 export async function downloadWallet(paperWallets, keyfile, keyfilename) {
   if (paperWallets.length === 1) {
     const zip = new JSZip();

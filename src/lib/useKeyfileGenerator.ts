@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useEffect, useState } from "react";
 import { Just } from "folktale/maybe";
 import saveAs from "file-saver";
-import { useWallet } from "../lib/urbitWallet";
-import { EMPTY_POINT, useRollerStore } from "store/rollerStore"; // x
-import { generateCode } from "../lib/networkCode";
+import { useWallet } from "store/wallet"; // xxx
+import { EMPTY_POINT, useRollerStore } from "store/rollerStore"; // xxx
+import { generateCode } from "lib/networkCode";
 import {
   attemptNetworkSeedDerivation,
   deriveNetworkSeedFromUrbitWallet,
@@ -11,11 +11,9 @@ import {
   deriveNetworkKeys,
   compileMultiKey,
 } from "./keys";
-import { stripSigPrefix } from "form/formatters"; // x
-import useRoller from "./useRoller"; // x
-import Point from "../types/Point";
-import { toL1Details } from "./utils/point"; // X
-import { ETH_ZERO_ADDR } from "../constants/constants";
+import { stripSigPrefix } from "form/formatters";
+import Point from "./types/Point";
+import useWalletStore from "../store/useWalletStore";
 
 interface useKeyfileGeneratorArgs {
   point?: Point;
@@ -40,10 +38,13 @@ function useKeyfileGenerator({ point, seeds }: useKeyfileGeneratorArgs) {
   const [code, setCode] = useState(false);
 
   // resolved point
-  const { point: storedPoint } = useRollerStore();
-  const resolvedPoint = useMemo(() => {
-    return point || storedPoint;
-  }, [point, storedPoint]);
+  // const { point: storedPoint } = useRollerStore();
+  // const resolvedPoint = useMemo(() => {
+  //   return point || storedPoint;
+  // }, [point, storedPoint]);
+
+  const { selectedShip, walletAddress } = useWalletStore();
+  // const { point } = selectedShip;
 
   const networkRevision = useMemo(() => {
     return Number(resolvedPoint.keyRevisionNumber);
@@ -140,73 +141,6 @@ function useKeyfileGenerator({ point, seeds }: useKeyfileGeneratorArgs) {
   return { ...values, bind: values };
 }
 
-interface ActivationKeyfileGeneratorArgs {
-  pointId: number;
-  wallets: UrbitWallet[];
-}
-
-/**
- * This Activation Keyfile Generator is used to derive a multikey during the
- * Activation Flow. At the time of generation, there is no Point yet set in
- * the Roller Store, so we need to look it up by Point ID (to retreive the
- * current key revision via API).
- *
- * @param pointId number - (required) the point ID for which to generate keys
- * @param wallets UrbitWallet[] - (required) for each wallet,
- *   a seed + revision pair is generated and consumed by `compileMultiKey`.
- *   It should be an array of [deterministic invite wallet, non-deterministic
- *   master ticket wallet] (the sending and receiving wallets)
- */
-export const useActivationKeyfileGenerator = ({
-  pointId,
-  wallets,
-}: ActivationKeyfileGeneratorArgs) => {
-  // resolve point
-  const { api } = useRoller();
-  const [point, setPoint] = useState<Point>(EMPTY_POINT);
-
-  const resolvePoint = useCallback(async () => {
-    const resolved = new Point({
-      value: pointId,
-      details: toL1Details(await api.getPoint(pointId)),
-      address: ETH_ZERO_ADDR,
-    });
-
-    setPoint(resolved);
-  }, [api, pointId]);
-
-  useEffect(() => {
-    resolvePoint();
-  }, [resolvePoint]);
-
-  // derive seeds from wallets
-  const [seeds, setSeeds] = useState<string[]>([]);
-  const deriveSeeds = useCallback(async () => {
-    if (!("keyRevisionNumber" in point)) {
-      return;
-    }
-
-    const derivedSeeds = await Promise.all(
-      wallets.map(async (w, i) => {
-        return deriveNetworkSeedFromUrbitWallet(w, point.keyRevisionNumber + i);
-      })
-    );
-
-    setSeeds(
-      derivedSeeds
-        .map((maybeSeed) => maybeSeed.getOrElse(null))
-        .filter((s) => s !== null)
-    );
-  }, [point, wallets]);
-
-  useEffect(() => {
-    deriveSeeds();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [point]);
-
-  return useKeyfileGenerator({ point, seeds });
-};
-
 interface SingleKeyfileGeneratorArgs {
   seed?: string;
 }
@@ -222,7 +156,9 @@ export const useSingleKeyfileGenerator = ({
   seed,
 }: SingleKeyfileGeneratorArgs) => {
   // use provided seed, or fallback to deriving from logged in wallet
-  const { point } = useRollerStore();
+  // const { point } = useRollerStore();
+  const { selectedShip, walletAddress } = useWalletStore();
+  const { point } = selectedShip;
   const { authMnemonic, authToken, urbitWallet, wallet }: any = useWallet();
   const [seeds, setSeeds] = useState<string[]>([]);
 

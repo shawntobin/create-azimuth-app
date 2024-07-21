@@ -12,6 +12,7 @@ import { PROVIDER_URL } from "../constants";
 import { CONTRACT } from "../constants/contracts";
 import { useNavigate } from "react-router-dom";
 import { downloadWallet } from "../lib/invite";
+import PaperBuilder from "components/PaperBuilder";
 
 const MasterTicket = () => {
   const { walletAddress, selectedShip } = useWalletStore();
@@ -49,8 +50,13 @@ const MasterTicket = () => {
 
   const handleDownloadTicket = () => {
     // Download passport
-    downloadWallet(newWallet.value.paper);
-    setStep(step + 1);
+    // downloadWallet(newWallet.value.paper);
+
+    toast.error("Error downloading passport");
+
+    console.log("new wallet", newWallet.value.paper);
+
+    // setStep(step + 1);
   };
 
   const handleVerifyReticket = () => {
@@ -71,9 +77,9 @@ const MasterTicket = () => {
         }
         buttonTitle="I Understand, Continue"
         onSubmit={() => setStep(step + 1)}
-        // className="h-[250px]"
+        className="w-[500px] h-[270px]"
       >
-        <div className="justify-start flex flex-col items-start pl-2 border-b border-primary-color h-full">
+        <div className="justify-start flex flex-col items-start p-4 h-full">
           <div className="text-[20px] font-bold text-left ">{`Reticketing is the process of generating a completely fresh wallet and transferring ownership of your point to that wallet.`}</div>
           <div className="text-[20px] mt-[20px] mb-1 text-left">
             Beware, this resets your proxy addresses; if you're using smart
@@ -103,7 +109,7 @@ const MasterTicket = () => {
           onSubmit={handleDownloadTicket}
           // className="h-[250px]"
         >
-          <div className="justify-start flex flex-col items-start pl-2 border-b border-primary-color h-full">
+          <div className="justify-start flex flex-col items-start p-4 h-full">
             <div className="text-[20px] h-[50px] font-bold text-left ">{`Download the new passport, and keep it somewhere safe!`}</div>
           </div>
         </ControlBox>

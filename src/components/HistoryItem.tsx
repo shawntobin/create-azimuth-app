@@ -5,63 +5,64 @@ import {
   KeyIcon,
 } from "@heroicons/react/20/solid";
 import { formatAddress } from "../utils/address";
+import UrbitIcon from "./UrbitIcon";
 
 const TRANSACTION_TYPES = [
   {
     type: "change-voting-proxy",
-    icon: <DocumentDuplicateIcon className="h-8 w-8 mr-3" />,
+    icon: <UrbitIcon name="galaxy" size={26} color="white" weight={"bold"} />,
   },
   {
     type: "change-management-proxy",
-    icon: <ArrowPathIcon className="h-8 w-8 mr-3" />,
+    icon: <UrbitIcon name="galaxy" size={26} color="white" weight={"bold"} />,
   },
   {
     type: "escaped",
-    icon: <ArrowsRightLeftIcon className="h-8 w-8 mr-3" />,
+    icon: <UrbitIcon name="galaxy" size={26} color="white" weight={"bold"} />,
   },
   {
     type: "activate",
-    icon: <KeyIcon className="h-8 w-8 mr-3" />,
+    icon: <UrbitIcon name="galaxy" size={26} color="white" weight={"bold"} />,
   },
   {
     type: "escape-requested",
-    icon: <DocumentDuplicateIcon className="h-8 w-8 mr-3" />,
+    icon: <UrbitIcon name="galaxy" size={26} color="white" weight={"bold"} />,
   },
   {
     type: "escape-canceled",
-    icon: <ArrowsRightLeftIcon className="h-8 w-8 mr-3" />,
+    icon: <UrbitIcon name="galaxy" size={26} color="white" weight={"bold"} />,
   },
   {
     type: "lost-sponsor",
-    icon: <ArrowPathIcon className="h-8 w-8 mr-3" />,
+    icon: <UrbitIcon name="galaxy" size={26} color="white" weight={"bold"} />,
   },
   {
     type: "broke-continuity",
-    icon: <KeyIcon className="h-8 w-8 mr-3" />,
+    icon: <UrbitIcon name="galaxy" size={26} color="white" weight={"bold"} />,
   },
   {
     type: "change-ownership",
-    icon: <KeyIcon className="h-8 w-8 mr-3" />,
+    icon: <UrbitIcon name="galaxy" size={26} color="white" weight={"bold"} />,
   },
   {
     type: "change-spawn-proxy",
-    icon: <ArrowsRightLeftIcon className="h-8 w-8 mr-3" />,
+    icon: <UrbitIcon name="galaxy" size={26} color="white" weight={"bold"} />,
   },
   {
     type: "invite",
-    icon: <ArrowPathIcon className="h-8 w-8 mr-3" />,
+    icon: <UrbitIcon name="galaxy" size={26} color="white" weight={"bold"} />,
   },
   {
     type: "change-transfer-proxy",
-    icon: <KeyIcon className="h-8 w-8 mr-3" />,
+    icon: <UrbitIcon name="galaxy" size={26} color="white" weight={"bold"} />,
   },
   {
     type: "spawn",
-    icon: <DocumentDuplicateIcon className="h-8 w-8 mr-3" />,
+    icon: <UrbitIcon name="galaxy" size={26} color="white" weight={"bold"} />,
   },
   {
     type: "change-networking-keys",
-    icon: <ArrowsRightLeftIcon className="h-8 w-8 mr-3" />,
+    icon: <UrbitIcon name="galaxy" size={26} color="white" weight={"bold"} />,
   },
 ];
 
@@ -83,7 +84,9 @@ const HistoryItem = ({ transaction }) => {
 
   return (
     <div className="font-bold text-left w-full border-b h-10 p-3 h-[75px] flex-row flex">
-      {TRANSACTION_TYPES.find((txn) => txn.type === type).icon}
+      <div className="mr-5">
+        {TRANSACTION_TYPES.find((txn) => txn.type === type).icon}
+      </div>
 
       <div className="flex-col flex w-full">
         <div className="justify-between flex items-center">

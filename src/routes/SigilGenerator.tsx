@@ -12,7 +12,7 @@ import { isValidHex } from "../utils/helper";
 
 const SigilGenerator = () => {
   const { selectedShip } = useWalletStore();
-  const { patp } = selectedShip;
+  // const { patp } = selectedShip;
   const [fgColor, setFgColor] = useState({ h: 0, s: 0, v: 100, a: 1 });
   const [bgColor, setBgColor] = useState({ h: 0, s: 0, v: 30, a: 1 });
   const [size, setSize] = useState(256);
@@ -20,6 +20,8 @@ const SigilGenerator = () => {
   const [bgHex, setBgHex] = useState(hsvaToHex(bgColor));
   const canvasRef = useRef(null);
   const { downloadSigil } = useSigilDownloader(canvasRef);
+
+  const patp = selectedShip?.patp || "riczod-tacmex";
 
   const colors = [hsvaToHex(fgColor), hsvaToHex(bgColor)];
 
@@ -57,7 +59,7 @@ const SigilGenerator = () => {
         buttonTitle="Download Sigil"
         className="h-[461px] w-[484px]"
       >
-        <div className="text-[20px] justify-start flex flex-col items-start p-5 border-b border-primary-color h-full mt-2">
+        <div className="text-[20px] justify-start flex flex-col items-start p-5 h-full mt-2">
           <div className="flex">
             <Sigil
               id={patp}

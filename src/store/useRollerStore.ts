@@ -1,7 +1,5 @@
 import create from "zustand";
 import { PendingTransaction } from "@urbit/roller-api";
-import { toBN } from "web3-utils";
-import BN from "bn.js";
 
 import { HOUR } from "../lib/roller";
 import Point, { Points } from "../types/Point";
@@ -30,7 +28,6 @@ export interface RollerState {
   pendingL1ByPoint: PendingL1;
   modalText?: string;
   recentlyCompleted: number;
-  ethBalance: BN;
 }
 
 export interface RollerActions {
@@ -43,7 +40,6 @@ export interface RollerActions {
   updatePoint: (point: Point) => void;
   storePendingL1Txn: (txn: PendingL1Txn) => void;
   deletePendingL1Txn: (txn: PendingL1Txn) => void;
-  setEthBalance: (ethBalance: BN) => void;
   resetStore: () => void;
 }
 
@@ -56,7 +52,6 @@ const initialRollerState: RollerState = {
   points: {},
   pendingL1ByPoint: {},
   recentlyCompleted: 0,
-  ethBalance: toBN(0),
 };
 
 export const useRollerStore = create<RollerState & RollerActions>((set) => ({
@@ -99,7 +94,6 @@ export const useRollerStore = create<RollerState & RollerActions>((set) => ({
         pendingL1ByPoint[txn.point]?.filter(({ id }) => id !== txn.id) || [];
       return { pendingL1ByPoint: newPending };
     }),
-  setEthBalance: (ethBalance: BN) => set(() => ({ ethBalance })),
   resetStore: () => {
     set(initialRollerState);
   },

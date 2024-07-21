@@ -11,12 +11,15 @@ import { isZeroAddress } from "../utils/address";
 import AlertModal from "../components/AlertModal";
 import useAppStore from "../store/useAppStore";
 import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
+import { useSingleKeyfileGenerator } from "../lib/useKeyfileGenerator"; // xxxx
+import Web3 from "web3";
+import { PROVIDER_URL } from "../constants";
 
 const Advanced = () => {
   const navigate = useNavigate();
 
   const { showAlert, setShowAlert } = useAppStore();
-  const { selectedShip } = useWalletStore();
+  const { selectedShip, walletAddress } = useWalletStore();
 
   // disable Sponsor for galaxies
 
@@ -32,9 +35,42 @@ const Advanced = () => {
     keyRevisionNumber,
     sponsor,
     hasSponsor,
+    escapeRequested,
+    escapeRequestedTo,
   } = selectedShip;
 
   const sponsorPatp = hasSponsor ? ob.patp(sponsor) : "None";
+
+  // const { available, code, download, generating } = useSingleKeyfileGenerator(
+  //   {}
+  // );
+
+  const handleDownloadKeyfile = async () => {
+    const MESSAGE = "Bridge Authentication Token";
+
+    window.ethereum
+      .request({
+        method: "personal_sign",
+        params: [MESSAGE, walletAddress],
+      })
+      .then((txHash) => {
+        console.log(txHash);
+        return txHash;
+      });
+  };
+
+  const renderSponsor = () => {
+    return (
+      <div className="flex w-full justify-center items-center">
+        <span className="pr-2">{ob.patp(sponsor)}</span>
+        {escapeRequested && (
+          <span className="text-[16px] text-light-green">{`*pending request to ${ob.patp(
+            escapeRequestedTo
+          )}`}</span>
+        )}
+      </div>
+    );
+  };
 
   return (
     <Container>
@@ -48,7 +84,7 @@ const Advanced = () => {
               <SettingsItem
                 handleClick={() => navigate(`/manage/sponsor`)}
                 title="Sponsor"
-                text={sponsorPatp}
+                text={renderSponsor()}
               />
               <SettingsItem
                 handleClick={() => navigate(`/manage/network-keys`)}
@@ -59,14 +95,14 @@ const Advanced = () => {
             <div className="flex justify-start items-start w-full">
               <button
                 className=" flex underline decoration-1 items-center justify-center text-primary-color text-[20px] bg-transparent p-0 m-0"
-                onClick={() => {}}
+                onClick={handleDownloadKeyfile}
               >
                 <ArrowDownTrayIcon className="h-6 w-6 pr-1" />
                 Download Keyfile
               </button>
               <button
                 className=" flex underline decoration-1 items-center justify-center text-primary-color text-[20px] bg-transparent p-0 ml-6"
-                onClick={() => copy("Access Key")}
+                onClick={() => {}}
               >
                 <DocumentDuplicateIcon className="h-6 w-6 pr-1" />
                 Copy Access Key
@@ -93,6 +129,13 @@ const Advanced = () => {
                 title="Master Ticket"
                 text="Transfer to Master Ticket"
               />
+              {ob.clan(selectedShip.patp) !== "planet" && (
+                <SettingsItem
+                  handleClick={() => navigate(`/star-scanner`)}
+                  title="Spawn Planets"
+                  text=""
+                />
+              )}
             </div>
           </div>
         </div>

@@ -6,12 +6,12 @@ import * as ob from "urbit-ob";
 
 const useLogin = () => {
   const navigate = useNavigate();
-  const { setWalletAddress, setUrbitIds, setSelectedShip, resetState } =
+  const { setWalletAddress, setUrbitIds, setSelectedShip, clearState } =
     useWalletStore();
 
   const loginCommon = async (walletAddress: string) => {
     try {
-      resetState();
+      clearState();
 
       const ids = await txn.getPoints(walletAddress); // note if master ticket then could just use getPoint
       setWalletAddress(walletAddress);
@@ -32,7 +32,6 @@ const useLogin = () => {
       } else if (ids.length > 1) {
         navigate(`/wallet`);
       } else {
-        // change to appropriate route when address holds no IDs
         navigate(`/wallet`);
       }
     } catch (error) {

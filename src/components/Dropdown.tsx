@@ -11,7 +11,7 @@ import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/react/20/solid";
 const Dropdown = (props) => {
   const { items, focusedItem, onSelect, loading, loadingMessage } = props;
 
-  const isDisabled = items.length === 1;
+  const isDisabled = false; //items.length === 1;
 
   return (
     <Menu as="div" className="relative inline-block text-left m-0">

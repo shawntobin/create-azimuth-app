@@ -3,6 +3,7 @@ import Sigil from "../components/Sigil";
 import { formatNumber } from "../utils/helper";
 import UrbitIcon from "./UrbitIcon";
 import { Tooltip } from "react-tooltip";
+import { formatDistance } from "date-fns";
 
 const UrbitIdCard = (props) => {
   const { ship, className } = props;
@@ -13,12 +14,19 @@ const UrbitIdCard = (props) => {
   const parent = ob.sein(patp);
   const shipType = ob.clan(patp);
   const keysSet = keyRevisionNumber !== 0;
+  const isOnline = ship?.online;
 
-  const statusMessage = `This ship's keys have ${
-    keysSet ? "" : "not"
-  } been set.`;
+  const statusMessage = isOnline
+    ? `This ship is online (last updated ${formatDistance(
+        new Date(ship?.online),
+        new Date(),
+        {
+          addSuffix: true,
+        }
+      )})`
+    : "This ship has never been online.";
 
-  const statusColor = !keysSet ? "bg-[#E72E2E]" : "bg-[#AAE68C]";
+  const statusColor = !isOnline ? "bg-[#E72E2E]" : "bg-[#AAE68C]";
 
   return (
     <div

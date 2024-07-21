@@ -10,17 +10,18 @@ import { Just, Nothing } from "folktale/maybe";
 import { includes, noop } from "lodash";
 import { randomHex } from "web3-utils";
 
-import { walletFromMnemonic } from "lib/wallet";
+import { walletFromMnemonic } from "../lib/wallet";
 import {
   DEFAULT_HD_PATH,
   NONCUSTODIAL_WALLETS,
   WALLET_TYPES,
-} from "lib/constants";
-import { getAuthToken } from "lib/authToken";
-import { BRIDGE_ERROR } from "lib/error";
+} from "../constants";
+import { getAuthToken } from "../lib/authToken";
+// import { BRIDGE_ERROR } from "lib/error";
 
-import { useNetwork } from "store/network";
-import { publicToAddress } from "lib/utils/address";
+import Web3 from "web3";
+import { PROVIDER_URL } from "../constants";
+import { publicToAddress } from "../utils/address";
 
 const initialContext = {
   //
@@ -71,6 +72,7 @@ function _useWallet(initialWallet = Nothing(), initialMnemonic = Nothing()) {
   const [authMnemonic, setAuthMnemonic] = useState(initialMnemonic);
   const [networkSeed, setNetworkSeed] = useState(Nothing());
   const [networkRevision, setNetworkRevision] = useState(Nothing());
+  const [web3, setWeb3] = useState(Nothing());
 
   const [authToken, setAuthToken] = useState(Nothing());
   // Allow users to skip signing the auth token on login
@@ -82,7 +84,11 @@ function _useWallet(initialWallet = Nothing(), initialMnemonic = Nothing()) {
 
   const [useLegacyTokenSigning, setUseLegacyTokenSigning] = useState(false);
 
-  const { web3 } = useNetwork();
+  useEffect(() => {
+    const provider = new Web3.providers.HttpProvider(PROVIDER_URL);
+    const web3 = new Web3(provider);
+    setWeb3(Just(web3));
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -124,7 +130,7 @@ function _useWallet(initialWallet = Nothing(), initialMnemonic = Nothing()) {
   const setWalletType = useCallback(
     (walletType) => {
       if (!includes(WALLET_TYPES, walletType)) {
-        throw new Error(BRIDGE_ERROR.INVALID_WALLET_TYPE);
+        // throw new Error(BRIDGE_ERROR.INVALID_WALLET_TYPE);
       }
 
       _setWalletType(walletType);

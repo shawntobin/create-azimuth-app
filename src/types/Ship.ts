@@ -10,4 +10,6 @@ export default interface Ship {
   spawnProxy: string;
   transferProxy: string;
   votingProxy: string;
+  escapeRequested: boolean;
+  escapeRequestedTo: string;
 }

@@ -45,6 +45,8 @@ export const getShip = async (patp: string) => {
     managementProxy: _ship.managementProxy,
     transferProxy: _ship.transferProxy,
     votingProxy: _ship.votingProxy,
+    escapeRequested: _ship?.escapeRequested,
+    escapeRequestedTo: _ship?.escapeRequestedTo.toString(),
   };
 
   return ship;
@@ -52,11 +54,34 @@ export const getShip = async (patp: string) => {
 
 // Write txns
 
+const waitForTransactionReceipt = (txHash) => {
+  console.log("txHash", txHash);
+  return new Promise((resolve, reject) => {
+    const checkReceipt = async () => {
+      try {
+        const receipt = await window.ethereum.request({
+          method: "eth_getTransactionReceipt",
+          params: [txHash],
+        });
+        if (receipt) {
+          resolve(receipt);
+        } else {
+          setTimeout(checkReceipt, 1000);
+        }
+      } catch (error) {
+        reject(error);
+      }
+    };
+    checkReceipt();
+  });
+};
+
 export const transferPoint = async (
   walletAddress: string,
   patp: string,
   from: string,
-  to: string
+  to: string,
+  onTransactionComplete: (receipt: any) => void
 ) => {
   const point = ob.patp2dec(patp);
   const contracts = await azimuthConnection();
@@ -73,7 +98,14 @@ export const transferPoint = async (
       params: [txParams],
     });
 
-    return await waitForTransactionReceipt(txHash);
+    // Trigger the receipt check in the background and call the callback
+    waitForTransactionReceipt(txHash)
+      .then(onTransactionComplete)
+      .catch((error) => {
+        console.error("Transaction receipt error:", error);
+      });
+
+    return txHash;
   } catch (error) {
     if (error.code === 4001) {
       throw new Error("You cancelled the transaction.");
@@ -83,32 +115,12 @@ export const transferPoint = async (
   }
 };
 
-const waitForTransactionReceipt = (txHash) => {
-  return new Promise((resolve, reject) => {
-    const checkReceipt = async () => {
-      try {
-        const receipt = await window.ethereum.request({
-          method: "eth_getTransactionReceipt",
-          params: [txHash],
-        });
-        if (receipt) {
-          resolve(receipt);
-        } else {
-          setTimeout(checkReceipt, 1000); // Check again after 1 second
-        }
-      } catch (error) {
-        reject(error);
-      }
-    };
-    checkReceipt();
-  });
-};
-
 export const changeManagementProxy = async (
   walletAddress: string,
   patp: string,
   from: string,
-  managerAddress: string
+  managerAddress: string,
+  onTransactionComplete: (receipt: any) => void
 ) => {
   const point = ob.patp2dec(patp);
   const contracts = await azimuthConnection();
@@ -123,21 +135,35 @@ export const changeManagementProxy = async (
   // txParams.maxPriorityFeePerGas = "0x3b9aca00";
   // txParams.maxFeePerGas = "0x2540be400";
 
-  window.ethereum
-    .request({
+  try {
+    const txHash = await window.ethereum.request({
       method: "eth_sendTransaction",
       params: [txParams],
-    })
-    .then((txHash) => {
-      return txHash;
     });
+
+    // Trigger the receipt check in the background and call the callback
+    waitForTransactionReceipt(txHash)
+      .then(onTransactionComplete)
+      .catch((error) => {
+        console.error("Transaction receipt error:", error);
+      });
+
+    return txHash;
+  } catch (error) {
+    if (error.code === 4001) {
+      throw new Error("You cancelled the transaction.");
+    } else {
+      throw new Error(error.message || "Transaction failed");
+    }
+  }
 };
 
 export const requestNewSponsor = async (
   walletAddress: string,
   patp: string,
   from: string,
-  newSponsorPatp: string
+  newSponsorPatp: string,
+  onTransactionComplete: (receipt: any) => void
 ) => {
   const point = ob.patp2dec(patp);
   const contracts = await azimuthConnection();
@@ -149,12 +175,25 @@ export const requestNewSponsor = async (
   // txParams.maxPriorityFeePerGas = "0x3b9aca00";
   // txParams.maxFeePerGas = "0x2540be400";
 
-  window.ethereum
-    .request({
+  try {
+    const txHash = await window.ethereum.request({
       method: "eth_sendTransaction",
       params: [txParams],
-    })
-    .then((txHash) => {
-      return txHash;
     });
+
+    // Trigger the receipt check in the background and call the callback
+    waitForTransactionReceipt(txHash)
+      .then(onTransactionComplete)
+      .catch((error) => {
+        console.error("Transaction receipt error:", error);
+      });
+
+    return txHash;
+  } catch (error) {
+    if (error.code === 4001) {
+      throw new Error("You cancelled the transaction.");
+    } else {
+      throw new Error(error.message || "Transaction failed");
+    }
+  }
 };

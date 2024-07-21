@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Container from "../components/Container";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import ControlBox from "../components/ControlBox";
@@ -13,10 +13,14 @@ import useGasEstimate from "../hooks/useGasEstimate";
 import { isAddress } from "web3-validator";
 import { GAS_LIMITS } from "../constants/constants";
 import { isZeroAddress } from "../utils/address";
+import { useRefresh } from "../hooks/useRefresh";
+import useTransaction from "../hooks/useTransaction";
 
 const ManagementAddress = () => {
   const { walletAddress, selectedShip } = useWalletStore();
   const [managerAddress, setManagerAddress] = useState("");
+  const { txHash, txnLoading, executeTransaction } = useTransaction();
+  const { refresh } = useRefresh();
   const {
     gasOptions,
     loading,
@@ -29,24 +33,24 @@ const ManagementAddress = () => {
   const { patp, managementProxy } = selectedShip;
 
   const handleTransaction = async () => {
-    // need to include gas for non-metamask transactions
-    const res = await txn.changeManagementProxy(
+    const result = await executeTransaction(
+      txn.changeManagementProxy,
       walletAddress,
       patp,
       walletAddress,
       managerAddress
     );
 
-    res && toast.success("Transfer successful!");
-
-    // update global state - roller delay ?
-    // const updatedShip = await txn.getShip(ob.patp(ids[0]));
-    // setSelectedShip(ship);
+    if (result?.success) {
+      setManagerAddress("");
+    }
   };
 
   return (
     <Container>
       <ControlBox
+        txnHash={txHash}
+        txnInProgress={txnLoading}
         headerContent={
           <div className="text-left w-full flex justify-between">
             <div className="items-center justify-center flex text-[20px] ">
@@ -69,7 +73,7 @@ const ManagementAddress = () => {
         }
         buttonTitle="Set Management Proxy"
         onSubmit={handleTransaction}
-        className="h-[319px]"
+        className="h-[319px] w-[500px]"
         disabled={!isAddress(managerAddress)}
       >
         <div className="text-[20px] justify-start flex flex-col items-start pl-2 border-b border-primary-color h-full mt-2">

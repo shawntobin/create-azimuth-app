@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Container from "../components/Container";
 import UrbitIdCard from "../components/UrbitIdCard";
 import Button from "../components/Button";
@@ -12,7 +13,7 @@ const Manage = () => {
     <Container dropdown>
       <UrbitIdCard ship={selectedShip} className={"mb-10 mt-20"} />
       <div className="flex-row flex">
-        <Button handleClick={() => {}} text="Set up Planet" />
+        <Button handleClick={() => navigate("/hosting")} text="Set up Planet" />
         <Button
           handleClick={() => navigate("/sigil-generator")}
           text="Sigil Generator"

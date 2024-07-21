@@ -11,7 +11,6 @@ import { PROVIDER_URL } from "../constants";
 import { CONTRACT } from "../constants/contracts";
 import { useNavigate } from "react-router-dom";
 import Sigil from "../components/Sigil";
-import UrbitIdSmall from "../components/UrbitIdSmall";
 
 import { ReactComponent as SecretShapeOne } from "../assets/secret-input-1.svg";
 import { ReactComponent as SecretShapeTwo } from "../assets/secret-input-2.svg";
@@ -21,6 +20,7 @@ import { ReactComponent as SecretShapeFour } from "../assets/secret-input-4.svg"
 const Activation = () => {
   const { walletAddress } = useWalletStore();
   const [step, setStep] = useState(1);
+  const [verifyError, setVerifyError] = useState(true);
   const navigate = useNavigate();
 
   const renderTicketFlow = () => {
@@ -65,19 +65,11 @@ const Activation = () => {
   const stepOne = () => {
     return (
       <ControlBox
-        headerContent={
-          <div className="text-left w-full flex justify-between text-[20px] font-bold">
-            <div className="items-center justify-center flex">
-              <span>L2 Activation</span>
-            </div>
-            {/* <span>{`Step ${step} of 4`}</span> */}
-          </div>
-        }
         buttonTitle="Claim"
         onSubmit={() => setStep(step + 1)}
-        // className="h-[250px]"
+        className="w-[500px]"
       >
-        <div className="justify-start flex flex-col items-start p-4 pr-10 border-b border-primary-color h-full">
+        <div className="justify-start flex flex-col items-start p-4 pr-10 h-full">
           <div className="text-[20px] text-left ">{`An Urbit ID is your unique identity that you use to communicate on Urbit. You own it forever.`}</div>
           <div className="text-[20px] mt-[20px] mb-1 text-left">
             To activate your Urbit ID begin by claiming it via the link below.
@@ -145,36 +137,36 @@ const Activation = () => {
         {renderStepBackButton()}
         <ControlBox
           hideBackButton
-          headerContent={
-            <div className="text-left w-full flex justify-between text-[20px] font-bold">
-              <div className="items-center justify-center flex">
-                <span>L2 Activation</span>
-              </div>
-              {/* <span>{`Step ${step} of 4`}</span> */}
-            </div>
-          }
           buttonTitle="Download Back Up (Passport)"
           onSubmit={handleVerifyReticket}
-          className="h-[440px]"
+          className="h-[375px]"
         >
-          <div className="justify-between flex flex-col items-start p-0 border-b border-primary-color h-full">
-            <div className="p-8 text-left">
+          <div className="justify-between flex flex-col items-start p-0 h-full">
+            <div className="p-8">
               <div className="text-[20px] font-bold pb-4 ">{`Back up your Master Ticket`}</div>
-              <div className="text-[20px] text-left">{`Download and store your backup somewhere safe, like a security deposit box or password manager.`}</div>
+              <div className="text-[16px] text-[#C1C1C1]">{`Download and store your backup somewhere safe, like a security deposit box or password manager.`}</div>
 
               <div className="w-full flex items-center justify-center m-3">
-                <div className="text-[20px] text-center items-center flex border border-[#E72E2E] px-4 py-1 mt-4 rounded-[5px] text-black font-bold bg-[#F6C8C4]">{`Never share your master ticket with anyone.`}</div>
+                <div className="text-[20px] text-center items-center flex border border-[#FF0000] px-4 py-1 mt-4 rounded-[5px] text-[#E72E2E] font-bold bg-transparent">{`Never share your master ticket with anyone.`}</div>
               </div>
             </div>
 
             <div className="flex items-center justify-center mt-0 w-full">
-              <input className="border border-[white] bg-transparent rounded-[5px] h-[45px] w-[84px]" />
+              <div className="border border-[white] bg-[#2B2B29] rounded-[5px] h-[45px] w-[84px] flex justify-center items-center">
+                hastuc
+              </div>
               <div className="border w-[23px]" />
-              <input className="border border-[white] bg-transparent rounded-[5px] h-[45px] w-[84px]" />
+              <div className="border border-[white] bg-[#2B2B29] rounded-[5px] h-[45px] w-[84px] flex justify-center items-center">
+                hastuc
+              </div>
               <div className="border w-[23px]" />
-              <input className="border border-[white] bg-transparent rounded-[5px] h-[45px] w-[84px]" />
+              <div className="border border-[white] bg-[#2B2B29] rounded-[5px] h-[45px] w-[84px] flex justify-center items-center">
+                hastuc
+              </div>
               <div className="border w-[23px]" />
-              <input className="border border-[white] bg-transparent rounded-[5px] h-[45px] w-[84px]" />
+              <div className="border border-[white] bg-[#2B2B29] rounded-[5px] h-[45px] w-[84px] flex justify-center items-center">
+                hastuc
+              </div>
             </div>
 
             <div className="text-[16px] mt-[20px] mb-1 flex justify-center items-center w-full mb-3">
@@ -198,30 +190,30 @@ const Activation = () => {
         {renderStepBackButton()}
         <ControlBox
           hideBackButton
-          headerContent={
-            <div className="text-left w-full flex justify-between text-[20px] font-bold">
-              <div className="items-center justify-center flex">
-                <span>L2 Activation</span>
-              </div>
-              {/* <span>{`Step ${step} of 4`}</span> */}
-            </div>
-          }
           buttonTitle="Confirm Backup"
           onSubmit={() => setStep(step + 1)}
         >
-          <div className="justify-start flex flex-col items-start pl-2 border-b border-primary-color h-full mt-2">
-            <div className="text-[20px] font-bold text-left p-4 ">{`To confirm that you stored your Master Ticket somewhere safe, enter it below.`}</div>
+          <div className="justify-start flex flex-col items-start pl-2 h-full mt-2">
+            <div className="text-[20px] font-bold text-left px-4 ">{`Confirm Backup`}</div>
+            <div className="text-[20px] text-left p-4 ">{`To confirm that you stored your Master Ticket somewhere safe, enter it below.`}</div>
+            <div className=" my-10 my-10  w-full px-10">
+              {verifyError && (
+                <div className="text-[#E72E2E] justify-start items-start flex font-[20px] pb-4">
+                  Incorrect Master Ticket.
+                </div>
+              )}
 
-            <div className="flex items-center justify-center my-10 w-full">
-              <input className="border border-[white] bg-transparent rounded-[5px] h-[45px] w-[84px]" />
-              <div className="border w-[23px]" />
-              <input className="border border-[white] bg-transparent rounded-[5px] h-[45px] w-[84px]" />
-              <div className="border w-[23px]" />
-              <input className="border border-[white] bg-transparent rounded-[5px] h-[45px] w-[84px]" />
-              <div className="border w-[23px]" />
-              <input className="border border-[white] bg-transparent rounded-[5px] h-[45px] w-[84px]" />
+              <div className="flex items-center justify-center">
+                <input className="border border-[white] bg-transparent rounded-[5px] h-[45px] w-[84px] flex justify-center items-center text-center" />
+                <div className="border w-[23px]" />
+                <input className="border border-[white] bg-transparent rounded-[5px] h-[45px] w-[84px] flex justify-center items-center text-center" />
+                <div className="border w-[23px]" />
+                <input className="border border-[white] bg-transparent rounded-[5px] h-[45px] w-[84px] flex justify-center items-center text-center" />
+                <div className="border w-[23px]" />
+                <input className="border border-[white] bg-transparent rounded-[5px] h-[45px] w-[84px] flex justify-center items-center text-center" />
+              </div>
+              <div className="text-[20px] mt-[20px] mb-1 text-left"></div>
             </div>
-            <div className="text-[20px] mt-[20px] mb-1 text-left"></div>
           </div>
         </ControlBox>
       </div>
@@ -234,19 +226,11 @@ const Activation = () => {
         {renderStepBackButton()}
         <ControlBox
           hideBackButton
-          headerContent={
-            <div className="text-left w-full flex justify-between text-[20px] font-bold">
-              <div className="items-center justify-center flex">
-                <span>L2 Activation</span>
-              </div>
-              {/* <span>{`Step ${step} of 4`}</span> */}
-            </div>
-          }
           buttonColor="bg-bright-green"
           buttonTitle="Set up planet"
-          onSubmit={() => navigate(`/`)}
+          onSubmit={() => navigate(`/hosting`)}
         >
-          <div className="justify-start flex flex-col items-start pl-2 border-b border-primary-color h-full mt-2">
+          <div className="justify-start flex flex-col items-start pl-2 h-full mt-2">
             <div className="text-[20px] font-bold text-left p-4 ">{`Congratulations,`}</div>
 
             <div className="text-[20px] text-left p-4 flex">

@@ -1,5 +1,5 @@
 const Checkbox = (props) => {
-  const { checked, onChange, label } = props;
+  const { checked, onChange, label, isBold } = props;
 
   return (
     <label htmlFor={label} className="flex items-center cursor-pointer pl-1">
@@ -19,7 +19,11 @@ const Checkbox = (props) => {
           </span>
         )}
       </span>
-      {label && <span className="ml-3 text-[20px] font-bold">{label}</span>}
+      {label && (
+        <span className={`ml-3 text-[20px] ${isBold && "font-bold"}`}>
+          {label}
+        </span>
+      )}
     </label>
   );
 };

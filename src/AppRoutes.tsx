@@ -14,14 +14,20 @@ import SigilGenerator from "./routes/SigilGenerator";
 import Onboarding from "./routes/Onboarding";
 import TransactionHistory from "./routes/TransactionHistory";
 import Activation from "./routes/Activation";
+import Hosting from "./routes/Hosting";
+import StarAnalyzer from "./routes/StarAnalyzer";
+import LandingPage from "./routes/LandingPage";
 
 const routeConfigs = [
-  { path: "/", element: <MainLogin />, protected: false },
-  { path: "/login", element: <MainLogin />, protected: false },
+  { path: "/", element: <LandingPage />, protected: false },
+  { path: "/login", element: <LandingPage />, protected: false },
   { path: "/seed-login", element: <SeedLogin />, protected: false },
+  { path: "/ticket-login", element: <MainLogin />, protected: false },
+  { path: "/star-scanner", element: <StarAnalyzer />, protected: false },
   { path: "/activation", element: <Activation />, protected: false },
   { path: "/wallet", element: <Wallet />, protected: true },
   { path: "/onboarding", element: <Onboarding />, protected: true },
+  { path: "/hosting", element: <Hosting />, protected: true },
   { path: "/manage", element: <Manage />, protected: true },
   { path: "/manage/advanced", element: <Advanced />, protected: true },
   { path: "/manage/sponsor", element: <Sponsor />, protected: true },
@@ -36,7 +42,7 @@ const routeConfigs = [
   {
     path: "/sigil-generator",
     element: <SigilGenerator />,
-    protected: true,
+    protected: false,
   },
   {
     path: "/manage/management-key",

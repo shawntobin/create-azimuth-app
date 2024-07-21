@@ -24,11 +24,12 @@ const NetworkKeys = () => {
         }
         buttonTitle="Reset Network Keys"
         onSubmit={() => {}}
-        className="h-[292px]"
+        className="h-[292px] w-[500px]"
       >
         <div className="justify-start flex flex-col items-start text-left p-2 mt-2">
           <div className="pb-4">
             <Checkbox
+              isBold
               label="Factory Reset"
               checked={factoryReset}
               onChange={() => setFactoryReset(!factoryReset)}
@@ -40,6 +41,7 @@ const NetworkKeys = () => {
           </div>
           <div>
             <Checkbox
+              isBold
               label="Custom Network Seed"
               checked={customSeed}
               onChange={() => setCustomSeed(!customSeed)}

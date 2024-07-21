@@ -1,7 +1,17 @@
-import { NETWORK_EVENTS_API } from "../constants/config";
+import { NETWORK_EVENTS_API, SHIP_STATUS_API } from "../constants/config";
 
 export const getEvents = async (ship) => {
   const apiUrl = `${NETWORK_EVENTS_API}${ship}`;
+
+  const response = await fetch(apiUrl, {
+    headers: {},
+  });
+
+  return response.json();
+};
+
+export const getShipStatus = async (ship) => {
+  const apiUrl = `${SHIP_STATUS_API}${ship}`;
 
   const response = await fetch(apiUrl, {
     headers: {},
