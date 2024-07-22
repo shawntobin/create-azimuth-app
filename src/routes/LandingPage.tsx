@@ -102,7 +102,7 @@ const LandingPage = () => {
               </div>
 
               <img
-                src="src/assets/sigils.png"
+                src="/sigils.png"
                 alt="star scanner"
                 className="w-full h-[150px] object-cover border-b border-black"
               />
@@ -130,7 +130,7 @@ const LandingPage = () => {
                 Buy Urbit ID
               </div>
               <img
-                src="src/assets/opensea-logo.png"
+                src="/opensea-logo.png"
                 alt="star scanner"
                 className="w-full h-[150px] object-cover border-b border-black"
               />
@@ -159,7 +159,7 @@ const LandingPage = () => {
                 Sigil Generator
               </div>
               <img
-                src="src/assets/sigil-sample.png"
+                src="/sigil-sample.png"
                 alt="star scanner"
                 className="w-full h-[150px] object-cover border-b border-black"
               />

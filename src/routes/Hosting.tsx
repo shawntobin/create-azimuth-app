@@ -29,7 +29,7 @@ const Hosting = () => {
             <div className="text-[16px] justify-start flex flex-col items-start  h-full mt-2">
               <div className="flex justify-center items-center w-full h-full py-10">
                 <img
-                  src="src/assets/red-horizon-logo.png"
+                  src="/red-horizon-logo.png"
                   alt="red horizon logo"
                   className="w-[113px] h-[113px]"
                 />
@@ -59,7 +59,7 @@ const Hosting = () => {
             <div className="text-[16px] justify-start flex flex-col items-start h-full">
               <div className="flex justify-start items-start w-full h-full">
                 <img
-                  src="src/assets/urbit-dojo.png"
+                  src="/urbit-dojo.png"
                   alt="red horizon logo"
                   className="w-full h-full"
                 />
