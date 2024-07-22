@@ -138,9 +138,9 @@ export const findEnglishPatps = (patp: string) => {
 export const assignTags = ({ patp }: Planet) => {
   let tags = [];
 
-  if (findBothEnglish(patp)) {
-    tags.push(BOTH_ENGLISH);
-  }
+  // if (findBothEnglish(patp)) {
+  //   tags.push(BOTH_ENGLISH);
+  // }
 
   if (findDoubles(patp)) {
     tags.push(DOUBLES);
@@ -172,7 +172,7 @@ export const getPlanets = (patp: string) => {
   return shipArr;
 };
 
-export const ENGLISH_LIKE = "english-like";
+export const ENGLISH_LIKE = "words";
 export const DOUBLES = "doubles";
 export const BOTH_ENGLISH = "both english";
 

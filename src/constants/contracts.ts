@@ -5,9 +5,7 @@ type ContractAddresses = {
   [key: string]: string;
 };
 
-type Environment = keyof typeof ETHEREUM_NETWORK;
-
-let currentEnvironment: Environment;
+let currentEnvironment;
 
 switch (NETWORK) {
   case "mainnet":

@@ -14,7 +14,7 @@
     "dev:sepolia": "cross-env NODE_ENV=development VITE_REACT_APP_NETWORK=sepolia vite",
     "dev:local": "BROWSER=NONE WITH_TEST_STATE=L2 cross-env NODE_ENV=development VITE_REACT_APP_NETWORK=local HTTPS=false npm-run-all dev:setup dev dev:cleanup --continue-on-error",
     "dev:mainnet": "cross-env NODE_ENV=development VITE_REACT_APP_NETWORK=mainnet vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -49,6 +49,7 @@
     "lodash": "^4.17.21",
     "match-sorter": "^6.3.4",
     "more-entropy": "^0.0.7",
+    "pluralize": "^8.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",

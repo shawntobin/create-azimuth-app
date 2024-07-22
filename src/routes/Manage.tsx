@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Container from "../components/Container";
 import UrbitIdCard from "../components/UrbitIdCard";
 import Button from "../components/Button";

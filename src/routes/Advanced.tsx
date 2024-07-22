@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Container from "../components/Container";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
@@ -6,14 +6,11 @@ import SettingsItem from "../components/SettingsItem";
 import useWalletStore from "../store/useWalletStore";
 import * as ob from "urbit-ob";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
-import { copy } from "../utils/helper";
 import { isZeroAddress } from "../utils/address";
 import AlertModal from "../components/AlertModal";
 import useAppStore from "../store/useAppStore";
 import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
-import { useSingleKeyfileGenerator } from "../lib/useKeyfileGenerator"; // xxxx
-import Web3 from "web3";
-import { PROVIDER_URL } from "../constants";
+// import { useSingleKeyfileGenerator } from "../lib/useKeyfileGenerator"; // xxxx
 
 const Advanced = () => {
   const navigate = useNavigate();
@@ -30,16 +27,16 @@ const Advanced = () => {
 
   const {
     owner,
-    spawnProxy,
+    // spawnProxy,
     managementProxy,
     keyRevisionNumber,
     sponsor,
-    hasSponsor,
+    // hasSponsor,
     escapeRequested,
     escapeRequestedTo,
   } = selectedShip;
 
-  const sponsorPatp = hasSponsor ? ob.patp(sponsor) : "None";
+  // const sponsorPatp = hasSponsor ? ob.patp(sponsor) : "None";
 
   // const { available, code, download, generating } = useSingleKeyfileGenerator(
   //   {}

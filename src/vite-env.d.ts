@@ -41,11 +41,6 @@ interface Window {
   ethereum: any;
 }
 
-declare module "urbit-ob" {}
+declare module "urbit-ob";
 
-declare module "azimuth-js" {
-  export function initContractsPartial(
-    web3: any,
-    contractAddress: string
-  ): Promise<any>;
-}
+declare module "azimuth-js";

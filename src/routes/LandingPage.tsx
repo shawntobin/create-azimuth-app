@@ -1,11 +1,7 @@
-import { useEffect, useState } from "react";
-import { useNavigate, Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import useLogin from "../hooks/useLogin";
-import { urbitWalletFromTicket } from "../lib/wallet";
-import * as ob from "urbit-ob";
-import Sigil from "../components/Sigil";
-import Disclaimer from "../components/Disclaimer";
+// import Disclaimer from "../components/Disclaimer";
 
 import Onboard from "@web3-onboard/core";
 import walletConnectModule from "@web3-onboard/walletconnect";
@@ -13,7 +9,6 @@ import ledgerModule from "@web3-onboard/ledger";
 import injectedModule from "@web3-onboard/injected-wallets";
 // import { init, useConnectWallet } from "@web3-onboard/react";
 import { PROVIDER_URL } from "../constants";
-import ControlBox from "../components/ControlBox";
 
 type LedgerOptionsWCv2 = {
   walletConnectVersion: 2;
@@ -196,13 +191,14 @@ const LandingPage = () => {
           Log in with any method below to receive, send, and manage your Urbit
           identity.
         </div>
-
         <button
           className="mb-8 w-[216px] flex items-center justify-center rounded-full border border-primary-color font-bold text-base-color text-[20px] h-[36px] bg-primary-color whitespace-nowrap hover:border-light-gray hover:bg-light-gray"
           onClick={handleWalletLogin}
         >
           Connect Wallet
         </button>
+
+        <div className="border-b border-primary-color w-[210px] mb-8" />
 
         <div className="flex flex-col space-y-2 w-full items-center">
           <button

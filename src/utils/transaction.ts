@@ -28,8 +28,18 @@ export const getShip = async (patp: string) => {
   const ship = await layer.getShip(patp);
 
   const shipStatus = await getShipStatus(patp);
-  const shipWithStatus = { ...ship, online: shipStatus?.online };
+  const shipWithStatus = { ...(ship as object), online: shipStatus?.online };
   return shipWithStatus;
+};
+
+export const getSpawned = async (patp: string) => {
+  const children = await layer.getSpawned(patp);
+  return children;
+};
+
+export const getSpawnCount = async (patp: string) => {
+  const children = await layer.getSpawnCount(patp);
+  return children;
 };
 
 // WRITE transactions

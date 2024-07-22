@@ -1,18 +1,5 @@
-import { useState } from "react";
 import Container from "../components/Container";
-import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import ControlBox from "../components/ControlBox";
-import useWalletStore from "../store/useWalletStore";
-import toast from "react-hot-toast";
-import { formatAddress } from "../utils/address";
-import { copy, calculateMaxTransactionCost } from "../utils/helper";
-import * as txn from "../utils/transaction";
-import { ETH_ZERO_ADDR } from "../constants/constants";
-import Dropdown from "../components/Dropdown";
-import useGasEstimate from "../hooks/useGasEstimate";
-import { isAddress } from "web3-validator";
-import { GAS_LIMITS } from "../constants/constants";
-import { isZeroAddress } from "../utils/address";
 import BackButton from "../components/BackButton";
 
 const Hosting = () => {

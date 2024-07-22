@@ -1,9 +1,3 @@
-import {
-  DocumentDuplicateIcon,
-  ArrowPathIcon,
-  ArrowsRightLeftIcon,
-  KeyIcon,
-} from "@heroicons/react/20/solid";
 import { formatAddress } from "../utils/address";
 import UrbitIcon from "./UrbitIcon";
 

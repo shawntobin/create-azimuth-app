@@ -1,5 +1,3 @@
-import path from "path";
-
 import { Options } from "@urbit/roller-api";
 
 const INFURA_ID = import.meta.env.VITE_REACT_APP_INFURA_API;

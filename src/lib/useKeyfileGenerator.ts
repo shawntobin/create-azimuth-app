@@ -2,11 +2,10 @@ import { useCallback, useMemo, useEffect, useState } from "react";
 import { Just } from "folktale/maybe";
 import saveAs from "file-saver";
 import { useWallet } from "store/wallet"; // xxx
-import { EMPTY_POINT, useRollerStore } from "store/rollerStore"; // xxx
+import { EMPTY_POINT } from "store/rollerStore"; // xxx
 import { generateCode } from "lib/networkCode";
 import {
   attemptNetworkSeedDerivation,
-  deriveNetworkSeedFromUrbitWallet,
   keysMatchChain,
   deriveNetworkKeys,
   compileMultiKey,

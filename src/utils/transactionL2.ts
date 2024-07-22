@@ -1,19 +1,17 @@
-import { useMemo } from "react";
-import * as c from "../constants/config";
 import { ROLLER_URL } from "../constants/config";
 import { generateHashAndSign } from "../lib/roller";
 import {
   RollerRPCAPI,
-  Proxy,
-  Signature,
-  From,
-  EthAddress,
-  AddressParams,
-  Ship,
-  SpawnParams,
-  L2Data,
-  PendingTransaction,
-  Options,
+  // Proxy,
+  // Signature,
+  // From,
+  // EthAddress,
+  // AddressParams,
+  // Ship,
+  // SpawnParams,
+  // L2Data,
+  // PendingTransaction,
+  // Options,
 } from "@urbit/roller-api";
 import * as ob from "urbit-ob";
 import { ROLLER_OPTIONS } from "../constants/config";
@@ -75,11 +73,26 @@ export const getPoints = async (addr: string) => {
   return allPoints;
 };
 
+export const getSpawned = async (patp: string) => {
+  const res = await callRoller("getSpawned", { ship: patp });
+
+  return res.result;
+};
+
+export const getSpawnCount = async (patp: string) => {
+  const res = await callRoller("getSpawned", { ship: patp });
+  const spawnCount = res.result.length;
+
+  return spawnCount;
+};
+
 export const getShip = async (patp: string) => {
   const _ship = await getPoint(patp);
   const id = ob.patp2dec(patp);
 
-  const ship: Ship = {
+  console.log("ship", _ship);
+
+  const ship = {
     patp: patp,
     point: id,
     layer: _ship.dominion,
@@ -155,7 +168,7 @@ export const changeManagementProxy = async (
   from: string,
   managerAddress: string
 ) => {
-  const api = new RollerRPCAPI(options);
+  const api = new RollerRPCAPI(ROLLER_OPTIONS);
   const nonce = await api.getNonce({ ship: patp, proxy: "own" });
   const signedMessage = await generateHashAndSign(
     api,
@@ -197,9 +210,8 @@ export const requestNewSponsor = async (
   from: string,
   newSponsorPatp: string
 ) => {
-  const api = new RollerRPCAPI(options);
+  const api = new RollerRPCAPI(ROLLER_OPTIONS);
   const nonce = await api.getNonce({ ship: patp, proxy: "own" });
-  const newSponsorPoint = ob.patp2dec(newSponsorPatp);
 
   const signedMessage = await generateHashAndSign(
     api,

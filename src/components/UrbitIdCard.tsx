@@ -8,12 +8,11 @@ import { formatDistance } from "date-fns";
 const UrbitIdCard = (props) => {
   const { ship, className } = props;
 
-  const { patp, layer, keyRevisionNumber } = ship;
+  const { patp, layer } = ship;
 
   const point = ob.patp2dec(patp);
   const parent = ob.sein(patp);
   const shipType = ob.clan(patp);
-  const keysSet = keyRevisionNumber !== 0;
   const isOnline = ship?.online;
 
   const statusMessage = isOnline

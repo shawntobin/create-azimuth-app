@@ -3,12 +3,6 @@ import Container from "../components/Container";
 import { DocumentDuplicateIcon, EyeIcon } from "@heroicons/react/24/outline";
 import ControlBox from "../components/ControlBox";
 import useWalletStore from "../store/useWalletStore";
-import toast from "react-hot-toast";
-import { copy } from "../utils/helper";
-import { ecliptic, azimuth, initContractsPartial } from "azimuth-js";
-import Web3 from "web3";
-import { PROVIDER_URL } from "../constants";
-import { CONTRACT } from "../constants/contracts";
 import { useNavigate } from "react-router-dom";
 import Sigil from "../components/Sigil";
 

@@ -1,18 +1,11 @@
 import { useState } from "react";
 import Container from "../components/Container";
-import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import ControlBox from "../components/ControlBox";
 import useWalletStore from "../store/useWalletStore";
 import toast from "react-hot-toast";
-import { copy } from "../utils/helper";
-import { ecliptic, azimuth, initContractsPartial } from "azimuth-js";
-import { changeManagementProxy } from "../utils/transactionL2";
-import Web3 from "web3";
-import { PROVIDER_URL } from "../constants";
-import { CONTRACT } from "../constants/contracts";
 import { useNavigate } from "react-router-dom";
-import { downloadWallet } from "../lib/invite";
-import PaperBuilder from "components/PaperBuilder";
+// import { downloadWallet } from "../lib/invite";
+// import PaperBuilder from "components/PaperBuilder";
 
 const MasterTicket = () => {
   const { walletAddress, selectedShip } = useWalletStore();
@@ -54,7 +47,7 @@ const MasterTicket = () => {
 
     toast.error("Error downloading passport");
 
-    console.log("new wallet", newWallet.value.paper);
+    // console.log("new wallet", newWallet.value.paper);
 
     // setStep(step + 1);
   };

@@ -11,10 +11,13 @@ import * as ob from "urbit-ob";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import * as utils from "../utils/analyzer-utils";
 import UrbitIcon from "../components/UrbitIcon";
+import Sigil from "../components/Sigil";
+import pluralize from "pluralize";
 
 type Planet = {
   patp: string;
   point: number;
+  tags: string[];
 };
 
 const Wallet = () => {
@@ -22,28 +25,63 @@ const Wallet = () => {
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const [selectedShipType, setSelectedShipType] = useState("all");
   const [filteredItems, setFilteredItems] = useState([]);
-  const [searchText, setSearchText] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [planets, setPlanets] = useState<Planet[]>([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [selectedFilter, setSelectedFilter] = useState("");
+  const [spawned, setSpawned] = useState(0);
+  const [keyRevision, setKeyRevision] = useState(0);
 
-  const itemsPerPage = 15;
+  const { selectedShip } = useWalletStore();
+
+  const star = selectedShip?.patp || "~marzod";
+
+  const itemsPerPage = 28;
 
   useEffect(() => {
-    startAnalyzing("~dosdel");
+    startAnalyzing(star);
   }, []);
 
   useEffect(() => {
-    const filterItems = () => {
-      //   if (selectedShipType === "all") {
-      //     setFilteredItems(planets);
-      //   } else {
-      setFilteredItems(planets);
+    const asyncFunction = async () => {
+      const result = await txn.getSpawnCount("~marzod");
+      const spawnedPlanets = result.toString();
+      setSpawned(spawnedPlanets);
+      // note this info already available when logged in
+      const shipDetails = await txn.getShip(star);
+      const keyRev = shipDetails.keyRevisionNumber;
+      setKeyRevision(keyRev);
     };
 
-    filterItems();
-  }, [planets]);
+    asyncFunction();
+  }, []);
+
+  useEffect(() => {
+    const filteredData = planets.filter(
+      (item) =>
+        (item.tags?.includes(selectedFilter) || !selectedFilter) &&
+        (item.patp.toLowerCase().includes(inputValue.toLowerCase()) ||
+          !inputValue)
+    );
+
+    setFilteredItems(filteredData);
+  }, [planets, selectedFilter, inputValue]);
+
+  const resetPagination = () => {
+    setItemOffset(0);
+    setCurrentPage(0);
+  };
+
+  const handleFilterClick = (filter: string) => {
+    resetPagination();
+
+    if (selectedFilter === filter) {
+      setSelectedFilter("");
+    } else {
+      setSelectedFilter(filter);
+    }
+  };
 
   useEffect(() => {
     toast.dismiss();
@@ -56,51 +94,25 @@ const Wallet = () => {
   const startAnalyzing = (_star: string) => {
     const ids = utils.getPlanets(_star);
 
-    console.log("ids", ids.length);
-
     setPlanets(ids);
     // setLoading(false);
     // setShowTextInput(false);
   };
 
   const handleSearch = (event) => {
-    // event.preventDefault();
-    // if (inputValue === "") {
-    //   return;
-    // }
-
     setInputValue(event.target.value);
-
-    const inputValue = event.target.value;
-
-    setSearchText(inputValue);
-    // setInputValue("");
-
-    const filtered = planets.filter((pl) => pl.patp.includes(inputValue));
-    console.log("filtered", filtered.length);
-    setFilteredItems(filtered);
-  };
-
-  const handleClearSearch = () => {
-    setSearchText("");
-    setInputValue("");
-    setFilteredItems(planets);
-  };
-
-  const handleSelectShipType = (shipType: string) => {
-    setItemOffset(0);
-    setPageCount(0);
-    setSelectedShipType(shipType);
   };
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % filteredItems.length;
     setItemOffset(newOffset);
+    setCurrentPage(event.selected);
   };
 
   const renderPagination = () => {
     return (
       <ReactPaginate
+        forcePage={currentPage}
         nextLabel="Next >"
         onPageChange={handlePageClick}
         pageRangeDisplayed={0}
@@ -116,7 +128,7 @@ const Wallet = () => {
         nextLinkClassName="text-white hover:text-secondary-color border-0 shadow-none focus:outline-none"
         breakClassName=""
         breakLinkClassName=""
-        containerClassName="flex justify-between h-full w-full font-bold text-lg px-6" //mt-6
+        containerClassName="flex justify-between w-full font-bold text-lg px-6" //mt-6
         activeClassName=""
         renderOnZeroPageCount={null}
       />
@@ -126,6 +138,7 @@ const Wallet = () => {
   const renderUrbitIds = currentItems.map((pl) => (
     <UrbitIdSmall
       size={80}
+      textSize={12}
       urbitId={pl.point}
       key={pl.point}
       handleClick={() => {}}
@@ -142,11 +155,42 @@ const Wallet = () => {
     );
   };
 
-  const renderWallet = () => {
+  const renderContent = () => {
     return (
       <div className="mt-[75px] flex-col justify-start items-start h-full">
+        <div className="border h-[86px] w-full rounded-[10px] flex justify-between items-center pr-8">
+          <div className="flex flex justify-start items-center">
+            <div className="ml-5 overflow-hidden h-[80px] w-[80px]">
+              <Sigil id={star} colors={["black", "white"]} size={86} />
+            </div>
+
+            <div className="text-[36px] font-[400] text-primary color pl-4">
+              {star}
+            </div>
+          </div>
+          <div className="flex font-[700] text-[16px]">
+            <div className="pr-4">
+              <div>
+                Spawned Planets: <span className="font-[400]">{spawned}</span>
+              </div>
+              <div>
+                Key Revision: <span className="font-[400]">{keyRevision}</span>
+              </div>
+            </div>
+            <div>
+              <div>
+                Azimuth Point:{" "}
+                <span className="font-[400]">{ob.patp2dec(star)}</span>
+              </div>
+              <div>
+                Parent:{" "}
+                <span className="font-[400]">{star && ob.sein(star)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
         <div>
-          <div className="flex justify-between mt-10 pr-7 pl-3">
+          <div className="flex justify-left mt-5 pl-3 space-x-3">
             <div className="relative flex items-center mb-3">
               <form onSubmit={() => {}} className="input">
                 <input
@@ -165,31 +209,47 @@ const Wallet = () => {
                 </button> */}
               </form>
             </div>
-            {/* <button className="h-[26px] p-0 m-0 flex justify-center items-center font-[600] rounded-full border border-primary-color text-light-gray w-[97px] text-[16px] bg-transparent">
-            
-              <UrbitIcon
-                name="doubles"
-                size={26}
-                color="white"
-                className="mt-5"
-              />
+            <button
+              className={`h-[26px] px-2 m-0 flex justify-center items-center font-[600] rounded-full border border-primary-color text-[16px] ${
+                selectedFilter === "doubles"
+                  ? "text-black bg-primary-color"
+                  : "text-primary-color bg-transparent"
+              }`}
+              onClick={() => handleFilterClick("doubles")}
+            >
               Doubles
+              {selectedFilter === "doubles" && (
+                <XMarkIcon className="h-3 w-3 ml-1" />
+              )}
             </button>
-            <button className="h-[26px] p-0 m-0 flex justify-center items-center font-[600] rounded-full border border-primary-color text-light-gray w-[97px] text-[16px] bg-transparent">
-              
+            <button
+              className={`h-[26px] px-2 m-0 flex justify-center items-center font-[600] rounded-full border border-primary-color text-[16px] ${
+                selectedFilter === "words"
+                  ? "text-black bg-primary-color"
+                  : "text-primary-color bg-transparent"
+              }`}
+              onClick={() => handleFilterClick("words")}
+            >
               Words
-            </button> */}
+              {selectedFilter === "words" && (
+                <XMarkIcon className="h-3 w-3 ml-1" />
+              )}
+            </button>
           </div>
 
-          <div className="flex flex-row flex-wrap items-start justify-start w-[500px] h-full mb-[50px]">
+          <div className="p-2 flex flex-row flex-wrap items-start justify-start w-[700px] h-full mb-[20px]">
             {renderUrbitIds.length > 0 ? renderUrbitIds : renderNoIds()}
           </div>
         </div>
+
         {renderPagination()}
+        <div className="text-secondary-color">{`${filteredItems.length.toLocaleString(
+          "en"
+        )} ${pluralize("Result", filteredItems.length)}`}</div>
       </div>
     );
   };
-  return <Container>{renderWallet()}</Container>;
+  return <Container symbols={false}>{renderContent()}</Container>;
 };
 
 export default Wallet;

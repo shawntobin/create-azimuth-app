@@ -4,7 +4,6 @@ import { PROVIDER_URL } from "../constants";
 import { CONTRACT } from "../constants/contracts";
 import * as ob from "urbit-ob";
 import { isGalaxy } from "./helper";
-import toast from "react-hot-toast";
 
 // Using patp instead of point number for parameters since that's what L2 uses, then convert using ob.patp2dec
 
@@ -20,6 +19,20 @@ export const getPoints = async (walletAddress: string) => {
   const contracts = await azimuthConnection();
   const points = await azimuth.getOwnedPoints(contracts, walletAddress);
   return points;
+};
+
+export const getSpawned = async (patp: string) => {
+  const id = ob.patp2dec(patp);
+  const contracts = await azimuthConnection();
+  const children = await azimuth.getSpawned(contracts, id);
+  return children;
+};
+
+export const getSpawnCount = async (patp: string) => {
+  const id = ob.patp2dec(patp);
+  const contracts = await azimuthConnection();
+  const children = await azimuth.getSpawnCount(contracts, id);
+  return children;
 };
 
 export const getPoint = async (patp: string) => {

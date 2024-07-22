@@ -6,6 +6,9 @@ import { comlink } from "vite-plugin-comlink";
 import svgr from "@svgr/rollup";
 
 export default defineConfig({
+  build: {
+    target: "esnext",
+  },
   plugins: [react(), wasm(), comlink(), svgr()],
   optimizeDeps: {
     include: ["urbit-key-generation"],
@@ -13,6 +16,7 @@ export default defineConfig({
       define: {
         global: "globalThis",
       },
+
       plugins: [
         GlobalPolyFill({
           process: true,

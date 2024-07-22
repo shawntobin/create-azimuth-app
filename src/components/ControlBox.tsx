@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import BackButton from "./BackButton";
 import classNames from "classnames";
 import BeatLoader from "react-spinners/BeatLoader";
-import MoonLoader from "react-spinners/MoonLoader";
 
 interface ControlBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;

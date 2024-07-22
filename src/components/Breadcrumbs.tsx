@@ -1,5 +1,3 @@
-// Breadcrumbs.js
-import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { getBreadcrumbName } from "../utils/breadcrumbs";
 import { formatAddress } from "../utils/address";

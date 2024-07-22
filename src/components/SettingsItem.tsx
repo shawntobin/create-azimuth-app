@@ -6,7 +6,7 @@ import { isAddress } from "web3-validator";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   handleClick: () => void;
-  text: string;
+  text: React.ReactNode;
   title: string;
 }
 
@@ -15,12 +15,10 @@ const SettingsItem: React.FC<ButtonProps> = ({
   title,
   text,
   className = "",
-  ...rest
 }) => {
   return (
     <div
       className={`pl-4 justify-start rounded-full border border-primary-color text-primary-color text-[20px] h-[36px] bg-transparent ${className} m-[3px] relative flex items-center`}
-      {...rest}
     >
       <div className="mb-0 pb-0">{title}</div>
       <div className="mb-0 pb-0 font-[200] pl-3">

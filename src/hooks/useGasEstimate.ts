@@ -8,7 +8,7 @@ const useGasEstimate = (gasLimit) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [maxTransactionCost, setMaxTransactionCost] = useState();
+  const [maxTransactionCost, setMaxTransactionCost] = useState("0");
   const [selectedItem, setSelectedItem] = useState();
 
   const handleSelect = (option) => {

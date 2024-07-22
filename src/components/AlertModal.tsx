@@ -1,7 +1,6 @@
 import Modal from "react-modal";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import UrbitIcon from "./UrbitIcon";
 
 const customStyles = {
   content: {
