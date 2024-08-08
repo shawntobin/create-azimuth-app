@@ -41,8 +41,12 @@
 
 .breadcrumb-item a {
   text-decoration: none;
-  color: #c7c7c7;
+  color: #fff;
   margin-left: 5px;
+}
+
+.breadcrumb-item a:hover {
+  color: #ccc;
 }
 
 .breadcrumb-item::after {

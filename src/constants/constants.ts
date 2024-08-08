@@ -58,6 +58,15 @@ const NONCUSTODIAL_WALLETS = new Set([
   WALLET_TYPES.WALLET_CONNECT,
 ]);
 
+// The above definitions are from the original codebase.
+// Using the below at the moment.
+
+const LOGIN_METHODS = {
+  BLOCKNATIVE: Symbol("BLOCKNATIVE"),
+  TICKET: Symbol("TICKET"),
+  SEED: Symbol("SEED"),
+};
+
 const DEFAULT_HD_PATH = "m/44'/60'/0'/0/0";
 const ETH_ZERO_ADDR = "0x0000000000000000000000000000000000000000";
 const ETH_ZERO_ADDR_SHORT = "0x0";
@@ -115,4 +124,5 @@ export {
   ETHEREUM_NETWORK,
   NONCUSTODIAL_WALLETS,
   WALLET_TYPES,
+  LOGIN_METHODS,
 };

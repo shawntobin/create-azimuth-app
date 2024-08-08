@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Container from "../components/Container";
-import UrbitIdSmall from "../components/UrbitIdSmall";
+import UrbitIdMedium from "../components/UrbitIdMedium";
 import useWalletStore from "../store/useWalletStore";
 import { useNavigate } from "react-router-dom";
 import * as txn from "../utils/transaction";
@@ -10,7 +10,7 @@ import { formatAddress } from "../utils/address";
 import ShipTypeMenuSelection from "../components/ShipTypeMenuSelection";
 import * as ob from "urbit-ob";
 import { XCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { set } from "lodash";
+import { getShipStatus } from "../lib/networkEvents";
 
 const Wallet = () => {
   const { urbitIds, setSelectedShip, walletAddress } = useWalletStore();
@@ -20,10 +20,38 @@ const Wallet = () => {
   const [itemOffset, setItemOffset] = useState(0);
   const [selectedShipType, setSelectedShipType] = useState("all");
   const [filteredItems, setFilteredItems] = useState([]);
-  const [searchText, setSearchText] = useState("");
   const [inputValue, setInputValue] = useState("");
+  const [idsWithStatus, setIdsWithStatus] = useState([]);
 
   const itemsPerPage = 12;
+
+  useEffect(() => {
+    const filteredData = urbitIds.filter(
+      (item) => ob.patp(item).includes(inputValue.toLowerCase()) || !inputValue
+    );
+
+    setFilteredItems(filteredData);
+  }, [urbitIds, inputValue]);
+
+  useEffect(() => {
+    const asyncFunction = async () => {
+      const onlineStatus = await Promise.all(
+        urbitIds.map((id) => getShipStatus(ob.patp(id)))
+      );
+
+      let idsMapped = [];
+      urbitIds.forEach((id, index) => {
+        idsMapped.push({
+          id,
+          status: onlineStatus[index]?.online ? true : false,
+        });
+      });
+
+      setIdsWithStatus(idsMapped);
+    };
+
+    asyncFunction();
+  }, []);
 
   useEffect(() => {
     const filterItems = () => {
@@ -48,22 +76,7 @@ const Wallet = () => {
   }, [filteredItems, itemOffset]);
 
   const handleSearch = (event) => {
-    event.preventDefault();
-    if (inputValue === "") {
-      return;
-    }
-
-    setSearchText(inputValue);
-    setInputValue("");
-
-    const filtered = urbitIds.filter((id) => ob.patp(id).includes(inputValue));
-    setFilteredItems(filtered);
-  };
-
-  const handleClearSearch = () => {
-    setSearchText("");
-    setInputValue("");
-    setFilteredItems(urbitIds);
+    setInputValue(event.target.value);
   };
 
   const handleSelectUrbitId = async (patp: string) => {
@@ -120,11 +133,12 @@ const Wallet = () => {
   };
 
   const renderUrbitIds = currentItems.map((id) => (
-    <UrbitIdSmall
+    <UrbitIdMedium
       size={100}
       urbitId={id}
       key={id}
       handleClick={(patp: string) => handleSelectUrbitId(patp)}
+      online={idsWithStatus.find((item) => item.id === id)?.status}
     />
   ));
 
@@ -140,46 +154,26 @@ const Wallet = () => {
 
   const renderWallet = () => {
     return (
-      <div className="mt-[75px] flex-col justify-start items-start h-full">
+      <div className="mt-[75px] flex-col justify-start items-start h-full pt-[50px]">
         <div>
           <div className="flex justify-between mt-10 pr-7 pl-3">
-            {searchText ? (
-              <div className="text-left">
-                <div
-                  className="border inline-block px-2 py-0 rounded-full bg-white text-black cursor-pointer hover:bg-opacity-90"
-                  onClick={handleClearSearch}
-                >
-                  {searchText}
-                  <XMarkIcon className="h-4 w-4 inline-block ml-1" />
-                </div>
-              </div>
-            ) : (
+            <input
+              type="text"
+              spellCheck="false"
+              placeholder="Search"
+              className="font-[600] pl-2 pr-8 py-2 rounded-full border border-primary-color text-light-gray w-[142px] text-[16px] h-[25px] bg-transparent placeholder-secondary-color"
+              onChange={(e) => handleSearch(e)}
+              value={inputValue}
+            />
+
+            <div className="relative flex items-center mb-3">
               <ShipTypeMenuSelection
                 selectShipType={handleSelectShipType}
                 selectedShipType={selectedShipType}
               />
-            )}
-            <div className="relative flex items-center mb-3">
-              <form onSubmit={handleSearch} className="input">
-                <input
-                  type="text"
-                  spellCheck="false"
-                  placeholder="Search"
-                  className="font-[600] pl-2 pr-8 py-2 rounded-full border border-primary-color text-light-gray w-[142px] text-[16px] h-[25px] bg-transparent placeholder-secondary-color"
-                  onChange={(e) => setInputValue(e.target.value)}
-                  value={inputValue}
-                />
-                <button
-                  className="text-base-color border-primary-color absolute inset-y-0 right-0 flex items-center justify-center bg-primary-color rounded-full h-[24px] w-[24px] text-[30px] p-1 pt-0 font-[400] focus:outline-none focus:ring-2 focus:ring-primary-color"
-                  onClick={handleSearch}
-                >
-                  &gt;
-                </button>
-              </form>
             </div>
           </div>
-
-          <div className="flex flex-row flex-wrap items-start justify-start w-[500px] h-full mb-[50px]">
+          <div className="flex flex-row flex-wrap items-start justify-start w-[500px] mb-[50px]">
             {renderUrbitIds.length > 0 ? renderUrbitIds : renderNoIds()}
           </div>
         </div>
@@ -187,7 +181,11 @@ const Wallet = () => {
       </div>
     );
   };
-  return <Container>{renderWallet()}</Container>;
+  return (
+    <Container hideHistory dropdown={false}>
+      {renderWallet()}
+    </Container>
+  );
 };
 
 export default Wallet;

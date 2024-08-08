@@ -1,26 +1,29 @@
-import { ReactComponent as StarIconBold } from "../assets/icons/bold/star.svg";
-import { ReactComponent as PlanetIconBold } from "../assets/icons/bold/planet.svg";
 import { ReactComponent as AzimuthIconBold } from "../assets/icons/bold/azimuth.svg";
-import { ReactComponent as GalaxyIconBold } from "../assets/icons/bold/galaxy.svg";
-import { ReactComponent as GalaxyIcon } from "../assets/icons/regular/galaxy.svg";
-import { ReactComponent as StarIcon } from "../assets/icons/regular/star.svg";
-import { ReactComponent as PlanetIcon } from "../assets/icons/regular/planet.svg";
 import { ReactComponent as AzimuthIcon } from "../assets/icons/regular/azimuth.svg";
-import { ReactComponent as AlertIcon } from "../assets/icons/regular/alert.svg";
+import { ReactComponent as AlertIcon } from "../assets/icons/regular/alert-yellow.svg";
+
 import { ReactComponent as DoublesIcon } from "../assets/icons/regular/doubles.svg";
+import { ReactComponent as ArrowsRightLeftIcon } from "../assets/icons/regular/arrows-right-left.svg";
+import { ReactComponent as SpawnProxyIcon } from "../assets/icons/regular/spawn-proxy-changed.svg";
+import { ReactComponent as EscapeRequestedIcon } from "../assets/icons/regular/escape-requested.svg";
+import { ReactComponent as InviteIcon } from "../assets/icons/regular/invite.svg";
+import { ReactComponent as ChangeManagementProxyIcon } from "../assets/icons/regular/change-management-proxy.svg";
+import { ReactComponent as SpawnIcon } from "../assets/icons/regular/spawn.svg";
+import { ReactComponent as BrokeContinuity } from "../assets/icons/regular/broke-continuity.svg";
 
 const icons = {
-  galaxy: GalaxyIcon,
-  star: StarIcon,
-  planet: PlanetIcon,
   azimuth: AzimuthIcon,
   alert: AlertIcon,
-  galaxyBold: GalaxyIconBold,
-  starBold: StarIconBold,
-  planetBold: PlanetIconBold,
   azimuthBold: AzimuthIconBold,
   alertBold: AlertIcon,
   doubles: DoublesIcon,
+  arrowsRightLeft: ArrowsRightLeftIcon,
+  spawnProxy: SpawnProxyIcon,
+  escapeRequested: EscapeRequestedIcon,
+  invite: InviteIcon,
+  changeManagementProxy: ChangeManagementProxyIcon,
+  spawn: SpawnIcon,
+  brokeContinuity: BrokeContinuity,
 };
 
 const UrbitIcon = ({ name, size, color = "#000000", weight = "regular" }) => {
@@ -30,7 +33,11 @@ const UrbitIcon = ({ name, size, color = "#000000", weight = "regular" }) => {
     return null;
   }
 
-  return <Icon width={size} height={size} fill={color} weight={weight} />;
+  return (
+    <div style={{ width: size * 1.1, height: size * 1.1, margin: 1 }}>
+      <Icon width={size} height={size} fill={color} weight={weight} />
+    </div>
+  );
 };
 
 export default UrbitIcon;

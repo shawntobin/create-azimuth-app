@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Container from "../components/Container";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
@@ -10,15 +10,37 @@ import { isZeroAddress } from "../utils/address";
 import AlertModal from "../components/AlertModal";
 import useAppStore from "../store/useAppStore";
 import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
+import { getAuthToken } from "../lib/authToken";
+import { WALLET_TYPES } from "../constants/constants";
+import Web3 from "web3";
+import { PROVIDER_URL } from "../constants";
+import toast from "react-hot-toast";
+import { getShipStatus } from "../lib/networkEvents";
+import { Tooltip } from "react-tooltip";
+import { formatDistance } from "date-fns";
 // import { useSingleKeyfileGenerator } from "../lib/useKeyfileGenerator"; // xxxx
 
 const Advanced = () => {
   const navigate = useNavigate();
 
+  const [sponsorStatus, setSponsorStatus] = useState(false);
+
   const { showAlert, setShowAlert } = useAppStore();
-  const { selectedShip, walletAddress } = useWalletStore();
+  const { selectedShip, walletAddress, urbitWallet } = useWalletStore();
+
+  const provider = new Web3.providers.HttpProvider(PROVIDER_URL);
+  const web3 = new Web3(provider);
 
   // disable Sponsor for galaxies
+
+  useEffect(() => {
+    const asyncFunction = async () => {
+      const onlineStatus = await getShipStatus(ob.patp(selectedShip?.sponsor));
+      setSponsorStatus(onlineStatus?.online);
+    };
+
+    asyncFunction();
+  }, [selectedShip]);
 
   useEffect(() => {
     // During testing
@@ -27,7 +49,7 @@ const Advanced = () => {
 
   const {
     owner,
-    // spawnProxy,
+    spawnProxy,
     managementProxy,
     keyRevisionNumber,
     sponsor,
@@ -43,27 +65,53 @@ const Advanced = () => {
   // );
 
   const handleDownloadKeyfile = async () => {
-    const MESSAGE = "Bridge Authentication Token";
+    const authToken = await getAuthToken({
+      address: walletAddress,
+      walletType: WALLET_TYPES.METAMASK,
+      web3,
+    });
 
-    window.ethereum
-      .request({
-        method: "personal_sign",
-        params: [MESSAGE, walletAddress],
-      })
-      .then((txHash) => {
-        console.log(txHash);
-        return txHash;
-      });
+    authToken && console.log("AUTH TOKEN", authToken);
   };
+
+  const statusMessage = sponsorStatus
+    ? `Your sponsor is online (last updated ${formatDistance(
+        new Date(sponsorStatus),
+        new Date(),
+        {
+          addSuffix: true,
+        }
+      )})`
+    : "Your sponsor is offline!";
 
   const renderSponsor = () => {
     return (
       <div className="flex w-full justify-center items-center">
-        <span className="pr-2">{ob.patp(sponsor)}</span>
+        <span className="pr-1">{ob.patp(sponsor)}</span>
+        <div
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={statusMessage}
+          className="rounded-full text-black px-[3px] py-[3px]"
+          style={{ backgroundColor: sponsorStatus ? "#AAE68C" : "#E72E2E" }}
+        ></div>
+
+        <Tooltip
+          id="my-tooltip"
+          style={{
+            backgroundColor: "#212121",
+            color: "white",
+            fontWeight: 600,
+            fontSize: "18px",
+            borderRadius: "10px",
+          }}
+        />
+
         {escapeRequested && (
-          <span className="text-[16px] text-light-green">{`*pending request to ${ob.patp(
-            escapeRequestedTo
-          )}`}</span>
+          <span className="text-[16px] text-light-green font-bold">
+            {/* // <span className="text-[16px] text-light-green">{`*pending request to ${ob.patp(
+          //   escapeRequestedTo
+          // )}`}</span> */}
+          </span>
         )}
       </div>
     );
@@ -72,51 +120,65 @@ const Advanced = () => {
   return (
     <Container>
       <AlertModal isOpen={showAlert} handleClose={() => setShowAlert(false)} />
-      <div className="w-[968px]">
-        <BackButton />
-        <div className="flex gap-x-8 h-[96px]">
+      <div className="flex-col items-center justify-center">
+        <div className="ml-[3px]">
+          <BackButton />
+        </div>
+        <div className="flex gap-x-8 h-[96px] mt-2">
           <div className="w-[484px]">
-            <div className="text-left font-bold  pb-1">OS Settings</div>
-            <div className="flex flex-col gap-y-1 h-full">
+            <div className="text-left font-bold  pb-1 ml-5">OS Settings</div>
+            <div className="flex flex-col gap-y-1">
               <SettingsItem
                 handleClick={() => navigate(`/manage/sponsor`)}
-                title="Sponsor"
+                title="Change Sponsor"
                 text={renderSponsor()}
               />
               <SettingsItem
                 handleClick={() => navigate(`/manage/network-keys`)}
-                title="Network Keys"
+                title="Reset Network Keys"
                 text={`Revision ${keyRevisionNumber}`}
               />
-            </div>
-            <div className="flex justify-start items-start w-full">
-              <button
-                className=" flex underline decoration-1 items-center justify-center text-primary-color text-[20px] bg-transparent p-0 m-0"
-                onClick={handleDownloadKeyfile}
-              >
-                <ArrowDownTrayIcon className="h-6 w-6 pr-1" />
-                Download Keyfile
-              </button>
-              <button
-                className=" flex underline decoration-1 items-center justify-center text-primary-color text-[20px] bg-transparent p-0 ml-6"
-                onClick={() => {}}
-              >
-                <DocumentDuplicateIcon className="h-6 w-6 pr-1" />
-                Copy Access Key
-              </button>
+
+              <div className="flex justify-between items-start w-full">
+                <div
+                  className={`w-[232px] pl-4 justify-start rounded-[10px] border border-primary-color text-primary-color text-[20px] h-[36px] bg-transparent m-[3px] relative flex items-center`}
+                >
+                  <div className="mb-0 pb-0">Download Keyfile</div>
+
+                  <div
+                    className="cursor-pointer font-[600] text-[22px] pb-0 pl-0 -mr-0.5 bg-primary-color text-base-color border-primary-color absolute right-0 flex items-center justify-center rounded-r-[10px] h-[36px] w-[36px] focus:outline-none focus:bg-transparent hover:bg-light-gray hover:border-primary-color"
+                    onClick={() => toast("Downloading keyfile is disabled")}
+                  >
+                    {`↓`}
+                  </div>
+                </div>
+
+                <div
+                  className={`w-[232px] pl-4 justify-start rounded-[10px] border border-primary-color text-primary-color text-[20px] h-[36px] bg-transparent m-[3px] relative flex items-center`}
+                >
+                  <div className="mb-0 pb-0">Copy Access Key</div>
+
+                  <div
+                    className="cursor-pointer font-[600] text-[28px] pb-1 pl-0.5 -mr-0.5 bg-primary-color text-base-color border-primary-color absolute right-0 flex items-center justify-center rounded-r-[10px] h-[36px] w-[36px] focus:outline-none focus:bg-transparent hover:bg-light-gray hover:border-primary-color"
+                    onClick={() => toast("Copying access key is disabled")}
+                  >
+                    {`>`}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div className="w-[484px]">
-            <div className="text-left font-bold pb-1">ID Settings</div>
+            <div className="text-left font-bold pb-1 ml-5">ID Settings</div>
             <div className="flex flex-col gap-y-1">
               <SettingsItem
                 handleClick={() => navigate(`/manage/ownership`)}
-                title="Ownership Administration"
+                title="Transfer Ownership"
                 text={owner}
               />
               <SettingsItem
                 handleClick={() => navigate(`/manage/management-key`)}
-                title="Management Address"
+                title="Set Management Proxy"
                 text={
                   !isZeroAddress(managementProxy) ? managementProxy : "None"
                 }
@@ -124,14 +186,22 @@ const Advanced = () => {
               <SettingsItem
                 handleClick={() => navigate(`/manage/master-ticket`)}
                 title="Master Ticket"
-                text="Transfer to Master Ticket"
+                text="Convert to Master Ticket"
               />
-              {ob.clan(selectedShip.patp) !== "planet" && (
-                <SettingsItem
-                  handleClick={() => navigate(`/star-scanner`)}
-                  title="Spawn Planets"
-                  text=""
-                />
+              {ob.clan(selectedShip.patp) === "star" && (
+                <>
+                  <div className="text-left font-bold pb-1">Star Settings</div>
+                  <SettingsItem
+                    handleClick={() => navigate(`/star-scanner`)}
+                    title="Spawn Planets"
+                    text=""
+                  />
+                  <SettingsItem
+                    handleClick={() => navigate(`/manage/spawn-proxy`)}
+                    title="Set Spawn Proxy"
+                    text={!isZeroAddress(spawnProxy) ? spawnProxy : "None"}
+                  />
+                </>
               )}
             </div>
           </div>

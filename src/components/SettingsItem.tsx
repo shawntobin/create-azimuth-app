@@ -18,7 +18,7 @@ const SettingsItem: React.FC<ButtonProps> = ({
 }) => {
   return (
     <div
-      className={`pl-4 justify-start rounded-full border border-primary-color text-primary-color text-[20px] h-[36px] bg-transparent ${className} m-[3px] relative flex items-center`}
+      className={`pl-4 justify-start rounded-[10px] border border-primary-color text-primary-color text-[20px] h-[36px] bg-transparent ${className} m-[3px] relative flex items-center`}
     >
       <div className="mb-0 pb-0">{title}</div>
       <div className="mb-0 pb-0 font-[200] pl-3">
@@ -34,14 +34,11 @@ const SettingsItem: React.FC<ButtonProps> = ({
       )}
 
       <div
-        className="cursor-pointer font-[600] text-[28px] pb-1 pl-0.5 -mr-0.5 bg-primary-color text-base-color border-primary-color absolute right-0 flex items-center justify-center rounded-full h-[36px] w-[36px] focus:outline-none focus:bg-transparent hover:bg-light-gray hover:border-primary-color"
+        className="cursor-pointer font-[600] text-[28px] pb-1 pl-0.5 -mr-0.5 bg-primary-color text-base-color border-primary-color absolute right-0 flex items-center justify-center rounded-r-[10px] h-[36px] w-[36px] focus:outline-none focus:bg-transparent hover:bg-light-gray hover:border-primary-color"
         onClick={handleClick}
       >
         {`>`}
       </div>
-      {/* <div className="font-[200] text-[50px] pb-2 pl-0.5 bg-primary-color text-base-color border-primary-color flex items-center justify-center rounded-full h-[36px] w-[36px]">
-        {`>`}
-      </div> */}
     </div>
   );
 };

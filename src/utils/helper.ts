@@ -34,3 +34,42 @@ export const calculateMaxTransactionCost = (fee, gasLimit) => {
 
 export const convertToSeconds = (milliseconds) =>
   (milliseconds / 1000).toFixed(0);
+
+export const formatPatp = (patp: string) => {
+  if (typeof patp !== "string" || patp.length === 0) {
+    return patp;
+  }
+
+  if (patp.substring(0, 1) === "~") {
+    return patp.toLowerCase();
+  } else if (patp.substring(0, 1) !== "~") {
+    return `~${patp.toLowerCase()}`;
+  }
+};
+
+export const addHexPrefix = (hex: string) => {
+  return hex.startsWith("0x") ? hex : `0x${hex}`;
+};
+
+export const hexify = (val: string | Buffer) =>
+  addHexPrefix(val.toString("hex"));
+
+export const capitalize = (s: string) => {
+  if (!s || s === "") {
+    return s;
+  }
+
+  return s.charAt(0).toUpperCase() + s.slice(1);
+};
+
+export const formatSpacedPatp = (patp: string) => {
+  if (typeof patp !== "string" || patp.length === 0) {
+    return patp;
+  }
+
+  if (patp.substring(0, 1) === "~") {
+    return patp.toLowerCase().replace("~", "~ ");
+  } else if (patp.substring(0, 1) !== "~") {
+    return `~ ${patp.toLowerCase()}`;
+  }
+};

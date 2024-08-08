@@ -6,15 +6,33 @@ import * as ob from "urbit-ob";
 
 const useLogin = () => {
   const navigate = useNavigate();
-  const { setWalletAddress, setUrbitIds, setSelectedShip, clearState } =
-    useWalletStore();
+  const {
+    setWalletAddress,
+    setUrbitIds,
+    setSelectedShip,
+    clearState,
+    setWalletLabel,
+    setWalletType,
+    setUrbitWallet,
+    setEthBalance,
+  } = useWalletStore();
 
-  const loginCommon = async (walletAddress: string) => {
+  const loginCommon = async (
+    walletAddress: string,
+    walletType: symbol,
+    walletLabel?: string,
+    ethBalance?: string | null,
+    urbitWallet?: UrbitWallet | null
+  ) => {
     try {
       clearState();
 
       const ids = await txn.getPoints(walletAddress); // note if master ticket then could just use getPoint
       setWalletAddress(walletAddress);
+      setWalletType(walletType);
+      setWalletLabel(walletLabel);
+      setUrbitWallet(urbitWallet);
+      setEthBalance(ethBalance);
       setUrbitIds(ids);
 
       if (ids.length === 1) {

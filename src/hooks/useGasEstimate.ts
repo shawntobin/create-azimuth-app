@@ -9,10 +9,10 @@ const useGasEstimate = (gasLimit) => {
   const [error, setError] = useState(null);
 
   const [maxTransactionCost, setMaxTransactionCost] = useState("0");
-  const [selectedItem, setSelectedItem] = useState();
+  const [selectedGasItem, setSelectedGasItem] = useState({});
 
   const handleSelect = (option) => {
-    setSelectedItem(option.label);
+    setSelectedGasItem(option);
     const maxCost = calculateMaxTransactionCost(option.value, gasLimit);
     setMaxTransactionCost(maxCost);
   };
@@ -31,18 +31,20 @@ const useGasEstimate = (gasLimit) => {
         const gasFees = await response.json();
 
         const relevantKeys = ["high", "medium", "low"];
-        const options = relevantKeys.map((key) => {
+        const labels = ["Fast", "Normal", "Slow"];
+        const options = relevantKeys.map((key, i) => {
           const fee = gasFees[key];
           return {
-            label: `${Math.round(
-              fee.suggestedMaxFeePerGas
-            )} gwei (${convertToSeconds(fee.minWaitTimeEstimate)} sec)`,
+            label: `${Math.round(fee.suggestedMaxFeePerGas)} gwei (${
+              labels[i]
+            }) `,
             value: fee,
           };
         });
 
         setGasOptions(options);
         setGasDetails(gasFees);
+        setSelectedGasItem(options[1]);
 
         const defaultTxnCost = calculateMaxTransactionCost(
           options[1]?.value,
@@ -66,7 +68,7 @@ const useGasEstimate = (gasLimit) => {
     loading,
     error,
     maxTransactionCost,
-    selectedItem,
+    selectedGasItem,
     handleSelect,
   };
 };

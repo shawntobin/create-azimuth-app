@@ -35,14 +35,13 @@ const Activation = () => {
   };
 
   const renderStepBackButton = () => {
-    return (
-      <button
-        onClick={() => setStep(step - 1)}
-        className="text-[40px] flex items-center justify-center bg-transparent border-none p-2 focus:outline-none focus:bg-transparent active:bg-transparent"
-      >
-        {`<`}
-      </button>
-    );
+    return null;
+    // <button
+    //   onClick={() => setStep(step - 1)}
+    //   className="h-[22px] w-[22px] p-0 pb-1 text-[25px] border border-primary-color rounded-[7px] flex items-center justify-center bg-transparent focus:outline-none focus:bg-transparent active:bg-transparent hover:text-secondary-color text-light-gray"
+    // >
+    //   {`<`}
+    // </button>
   };
 
   const handleDownloadTicket = () => {
@@ -92,6 +91,7 @@ const Activation = () => {
         {renderStepBackButton()}
         <ControlBox
           hideBackButton
+          hideInfoButton
           buttonTitle={
             <div className="flex w-full items-center justify-center">
               <EyeIcon className="h-7 w-7 mr-2" />
@@ -131,9 +131,10 @@ const Activation = () => {
         {renderStepBackButton()}
         <ControlBox
           hideBackButton
+          hideInfoButton
           buttonTitle="Download Back Up (Passport)"
           onSubmit={handleVerifyReticket}
-          className="h-[375px]"
+          className="h-[410px]"
         >
           <div className="justify-between flex flex-col items-start p-0 h-full">
             <div className="p-8">
@@ -184,6 +185,7 @@ const Activation = () => {
         {renderStepBackButton()}
         <ControlBox
           hideBackButton
+          hideInfoButton
           buttonTitle="Confirm Backup"
           onSubmit={() => setStep(step + 1)}
         >
@@ -220,6 +222,7 @@ const Activation = () => {
         {renderStepBackButton()}
         <ControlBox
           hideBackButton
+          hideInfoButton
           buttonColor="bg-bright-green"
           buttonTitle="Set up planet"
           onSubmit={() => navigate(`/hosting`)}
@@ -252,7 +255,11 @@ const Activation = () => {
     );
   };
 
-  return <Container>{renderTicketFlow()}</Container>;
+  return (
+    <Container hideHistory dropdown={false}>
+      {renderTicketFlow()}
+    </Container>
+  );
 };
 
 export default Activation;

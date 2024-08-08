@@ -164,16 +164,20 @@ export const transferPoint = async (
 
 export const changeManagementProxy = async (
   walletAddress: string,
+  walletType: symbol,
   patp: string,
   from: string,
-  managerAddress: string
+  managerAddress: string,
+  urbitWallet?: UrbitWallet
 ) => {
+  console.log("LAYER 2 ALERT");
   const api = new RollerRPCAPI(ROLLER_OPTIONS);
   const nonce = await api.getNonce({ ship: patp, proxy: "own" });
   const signedMessage = await generateHashAndSign(
     api,
-    {},
+    urbitWallet,
     walletAddress,
+    walletType,
     nonce,
     {
       ship: patp,
@@ -187,19 +191,19 @@ export const changeManagementProxy = async (
 
   console.log("signedMessage", signedMessage);
 
-  // const params = {
-  //   address: from,
-  //   sig: signedMessage,
-  //   from: {
-  //     ship: patp,
-  //     proxy: "own",
-  //   },
-  //   data: {
-  //     address: managerAddress,
-  //   },
-  // };
+  const params = {
+    address: from,
+    sig: signedMessage,
+    from: {
+      ship: patp,
+      proxy: "own",
+    },
+    data: {
+      address: managerAddress,
+    },
+  };
 
-  // const res = await callRoller("set-management-proxy", params);
+  const res = await callRoller("setManagementProxy", params);
 
   return res;
 };
@@ -215,7 +219,7 @@ export const requestNewSponsor = async (
 
   const signedMessage = await generateHashAndSign(
     api,
-    {},
+    {}, // urbitWallet
     walletAddress,
     nonce,
     {

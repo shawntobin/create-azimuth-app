@@ -2,12 +2,13 @@ import React from "react";
 import * as ob from "urbit-ob";
 import Sigil from "./Sigil";
 
-const UrbitIdSmall = (props: {
+const UrbitIdMedium = (props: {
   urbitId: number;
   handleClick: (patp: string, id: number) => void;
   size?: number;
   textSize?: number;
   spawnable?: boolean;
+  online?: boolean;
 }) => {
   const {
     urbitId,
@@ -15,6 +16,7 @@ const UrbitIdSmall = (props: {
     size = 100,
     textSize = 16,
     spawnable = false,
+    online = false,
   } = props;
 
   const patp = ob.patp(urbitId);
@@ -35,13 +37,13 @@ const UrbitIdSmall = (props: {
         }`}
       >
         <Sigil id={patp} colors={["black", "white"]} size={size * 0.8} />
-        {spawnable && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-75 text-white text-center text-sm p-2 rounded hidden group-hover:flex">
-            <div className="bg-[#FAFF00] rounded-full border border-black text-black px-2 py-1">
-              Spawn
-            </div>
-          </div>
-        )}
+
+        <div className="absolute right-2 top-2 flex items-center justify-center bg-black bg-opacity-0 text-white text-center text-sm rounded ">
+          <div
+            className="rounded-full text-black px-[3px] py-[3px]"
+            style={{ backgroundColor: online ? "#AAE68C" : "gray" }}
+          ></div>
+        </div>
       </div>
       <div>
         <div
@@ -55,4 +57,4 @@ const UrbitIdSmall = (props: {
   );
 };
 
-export default UrbitIdSmall;
+export default UrbitIdMedium;

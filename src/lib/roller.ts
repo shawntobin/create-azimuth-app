@@ -1,5 +1,6 @@
 import RollerRPCAPI, { From } from "@urbit/roller-api";
 import { signTransactionHash } from "./authToken";
+import { LOGIN_METHODS } from "../constants";
 
 export const SECOND = 1000;
 export const MINUTE = SECOND * 60;
@@ -9,6 +10,7 @@ export const generateHashAndSign = async (
   api: RollerRPCAPI,
   wallet: any,
   walletAddress: string,
+  walletType: symbol,
   nonce: number,
   from: From,
   type: string,
@@ -16,11 +18,10 @@ export const generateHashAndSign = async (
 ) => {
   // metamask
 
-  const metamask = true;
   let sig;
 
-  // if metamask
-  if (metamask) {
+  // currently only configured for metamask
+  if (LOGIN_METHODS.BLOCKNATIVE === walletType) {
     const hash = await api.prepareForSigning(nonce, from, type, data);
 
     if (window.ethereum) {
@@ -35,7 +36,7 @@ export const generateHashAndSign = async (
     }
 
     // seed phrase etc
-  } else {
+  } else if (LOGIN_METHODS.TICKET === walletType) {
     const hash = await api.getUnsignedTx(nonce, from, type, data);
     const sig = await signTransactionHash(hash, wallet.privateKey);
     return sig;

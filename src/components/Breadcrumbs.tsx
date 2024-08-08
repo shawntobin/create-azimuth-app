@@ -9,7 +9,7 @@ const Breadcrumbs = ({ walletAddress }) => {
   const params = { address: formatAddress(walletAddress) };
 
   return (
-    <nav>
+    <nav className="text-[20px] text-primary-color">
       <ol className="breadcrumb">
         <li key="home" className="breadcrumb-item">
           <Link to="/">{getBreadcrumbName("/", params)}</Link>

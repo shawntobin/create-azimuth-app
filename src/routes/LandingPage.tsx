@@ -8,7 +8,8 @@ import walletConnectModule from "@web3-onboard/walletconnect";
 import ledgerModule from "@web3-onboard/ledger";
 import injectedModule from "@web3-onboard/injected-wallets";
 // import { init, useConnectWallet } from "@web3-onboard/react";
-import { PROVIDER_URL } from "../constants";
+import { PROVIDER_URL, LOGIN_METHODS } from "../constants";
+import Navbar from "../components/Navbar";
 
 type LedgerOptionsWCv2 = {
   walletConnectVersion: 2;
@@ -74,9 +75,20 @@ const LandingPage = () => {
     try {
       const wallets = await onboard.connectWallet();
       const walletAddress = wallets[0]?.accounts[0]?.address;
+      const walletLabel = wallets[0]?.label;
+      const walletType = LOGIN_METHODS.BLOCKNATIVE;
+      const balance = wallets[0]?.accounts[0]?.balance?.ETH;
+
+      console.log(wallets);
 
       if (walletAddress) {
-        await loginCommon(walletAddress);
+        await loginCommon(
+          walletAddress,
+          walletType,
+          walletLabel,
+          balance,
+          null
+        );
       } else {
         // user closed the modal
       }
@@ -173,7 +185,7 @@ const LandingPage = () => {
                   marginRight: "-1px",
                 }}
                 className="mt-auto p-0 m-0 rounded-b-[18px] h-[38px] text-white bg-black text-[20px] font-[500] font-bold hover:bg-light-gray hover:text-black hover:border-light-gray"
-                onClick={() => navigate("/sigil-generator")}
+                onClick={() => navigate("/sigil-designer")}
               >
                 Open
               </button>
@@ -227,14 +239,16 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 h-screen w-screen flex">
-      <div className="w-1/2 bg-white text-black flex flex-col items-center justify-center">
-        {renderLeftContent()}
+    <>
+      <div className="fixed top-0 left-0 h-screen w-screen flex">
+        <div className="w-1/2 bg-white text-black flex flex-col items-center justify-center">
+          {renderLeftContent()}
+        </div>
+        <div className="w-1/2 bg-black text-white flex flex-col items-center justify-center">
+          {renderRightContent()}
+        </div>
       </div>
-      <div className="w-1/2 bg-black text-white flex flex-col items-center justify-center">
-        {renderRightContent()}
-      </div>
-    </div>
+    </>
   );
 };
 

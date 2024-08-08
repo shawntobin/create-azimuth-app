@@ -2,8 +2,9 @@ import * as L1 from "./transactionL1";
 import * as L2 from "./transactionL2";
 import { NETWORK, ETHEREUM_NETWORK } from "../constants";
 import { getShipStatus } from "../lib/networkEvents";
+import * as ob from "urbit-ob";
 
-const layer = NETWORK === ETHEREUM_NETWORK.SEPOLIA ? L1 : L2;
+const layer = NETWORK === ETHEREUM_NETWORK.SEPOLIA ? L1 : L1;
 
 // transaction "routing" to either L1 or L2
 
@@ -28,7 +29,10 @@ export const getShip = async (patp: string) => {
   const ship = await layer.getShip(patp);
 
   const shipStatus = await getShipStatus(patp);
-  const shipWithStatus = { ...(ship as object), online: shipStatus?.online };
+  const shipWithStatus = {
+    ...(ship as object),
+    online: shipStatus?.online,
+  };
   return shipWithStatus;
 };
 
@@ -45,49 +49,101 @@ export const getSpawnCount = async (patp: string) => {
 // WRITE transactions
 
 export const transferPoint = async (
-  walletAddress: string,
+  walletType: symbol,
   patp: string,
   from: string,
   to: string,
+  wallet: UrbitWallet,
+  gasSelection: any,
   onTransactionComplete: (receipt: any) => void
 ) => {
   return await layer.transferPoint(
-    walletAddress,
+    walletType,
     patp,
     from,
     to,
+    wallet,
+    gasSelection,
     onTransactionComplete
   );
 };
 
 export const changeManagementProxy = async (
-  walletAddress: string,
+  walletType: symbol,
   patp: string,
   from: string,
   managerAddress: string,
+  wallet: UrbitWallet,
+  gasSelection: any,
   onTransactionComplete: (receipt: any) => void
 ) => {
   return await layer.changeManagementProxy(
-    walletAddress,
+    walletType,
     patp,
     from,
     managerAddress,
+    wallet,
+    gasSelection,
+    onTransactionComplete
+  );
+};
+
+export const changeSpawnProxy = async (
+  walletType: symbol,
+  patp: string,
+  from: string,
+  spawnProxyAddress: string,
+  wallet: UrbitWallet,
+  gasSelection: any,
+  onTransactionComplete: (receipt: any) => void
+) => {
+  return await layer.changeSpawnProxy(
+    walletType,
+    patp,
+    from,
+    spawnProxyAddress,
+    wallet,
+    gasSelection,
     onTransactionComplete
   );
 };
 
 export const requestNewSponsor = async (
-  walletAddress: string,
+  walletType: symbol,
   patp: string,
   from: string,
   newSponsorPatp: string,
+  wallet: UrbitWallet,
+  gasSelection: any,
   onTransactionComplete: (receipt: any) => void
 ) => {
   return await layer.requestNewSponsor(
-    walletAddress,
+    walletType,
     patp,
     from,
     newSponsorPatp,
+    wallet,
+    gasSelection,
+    onTransactionComplete
+  );
+};
+
+export const spawnPoint = async (
+  walletType: symbol,
+  patp: string,
+  from: string,
+  newSponsorPatp: string,
+  wallet: UrbitWallet,
+  // gasSelection: any,
+  onTransactionComplete: (receipt: any) => void
+) => {
+  return await layer.spawnPoint(
+    walletType,
+    patp,
+    from,
+    newSponsorPatp,
+    wallet,
+    // gasSelection,
     onTransactionComplete
   );
 };

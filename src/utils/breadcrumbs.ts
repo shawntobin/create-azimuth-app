@@ -9,14 +9,15 @@ export const getBreadcrumbName = (path, params) => {
     "/onboarding": "Onboarding",
     "/hosting": "Hosting",
     "/manage": "Home",
+    "/manage/spawn-proxy": "Spawn Proxy",
     "/manage/advanced": "Advanced",
     "/manage/sponsor": "Sponsor",
     "/manage/ownership": "Ownership",
     "/manage/master-ticket": "Master Ticket",
     "/manage/network-keys": "Network Keys",
     "/history": "Transaction History",
-    "/sigil-generator": "Sigil Generator",
-    "/manage/management-key": "Management Address",
+    "/sigil-designer": "Sigil Designer",
+    "/manage/management-key": "Management Proxy",
   };
 
   return breadcrumbMap[path] || path;

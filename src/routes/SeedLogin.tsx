@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Container from "../components/Container";
 import { walletFromMnemonic } from "../lib/wallet";
 import useLogin from "../hooks/useLogin";
 import { Cog8ToothIcon } from "@heroicons/react/24/solid";
@@ -7,6 +6,7 @@ import ControlBox from "../components/ControlBox";
 import Breadcrumbs from "../components/Breadcrumbs";
 import UrbitSymbols from "../components/UrbitSymbols";
 import SeedModal from "../components/SeedModal";
+import { LOGIN_METHODS } from "../constants/constants";
 
 import { DEFAULT_HD_PATH } from "../constants/constants";
 
@@ -28,7 +28,7 @@ const SeedLogin = () => {
     const wallet = walletFromMnemonic(seedInput, DEFAULT_HD_PATH);
 
     if (wallet.address) {
-      await loginCommon(wallet.address);
+      await loginCommon(wallet.address, LOGIN_METHODS.SEED, "", wallet);
     } else {
       // error
     }

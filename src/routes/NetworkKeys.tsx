@@ -23,7 +23,7 @@ const NetworkKeys = () => {
           </div>
         }
         buttonTitle="Reset Network Keys"
-        onSubmit={() => {}}
+        onSubmit={() => toast("Setting Network keys is disabled")}
         className="h-[292px] w-[500px]"
       >
         <div className="justify-start flex flex-col items-start text-left p-2 mt-2">

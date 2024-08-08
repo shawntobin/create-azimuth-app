@@ -12,7 +12,7 @@ export const INFURA_BASE64_AUTH = Buffer.from(
 ).toString("base64");
 
 export const INFURA_GAS_URL =
-  "https://gas.api.infura.io/networks/1/suggestedGasFees";
+  "https://gas.api.infura.io/networks/11155111/suggestedGasFees"; // Mainnet is 1
 
 export const NETWORK_EVENTS_API =
   "https://mt2aga2c5l.execute-api.us-east-2.amazonaws.com/get-pki-events?urbit-id=";

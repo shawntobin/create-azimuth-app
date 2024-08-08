@@ -10,7 +10,7 @@ function App() {
       <BrowserRouter>
         <AppRoutes />
         <Toaster
-          position="top-center"
+          position="bottom-center"
           reverseOrder={false}
           gutter={8}
           containerClassName=""
@@ -19,9 +19,12 @@ function App() {
             className: "font-[700] text-[20px]",
             duration: 5000,
             style: {
-              background: "#363636",
+              background: "black", //"#363636",
               color: "#fff",
               fontWeight: "500",
+              height: "33px",
+              borderColor: "white",
+              border: "1px solid",
             },
 
             success: {
@@ -32,14 +35,14 @@ function App() {
               style: {
                 background: "#AAE68C",
                 color: "black",
-                borderRadius: "99px",
+                borderRadius: "10px",
               },
             },
             error: {
               style: {
                 background: "#E72E2E", //"#d9534f",
                 color: "black",
-                borderRadius: "99px",
+                borderRadius: "10px",
               },
             },
           }}

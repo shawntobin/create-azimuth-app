@@ -31,14 +31,13 @@ const MasterTicket = () => {
   };
 
   const renderStepBackButton = () => {
-    return (
-      <button
-        onClick={() => setStep(step - 1)}
-        className="text-[40px] flex items-center justify-center bg-transparent border-none p-2 focus:outline-none focus:bg-transparent active:bg-transparent"
-      >
-        {`<`}
-      </button>
-    );
+    return null;
+    // <button
+    //   onClick={() => setStep(step - 1)}
+    //   className="h-[22px] w-[22px] p-0 pb-1 text-[25px] border border-primary-color rounded-[7px] flex items-center justify-center bg-transparent focus:outline-none focus:bg-transparent active:bg-transparent hover:text-secondary-color text-light-gray"
+    // >
+    //   {`<`}
+    // </button>
   };
 
   const handleDownloadTicket = () => {
@@ -63,14 +62,14 @@ const MasterTicket = () => {
         headerContent={
           <div className="text-left w-full flex justify-between text-[20px] font-bold">
             <div className="items-center justify-center flex">
-              <span>Transfer Master Ticket</span>
+              <span>Convert to Master Ticket</span>
             </div>
             <span>{`Step ${step} of 4`}</span>
           </div>
         }
         buttonTitle="I Understand, Continue"
         onSubmit={() => setStep(step + 1)}
-        className="w-[500px] h-[270px]"
+        className="w-[500px] h-[305px]"
       >
         <div className="justify-start flex flex-col items-start p-4 h-full">
           <div className="text-[20px] font-bold text-left ">{`Reticketing is the process of generating a completely fresh wallet and transferring ownership of your point to that wallet.`}</div>
@@ -90,10 +89,11 @@ const MasterTicket = () => {
         {renderStepBackButton()}
         <ControlBox
           hideBackButton
+          hideInfoButton
           headerContent={
             <div className="text-left w-full flex justify-between text-[20px] font-bold">
               <div className="items-center justify-center flex">
-                <span>Transfer Master Ticket</span>
+                <span>Convert to Master Ticket</span>
               </div>
               <span>{`Step ${step} of 4`}</span>
             </div>
@@ -119,7 +119,7 @@ const MasterTicket = () => {
           headerContent={
             <div className="text-left w-full flex justify-between text-[20px] font-bold">
               <div className="items-center justify-center flex">
-                <span>Transfer Master Ticket</span>
+                <span>Convert to Master Ticket</span>
               </div>
               <span>{`Step ${step} of 4`}</span>
             </div>
@@ -167,7 +167,7 @@ const MasterTicket = () => {
           headerContent={
             <div className="text-left w-full flex justify-between text-[20px] font-bold">
               <div className="items-center justify-center flex">
-                <span>Transfer Master Ticket</span>
+                <span>Convert to Master Ticket</span>
               </div>
               <span>{`Step ${step} of 4`}</span>
             </div>

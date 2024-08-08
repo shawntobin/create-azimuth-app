@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import BackButton from "./BackButton";
+import InfoButton from "./InfoButton";
 import classNames from "classnames";
 import BeatLoader from "react-spinners/BeatLoader";
+import { WALLET_TYPES } from "../constants/constants";
+import InfoModal from "./InfoModal";
 
 interface ControlBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -11,11 +14,13 @@ interface ControlBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   onSubmit?: () => void;
   hideBackButton?: boolean;
+  hideInfoButton?: boolean;
   disabled?: boolean;
   txnInProgress?: boolean;
   txnHash?: string | null;
   width?: string;
   height?: string;
+  walletType?: symbol;
 }
 
 const ControlBox: React.FC<ControlBoxProps> = ({
@@ -26,12 +31,15 @@ const ControlBox: React.FC<ControlBoxProps> = ({
   className,
   onSubmit,
   hideBackButton,
+  hideInfoButton,
   disabled,
   txnInProgress,
   txnHash,
   width,
   height,
+  walletType,
 }) => {
+  const [showInfo, setShowInfo] = useState(false);
   const renderButtonContent = () => {
     if (txnHash) {
       return (
@@ -52,7 +60,9 @@ const ControlBox: React.FC<ControlBoxProps> = ({
     } else if (txnInProgress) {
       return (
         <div className="flex items-center justify-center">
-          Awaiting wallet confirmation...
+          {walletType === WALLET_TYPES.METAMASK
+            ? "Awaiting wallet confirmation..."
+            : "Transaction in progress..."}
         </div>
       );
     } else {
@@ -62,36 +72,43 @@ const ControlBox: React.FC<ControlBoxProps> = ({
 
   return (
     <div>
-      {!hideBackButton && <BackButton />}
+      <InfoModal isOpen={showInfo} handleClose={() => setShowInfo(false)} />
+      <div className="w-full flex justify-between mb-[15px] mt-[100px]">
+        {!hideBackButton && (
+          <div>
+            <BackButton />
+          </div>
+        )}
+        <div>
+          {!hideInfoButton && <InfoButton onClick={() => setShowInfo(true)} />}
+        </div>
+      </div>
       <div
         style={{ width, height }}
-        className={`flex flex-col w-[500px] rounded-[18px] border border-primary-color ${className}`}
+        className={`flex flex-col w-[500px] rounded-[10px] border border-primary-color ${className}  pb-[23px]`}
       >
         {headerContent && (
-          <div className="mb-0 text-left w-full flex justify-between px-3 py-1 border-b border-primary-color">
+          <div className="mb-0 text-left w-full flex justify-between px-5 py-1 border-b border-primary-color">
             {headerContent}
           </div>
         )}
         {children}
         {buttonTitle && (
-          <button
-            disabled={disabled}
-            style={{
-              marginBottom: "-1px",
-              marginLeft: "-1px",
-              marginRight: "-1px",
-            }}
-            className={classNames(
-              "mt-auto p-0 m-0 rounded-b-[18px] h-[38px] text-black text-[20px] font-bold",
-              {
-                [buttonColor]: !disabled,
-                "bg-gray-400": disabled,
-              }
-            )}
-            onClick={onSubmit}
-          >
-            {renderButtonContent()}
-          </button>
+          <div className="w-full justify-center items-center flex">
+            <button
+              disabled={disabled}
+              className={classNames(
+                "rounded-[10px] h-[38px] w-[455px] text-black text-[20px] font-bold items-center justify-center flex",
+                {
+                  [buttonColor]: !disabled,
+                  "bg-gray-400": disabled,
+                }
+              )}
+              onClick={onSubmit}
+            >
+              {renderButtonContent()}
+            </button>
+          </div>
         )}
       </div>
     </div>

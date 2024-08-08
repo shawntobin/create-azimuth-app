@@ -1,7 +1,7 @@
 import Modal from "react-modal";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-
+import UrbitIcon from "./UrbitIcon";
 const customStyles = {
   content: {
     top: "50%",
@@ -10,12 +10,12 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    backgroundColor: "#000000",
+    backgroundColor: "#14140F",
     color: "#FFFFFF",
     font: 20,
-    borderRadius: 22,
-    height: 193,
-    padding: 18,
+    borderRadius: 10,
+    height: 200,
+    padding: 0,
   },
   overlay: {
     backgroundColor: "rgba(0,0,0,0.7)",
@@ -37,27 +37,28 @@ const AlertModal = ({ isOpen, handleClose }) => {
       style={customStyles}
     >
       <div className="w-[600px] text-[20px]">
-        <div className="flex align-center items-center">
-          <ExclamationTriangleIcon className="w-7 h-7 text-[yellow]" />
+        <div className="flex align-center items-center p-3 border-b border-medium-gray">
+          <ExclamationTriangleIcon className="w-5 h-5 text-[yellow]" />
 
           {/* <UrbitIcon name={"alert"} size={31} /> */}
 
           <div className="font-[600] ml-1">Caution</div>
         </div>
-        <div className="w-[400px]">
-          Changes made within the Control Panel are irreversible and can affect
-          the ownership of your address space (Planet, Star, Galaxy).
+        <div className="w-[600px] p-3">
+          Changes made within the Control Panel may be irreversible and can
+          affect the ownership of your Urbit ID and the performance of your
+          Urbit.
         </div>
       </div>
-      <div className="text-right text-[16px]">
+      <div className="text-right text-[16px] p-3">
         <button
-          className="rounded-full items-center justify-center flex-col border border-[#DF0000] text-[#DF0000] bg-transparent py-1 px-3 "
+          className="rounded-[10px] items-center justify-center flex-col border border-primary-color text-primary-color bg-transparent py-1 px-3 "
           onClick={() => navigate(-1)}
         >
           Return
         </button>
         <button
-          className="rounded-full items-center justify-center flex-col border border-primary-color bg-white text-black py-1 px-3 ml-2"
+          className="rounded-[10px] items-center justify-center flex-col border border-primary-color bg-white text-black py-1 px-3 ml-2"
           onClick={handleClose}
         >
           Continue

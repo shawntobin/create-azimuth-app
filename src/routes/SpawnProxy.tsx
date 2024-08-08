@@ -4,23 +4,21 @@ import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import ControlBox from "../components/ControlBox";
 import useWalletStore from "../store/useWalletStore";
 import { formatAddress } from "../utils/address";
-import toast from "react-hot-toast";
-import * as txn from "../utils/transaction";
 import { copy } from "../utils/helper";
-import useGasEstimate from "../hooks/useGasEstimate";
+import * as txn from "../utils/transaction";
 import Dropdown from "../components/Dropdown";
+import useGasEstimate from "../hooks/useGasEstimate";
 import { isAddress } from "web3-validator";
-import { GAS_LIMITS } from "../constants";
+import { GAS_LIMITS, WALLET_TYPES } from "../constants/constants";
+import { isZeroAddress } from "../utils/address";
+import { useRefresh } from "../hooks/useRefresh";
 import useTransaction from "../hooks/useTransaction";
-import Checkbox from "../components/Checkbox";
 
-const Ownership = () => {
+const SpawnProxy = () => {
   const { walletAddress, selectedShip, walletType, urbitWallet } =
     useWalletStore();
-  const [newOwnerAddress, setNewOwnerAddress] = useState("");
+  const [spawnProxyAddress, setSpawnProxyAddress] = useState("");
   const { txHash, txnLoading, executeTransaction } = useTransaction();
-  const [resetKeys, setResetKeys] = useState(false);
-
   const {
     gasOptions,
     loading,
@@ -28,26 +26,23 @@ const Ownership = () => {
     maxTransactionCost,
     selectedGasItem,
     handleSelect,
-  } = useGasEstimate(GAS_LIMITS.TRANSFER);
-  const { patp, owner } = selectedShip;
+  } = useGasEstimate(GAS_LIMITS.SET_PROXY);
 
-  // could also check if input address is diff from current owner
-  // how should we display txn hash?
-  // repeat button pressing?
+  const { patp, spawnProxy } = selectedShip;
 
   const handleTransaction = async () => {
     const result = await executeTransaction(
-      txn.transferPoint,
+      txn.changeSpawnProxy,
       walletType,
       patp,
       walletAddress,
-      newOwnerAddress,
+      spawnProxyAddress,
       urbitWallet,
       selectedGasItem.value
     );
 
     if (result?.success) {
-      setNewOwnerAddress("");
+      setSpawnProxyAddress("");
     }
   };
 
@@ -59,41 +54,30 @@ const Ownership = () => {
         headerContent={
           <div className="text-left w-full flex justify-between">
             <div className="items-center justify-center flex text-[20px] ">
-              <div className="font-bold">Transfer Ownership</div>
+              <div className="font-bold">Spawn Proxy</div>
               <div className="font-[200] ml-3">
-                <div className="font-[200] ml-3">{formatAddress(owner)}</div>
+                {!isZeroAddress(spawnProxy)
+                  ? formatAddress(spawnProxy)
+                  : "None"}
               </div>
             </div>
-
-            <button
-              onClick={() => copy(owner)}
-              className="bg-transparent p-0 m-0"
-            >
-              <DocumentDuplicateIcon className="h-6 w-6" />
-            </button>
+            {!isZeroAddress(spawnProxy) && (
+              <button
+                onClick={() => copy(spawnProxy)}
+                className="bg-transparent p-0 m-0"
+              >
+                <DocumentDuplicateIcon className="h-6 w-6" />
+              </button>
+            )}
           </div>
         }
-        buttonTitle="Transfer"
+        buttonTitle="Set Spawn Proxy"
         onSubmit={handleTransaction}
-        className="h-[488px] w-[500px]"
-        disabled={!isAddress(newOwnerAddress)}
+        className="h-[330px] w-[500px]"
+        disabled={!isAddress(spawnProxyAddress)}
       >
         <div className="text-[20px] justify-start flex flex-col items-start px-[20px] h-full mt-2">
-          <div className="text-left pb-4 ">{`Transfer ${patp} to a new Ethereum address. This action is irreversible.`}</div>
-
-          <div className="pb-4">
-            <Checkbox
-              isBold
-              label="Clear Keys"
-              checked={resetKeys}
-              onChange={() => setResetKeys(!resetKeys)}
-            />
-            <div className="text-[20px] px-8 text-left">
-              Select if you want to reset all keys and break all previous
-              connections. This is recommended if your Urbit has been previously
-              online.
-            </div>
-          </div>
+          <div className="text-left pb-8 ">{`Your spawn proxy can spawn planets on your behalf.`}</div>
 
           <div className="flex justify-between w-full pr-4 mr-0 font-bold">
             <div className="text-[20px] text-left ">Gas Fee</div>
@@ -126,8 +110,8 @@ const Ownership = () => {
               spellCheck="false"
               placeholder="0x..."
               className="pl-4 pr-4 py-0 w-full h-[38px] font-[500] text-[20px] bg-transparent placeholder-secondary-color text-primary-color"
-              onChange={(e) => setNewOwnerAddress(e.currentTarget.value)}
-              value={newOwnerAddress}
+              onChange={(e) => setSpawnProxyAddress(e.currentTarget.value)}
+              value={spawnProxyAddress}
             />
           </div>
         </div>
@@ -136,4 +120,4 @@ const Ownership = () => {
   );
 };
 
-export default Ownership;
+export default SpawnProxy;

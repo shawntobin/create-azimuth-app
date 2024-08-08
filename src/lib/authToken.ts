@@ -5,6 +5,7 @@ import { hexToBytes } from "web3-utils";
 import { hashPersonalMessage } from "@ethereumjs/util";
 import BridgeWallet from "../types/BridgeWallet";
 import { Hash } from "@urbit/roller-api";
+import { WALLET_TYPES } from "../constants/constants";
 
 const MESSAGE = "Bridge Authentication Token";
 
@@ -52,29 +53,45 @@ type MetamaskAuthTokenArgs = {
   walletType: symbol;
 };
 
+type WalletConnectAuthTokenArgs = {
+  address: string;
+  signPersonalMessage: Function;
+  walletType: symbol;
+};
+
 type DefaultAuthTokenArgs = {
   wallet: BridgeWallet;
   walletType?: symbol;
   useLegacyTokenSigning?: boolean;
 };
 
-type GetAuthTokenArgs = MetamaskAuthTokenArgs | DefaultAuthTokenArgs;
+type GetAuthTokenArgs =
+  | MetamaskAuthTokenArgs
+  | WalletConnectAuthTokenArgs
+  | DefaultAuthTokenArgs;
 
-// const getMetamaskAuthToken = ({ address, web3 }: MetamaskAuthTokenArgs) => {
-//   if (window.ethereum) {
-//     //NOTE  this doesn't _seem_ to be affected by #596,
-//     //      but web3.eth.personal.sign hits it semi-reliably?
-//     //      no idea what's going on, we should figure it out,
-//     //      but we apply this bandaid to hopefully stop the bleeding.
-//     return window.ethereum.request({
-//       method: "personal_sign",
-//       params: [MESSAGE, address],
-//       from: address,
-//     });
-//   } else {
-//     return web3.eth.personal.sign(MESSAGE, address, "");
-//   }
-// };
+const getMetamaskAuthToken = ({ address, web3 }: MetamaskAuthTokenArgs) => {
+  if (window.ethereum) {
+    //NOTE  this doesn't _seem_ to be affected by #596,
+    //      but web3.eth.personal.sign hits it semi-reliably?
+    //      no idea what's going on, we should figure it out,
+    //      but we apply this bandaid to hopefully stop the bleeding.
+    return window.ethereum.request({
+      method: "personal_sign",
+      params: [MESSAGE, address],
+      from: address,
+    });
+  } else {
+    return web3.eth.personal.sign(MESSAGE, address, "");
+  }
+};
+
+const getWalletConnectAuthToken = async ({
+  address,
+  signPersonalMessage,
+}: WalletConnectAuthTokenArgs) => {
+  return await signPersonalMessage({ message: MESSAGE, address: address });
+};
 
 const getDefaultAuthToken = ({
   wallet,
@@ -88,12 +105,15 @@ const getDefaultAuthToken = ({
 };
 
 export const getAuthToken = async ({
-  //   walletType,
+  walletType,
   ...args
 }: GetAuthTokenArgs) => {
-  //   switch (walletType) {
-  // WALLET_TYPES.METAMASK:
-  //   return getMetamaskAuthToken(args as MetamaskAuthTokenArgs);
-  // default:
-  return getDefaultAuthToken(args as DefaultAuthTokenArgs);
+  switch (walletType) {
+    case WALLET_TYPES.METAMASK:
+      return getMetamaskAuthToken(args as MetamaskAuthTokenArgs);
+    case WALLET_TYPES.WALLET_CONNECT:
+      return getWalletConnectAuthToken(args as WalletConnectAuthTokenArgs);
+    default:
+      return getDefaultAuthToken(args as DefaultAuthTokenArgs);
+  }
 };

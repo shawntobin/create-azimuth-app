@@ -9,22 +9,22 @@ import * as txn from "../utils/transaction";
 import Dropdown from "../components/Dropdown";
 import useGasEstimate from "../hooks/useGasEstimate";
 import { isAddress } from "web3-validator";
-import { GAS_LIMITS } from "../constants/constants";
+import { GAS_LIMITS, WALLET_TYPES } from "../constants/constants";
 import { isZeroAddress } from "../utils/address";
 import { useRefresh } from "../hooks/useRefresh";
 import useTransaction from "../hooks/useTransaction";
 
 const ManagementAddress = () => {
-  const { walletAddress, selectedShip } = useWalletStore();
+  const { walletAddress, selectedShip, walletType, urbitWallet } =
+    useWalletStore();
   const [managerAddress, setManagerAddress] = useState("");
   const { txHash, txnLoading, executeTransaction } = useTransaction();
-  const { refresh } = useRefresh();
   const {
     gasOptions,
     loading,
     error,
     maxTransactionCost,
-    selectedItem,
+    selectedGasItem,
     handleSelect,
   } = useGasEstimate(GAS_LIMITS.SET_PROXY);
 
@@ -33,10 +33,12 @@ const ManagementAddress = () => {
   const handleTransaction = async () => {
     const result = await executeTransaction(
       txn.changeManagementProxy,
-      walletAddress,
+      walletType,
       patp,
       walletAddress,
-      managerAddress
+      managerAddress,
+      urbitWallet,
+      selectedGasItem.value
     );
 
     if (result?.success) {
@@ -52,7 +54,7 @@ const ManagementAddress = () => {
         headerContent={
           <div className="text-left w-full flex justify-between">
             <div className="items-center justify-center flex text-[20px] ">
-              <div className="font-bold">Management Address</div>
+              <div className="font-bold">Management Proxy</div>
               <div className="font-[200] ml-3">
                 {!isZeroAddress(managementProxy)
                   ? formatAddress(managementProxy)
@@ -71,45 +73,49 @@ const ManagementAddress = () => {
         }
         buttonTitle="Set Management Proxy"
         onSubmit={handleTransaction}
-        className="h-[319px] w-[500px]"
+        className="h-[360px] w-[500px]"
         disabled={!isAddress(managerAddress)}
       >
-        <div className="text-[20px] justify-start flex flex-col items-start pl-2 border-b border-primary-color h-full mt-2">
-          <div className="font-bold text-left pb-4 ">{`Your management key can configure networking settings (network keys and sponsorship).`}</div>
+        <div className="text-[20px] justify-start flex flex-col items-start px-[20px] h-full mt-2">
+          <div className="text-left pb-4 ">{`Your management proxy can configure networking settings (network keys and sponsorship).`}</div>
 
-          <div className="flex justify-between w-full pr-4 mr-0">
+          <div className="flex justify-between w-full pr-4 mr-0 font-bold">
             <div className="text-[20px] text-left ">Gas Fee</div>
             <div className="border-solid border-width-1">
               <Dropdown
+                height={25}
+                fontSize={16}
                 onSelect={handleSelect}
                 items={gasOptions}
-                focusedItem={selectedItem || gasOptions[1]?.label}
+                focusedItem={selectedGasItem.label}
                 loading={loading}
                 loadingMessage="Loading prices..."
               />
             </div>
           </div>
 
-          <div className="flex justify-between w-full pr-4 mr-0 pt-1">
+          <div className="flex justify-between w-full pr-4 mr-0 pt-0 font-bold">
             <div className="text-[20px] text-left ">Max Transaction Cost</div>
-            <div className="border-solid border-width-1 text-[18px]">
+            <div className="text-[16px] items-end justify-end flex">
               {maxTransactionCost ? `${maxTransactionCost} ETH` : "-"}
             </div>
           </div>
 
-          <div className="text-[20px] mt-[20px] mb-1">
+          <div className="text-[20px] mb-1 font-bold">
             New Management Address:
           </div>
         </div>
-        <div className="flex items-center">
-          <input
-            type="text"
-            spellCheck="false"
-            placeholder="0x..."
-            className="pl-4 pr-4 py-0 w-full h-[39px] font-[500] text-[20px] bg-transparent placeholder-secondary-color text-primary-color"
-            onChange={(e) => setManagerAddress(e.currentTarget.value)}
-            value={managerAddress}
-          />
+        <div className="w-full justify-center items-center flex">
+          <div className="flex items-center border w-[455px] rounded-[10px] mb-4">
+            <input
+              type="text"
+              spellCheck="false"
+              placeholder="0x..."
+              className="pl-4 pr-4 py-0 w-full h-[38px] font-[500] text-[20px] bg-transparent placeholder-secondary-color text-primary-color"
+              onChange={(e) => setManagerAddress(e.currentTarget.value)}
+              value={managerAddress}
+            />
+          </div>
         </div>
       </ControlBox>
     </Container>

@@ -11,7 +11,7 @@ const Button: React.FC<ButtonProps> = ({
   className = "",
   ...rest
 }) => {
-  const buttonClassName = `flex items-center justify-center rounded-full border border-primary-color text-primary-color text-[20px] h-[36px] bg-transparent ${className} m-[3px]`;
+  const buttonClassName = `flex items-center justify-center rounded-[10px] border border-primary-color text-primary-color text-[20px] h-[36px] bg-transparent ${className}`;
 
   return (
     <button onClick={handleClick} className={buttonClassName} {...rest}>

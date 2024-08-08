@@ -40,7 +40,7 @@ const TransactionHistory = () => {
   }, [selectedShip]);
 
   return (
-    <Container>
+    <Container hideHistory>
       <ControlBox
         headerContent={
           <div className="text-left w-full flex justify-between text-[20px]">

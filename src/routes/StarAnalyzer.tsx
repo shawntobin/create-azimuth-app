@@ -13,6 +13,8 @@ import * as utils from "../utils/analyzer-utils";
 import UrbitIcon from "../components/UrbitIcon";
 import Sigil from "../components/Sigil";
 import pluralize from "pluralize";
+import { isStar } from "../utils/helper";
+import useTransaction from "../hooks/useTransaction";
 
 type Planet = {
   patp: string;
@@ -32,10 +34,11 @@ const Wallet = () => {
   const [selectedFilter, setSelectedFilter] = useState("");
   const [spawned, setSpawned] = useState(0);
   const [keyRevision, setKeyRevision] = useState(0);
+  const { txHash, txnLoading, executeTransaction } = useTransaction();
+  const { walletAddress, selectedShip, walletType, urbitWallet } =
+    useWalletStore();
 
-  const { selectedShip } = useWalletStore();
-
-  const star = selectedShip?.patp || "~marzod";
+  const star = isStar(selectedShip?.patp) ? selectedShip.patp : "~marzod";
 
   const itemsPerPage = 28;
 
@@ -109,6 +112,28 @@ const Wallet = () => {
     setCurrentPage(event.selected);
   };
 
+  const handleItemClick = (pl: string) => {
+    handleSpawn(pl);
+  };
+
+  const handleSpawn = async (patp) => {
+    const result = await executeTransaction(
+      txn.spawnPoint,
+      walletType,
+      patp,
+      walletAddress,
+      walletAddress, //newOwnerAddress
+      urbitWallet
+      // selectedGasItem.value
+    );
+
+    if (result) {
+      toast.loading("Spawning Planet...");
+    } else {
+      toast.error("Failed to spawn");
+    }
+  };
+
   const renderPagination = () => {
     return (
       <ReactPaginate
@@ -141,7 +166,8 @@ const Wallet = () => {
       textSize={12}
       urbitId={pl.point}
       key={pl.point}
-      handleClick={() => {}}
+      handleClick={handleItemClick}
+      spawnable
     />
   ));
 
@@ -192,22 +218,14 @@ const Wallet = () => {
         <div>
           <div className="flex justify-left mt-5 pl-3 space-x-3">
             <div className="relative flex items-center mb-3">
-              <form onSubmit={() => {}} className="input">
-                <input
-                  type="text"
-                  spellCheck="false"
-                  placeholder="Search"
-                  className="font-[600] pl-2 pr-8 py-2 rounded-full border border-primary-color text-light-gray w-[142px] text-[16px] h-[25px] bg-transparent placeholder-secondary-color"
-                  onChange={(e) => handleSearch(e)}
-                  value={inputValue}
-                />
-                {/* <button
-                  className="text-base-color border-primary-color absolute inset-y-0 right-0 flex items-center justify-center bg-primary-color rounded-full h-[24px] w-[24px] text-[30px] p-1 pt-0 font-[400] focus:outline-none focus:ring-2 focus:ring-primary-color"
-                  onClick={handleSearch}
-                >
-                  &gt;
-                </button> */}
-              </form>
+              <input
+                type="text"
+                spellCheck="false"
+                placeholder="Search"
+                className="font-[600] pl-2 pr-8 py-2 rounded-full border border-primary-color text-light-gray w-[142px] text-[16px] h-[25px] bg-transparent placeholder-secondary-color"
+                onChange={(e) => handleSearch(e)}
+                value={inputValue}
+              />
             </div>
             <button
               className={`h-[26px] px-2 m-0 flex justify-center items-center font-[600] rounded-full border border-primary-color text-[16px] ${
@@ -249,7 +267,11 @@ const Wallet = () => {
       </div>
     );
   };
-  return <Container symbols={false}>{renderContent()}</Container>;
+  return (
+    <Container dropdown={false} symbols={false}>
+      {renderContent()}
+    </Container>
+  );
 };
 
 export default Wallet;

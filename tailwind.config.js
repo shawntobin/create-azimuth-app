@@ -1,4 +1,8 @@
 /** @type {import('tailwindcss').Config} */
+// module.exports = {
+//   darkMode: 'selector',
+//   // ...
+// }
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -17,7 +21,7 @@ export default {
 
         "primary-color": "#FFFFFF", //"#F5F5F5",
         "secondary-color": "#878787",
-        "base-color": "#000000", //"#141A14",
+        "base-color": "#000000", //"#14140F",
 
         "bright-green": "#AAE68C",
         "bright-yellow": "#E7D42E",

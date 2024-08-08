@@ -9,9 +9,12 @@ import { hsvaToHex, hexToHsva } from "@uiw/color-convert";
 import ShadeSlider from "@uiw/react-color-shade-slider";
 import useSigilDownloader from "../hooks/useSigilDownloader";
 import { isValidHex } from "../utils/helper";
+import { useLocation } from "react-router-dom";
 
 const SigilGenerator = () => {
   const { selectedShip } = useWalletStore();
+  const location = useLocation();
+  const { chosenPatp } = location.state || {};
   // const { patp } = selectedShip;
   const [fgColor, setFgColor] = useState({ h: 0, s: 0, v: 100, a: 1 });
   const [bgColor, setBgColor] = useState({ h: 0, s: 0, v: 30, a: 1 });
@@ -21,7 +24,7 @@ const SigilGenerator = () => {
   const canvasRef = useRef(null);
   const { downloadSigil } = useSigilDownloader(canvasRef);
 
-  const patp = selectedShip?.patp || "riczod-tacmex";
+  const patp = chosenPatp || selectedShip?.patp || "riczod-tacmex";
 
   const colors = [hsvaToHex(fgColor), hsvaToHex(bgColor)];
 
@@ -45,19 +48,19 @@ const SigilGenerator = () => {
   };
 
   return (
-    <Container>
+    <Container hideHistory dropdown={false}>
       <ControlBox
         onSubmit={handleDownload}
         headerContent={
           <div className="text-left w-full flex justify-between text-[20px]">
             <div className="items-center justify-center flex">
-              <div className="font-bold">Sigil Generator</div>
+              <div className="font-bold">Sigil Designer</div>
             </div>
             {patp}
           </div>
         }
         buttonTitle="Download Sigil"
-        className="h-[461px] w-[484px]"
+        className="h-[481px] w-[484px]"
       >
         <div className="text-[20px] justify-start flex flex-col items-start p-5 h-full mt-2">
           <div className="flex">
