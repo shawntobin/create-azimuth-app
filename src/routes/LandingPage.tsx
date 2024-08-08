@@ -147,7 +147,7 @@ const LandingPage = () => {
                 className="w-full h-[150px] object-cover border-b border-black"
               />
               <div className="h-[120px]  mb-0 text-left w-full flex justify-between px-3 py-1 border-b border-primary-color text-[12px] font-[400]">
-                Navigate to OpenSea to buy Planets or Stars.
+                Navigate to OpenSea to buy Planets, Stars or Galaxies.
               </div>
 
               <a
@@ -201,7 +201,7 @@ const LandingPage = () => {
         <div className="text-[32px] font-[700]">Log in</div>
         <div className="text-[16px] pb-8">
           Log in with any method below to receive, send, and manage your Urbit
-          identity.
+          ID.
         </div>
         <button
           className="mb-8 w-[216px] flex items-center justify-center rounded-full border border-primary-color font-bold text-base-color text-[20px] h-[36px] bg-primary-color whitespace-nowrap hover:border-light-gray hover:bg-light-gray"
