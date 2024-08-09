@@ -3,7 +3,7 @@ import { formatAddress } from "../utils/address";
 import useWalletStore from "../store/useWalletStore";
 import { useNavigate } from "react-router-dom";
 import LoginModal from "./LoginModal";
-import MetamaskModal from "./MetamaskModal";
+import WalletModal from "./WalletModal";
 
 import toast from "react-hot-toast";
 import Onboard from "@web3-onboard/core";
@@ -13,7 +13,8 @@ import { PROVIDER_URL, LOGIN_METHODS } from "../constants";
 import useLogin from "../hooks/useLogin";
 
 const Navbar = () => {
-  const { walletAddress, ethBalance, clearState } = useWalletStore();
+  const { walletAddress, ethBalance, clearState, walletLabel } =
+    useWalletStore();
   const navigate = useNavigate();
   const { loginCommon } = useLogin();
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -24,15 +25,22 @@ const Navbar = () => {
     return (
       <div
         onClick={() => setShowMetamaskModal(true)}
-        className="border border-x-black  px-3 text-black bg-white h-full mr-[120px] w-[320px] font-bold text-[18px] flex items-center justify-start text-left cursor-pointer"
+        className="border border-x-black px-3 text-black bg-white h-full mr-[30px] w-[320px] font-bold text-[18px] flex items-center justify-start text-left cursor-pointer"
       >
-        {/* <WalletIcon className="h-7 w-7 mr-3 mb-2" />
-         */}
-        <img
-          src="/metamask-logo-small.png"
-          alt="metamask logo"
-          className="w-[25px] h-[25px] mr-3 mb-2"
-        />
+        {walletLabel === "WalletConnect" ? (
+          <img
+            src="/wc.svg"
+            alt="WalletConnect logo"
+            className="w-[25px] h-[25px] mr-3 mb-2"
+          />
+        ) : (
+          <img
+            src="/MetaMask_Fox.svg"
+            alt="metamask logo"
+            className="w-[25px] h-[25px] mr-3 mb-2"
+          />
+        )}
+
         <div className="w-full">
           <div className="text-bold">{formatAddress(walletAddress)}</div>
           <div className="mt-[-5px] text-300 text-[#9C9C9C]">
@@ -46,7 +54,7 @@ const Navbar = () => {
 
   const renderLoginButton = () => {
     return (
-      <div className="flex items-center justify-end w-full h-full pr-[100px]">
+      <div className="flex items-center justify-end w-full h-full pr-[30px]">
         <button
           className="w-[115px] text-black text-[20px] font-bold flex items-center justify-center bg-white py-1 px-2 border border-x-black h-full"
           onClick={() => setShowLoginModal(true)}
@@ -123,6 +131,11 @@ const Navbar = () => {
     }
   };
 
+  const handleSwitchWallet = async () => {
+    setShowMetamaskModal(false);
+    setShowLoginModal(true);
+  };
+
   const handleLogOut = () => {
     navigate("/");
     clearState();
@@ -135,12 +148,14 @@ const Navbar = () => {
         handleClose={() => setShowLoginModal(false)}
         onClick={handleWalletLogin}
       />
-      <MetamaskModal
+      <WalletModal
         isOpen={showMetamaskModal}
-        handleClose={() => setShowMetamaskModal(false)}
-        onClick={handleLogOut}
         walletAddress={walletAddress}
+        walletLabel={walletLabel}
         ethBalance={ethBalance}
+        handleClose={() => setShowMetamaskModal(false)}
+        handleDisconnect={handleLogOut}
+        handleSwitchWallet={handleSwitchWallet}
       />
 
       <div className="h-[63px] bg-white flex items-center justify-start">
@@ -163,6 +178,13 @@ const Navbar = () => {
 
         {/* {renderLoginButton()} */}
         {walletAddress ? renderWalletInfo() : renderLoginButton()}
+        <img
+          src="/switch.png"
+          alt="switch placeholder"
+          className="mr-10 mb-2"
+          // w-[64px] h-[41.25px]
+          style={{ width: 64, height: 41.25 }}
+        />
       </div>
     </>
   );

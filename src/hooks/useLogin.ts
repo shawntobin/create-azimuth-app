@@ -30,7 +30,7 @@ const useLogin = () => {
       const ids = await txn.getPoints(walletAddress); // note if master ticket then could just use getPoint
       setWalletAddress(walletAddress);
       setWalletType(walletType);
-      setWalletLabel(walletLabel);
+      setWalletLabel(walletLabel || "Master Ticket");
       setUrbitWallet(urbitWallet);
       setEthBalance(ethBalance);
       setUrbitIds(ids);
