@@ -9,6 +9,7 @@ import Dropdown from "../components/Dropdown";
 import { GAS_LIMITS } from "../constants";
 import useTransaction from "../hooks/useTransaction";
 import { formatPatp } from "../utils/helper";
+import { MODAL_TEXT } from "../constants/content";
 
 const Sponsor = () => {
   const { walletAddress, selectedShip, walletType, urbitWallet } =
@@ -53,6 +54,7 @@ const Sponsor = () => {
   return (
     <Container>
       <ControlBox
+        infoModalText={MODAL_TEXT.CHANGE_SPONSOR}
         txnHash={txHash}
         txnInProgress={txnLoading}
         headerContent={

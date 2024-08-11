@@ -21,6 +21,7 @@ interface ControlBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: string;
   height?: string;
   walletType?: symbol;
+  infoModalText?: string;
 }
 
 const ControlBox: React.FC<ControlBoxProps> = ({
@@ -38,6 +39,7 @@ const ControlBox: React.FC<ControlBoxProps> = ({
   width,
   height,
   walletType,
+  infoModalText,
 }) => {
   const [showInfo, setShowInfo] = useState(false);
   const renderButtonContent = () => {
@@ -72,7 +74,11 @@ const ControlBox: React.FC<ControlBoxProps> = ({
 
   return (
     <div>
-      <InfoModal isOpen={showInfo} handleClose={() => setShowInfo(false)} />
+      <InfoModal
+        text={infoModalText}
+        isOpen={showInfo}
+        handleClose={() => setShowInfo(false)}
+      />
       <div className="w-full flex justify-between mb-[15px] mt-[100px]">
         {!hideBackButton && (
           <div>

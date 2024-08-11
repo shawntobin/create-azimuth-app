@@ -11,7 +11,7 @@ import { copy } from "../utils/helper";
 
 const customStyles = {
   content: {
-    top: "20%",
+    top: "25%",
     left: "81%",
     right: "auto",
     bottom: "auto",
@@ -22,7 +22,7 @@ const customStyles = {
     font: 20,
     borderRadius: 10,
     // height: 193,
-    padding: 10,
+    padding: 0,
   },
   overlay: {
     backgroundColor: "rgba(0,0,0,0.7)",
@@ -51,7 +51,7 @@ const WalletModal = ({
       onRequestClose={handleClose}
       style={customStyles}
     >
-      <div className="w-[280px] h-[270px] text-[20px] justify-start items-center flex flex-col p-4">
+      <div className="w-[280px] h-[270px] text-[20px] justify-start items-center flex flex-col px-4 py-1">
         <div className="text-[32px] w-full text-left">
           {/* <div>Metamask</div> */}
           <div

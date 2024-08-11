@@ -13,6 +13,7 @@ import { GAS_LIMITS, WALLET_TYPES } from "../constants/constants";
 import { isZeroAddress } from "../utils/address";
 import { useRefresh } from "../hooks/useRefresh";
 import useTransaction from "../hooks/useTransaction";
+import { MODAL_TEXT } from "../constants/content";
 
 const ManagementAddress = () => {
   const { walletAddress, selectedShip, walletType, urbitWallet } =
@@ -49,6 +50,7 @@ const ManagementAddress = () => {
   return (
     <Container>
       <ControlBox
+        infoModalText={MODAL_TEXT.SET_MANAGEMENT_PROXY}
         txnHash={txHash}
         txnInProgress={txnLoading}
         headerContent={

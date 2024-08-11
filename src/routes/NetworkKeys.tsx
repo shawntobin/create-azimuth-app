@@ -6,6 +6,7 @@ import useWalletStore from "../store/useWalletStore";
 import toast from "react-hot-toast";
 import * as ob from "urbit-ob";
 import Checkbox from "../components/Checkbox";
+import { MODAL_TEXT } from "../constants/content";
 
 const NetworkKeys = () => {
   // const { walletAddress, selectedShip } = useWalletStore();
@@ -15,6 +16,7 @@ const NetworkKeys = () => {
   return (
     <Container>
       <ControlBox
+        infoModalText={MODAL_TEXT.SET_NETWORK_KEYS}
         headerContent={
           <div className="text-left w-full flex justify-between">
             <div className="items-center justify-center flex text-[20px] ">

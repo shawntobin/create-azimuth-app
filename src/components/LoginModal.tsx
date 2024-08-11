@@ -93,7 +93,7 @@ const LoginModal = ({ isOpen, handleClose, onClick }) => {
 
   const renderMasterTicketLogin = () => {
     return (
-      <div className="w-[361px] text-[20px] justify-start items-center flex flex-col">
+      <div className="w-[361px] text-[20px] justify-start items-center flex flex-col p-5">
         <div className="text-[36px] flex items-center justify-start w-[291px]">
           <span className="mr-4">
             <button
@@ -169,7 +169,8 @@ const LoginModal = ({ isOpen, handleClose, onClick }) => {
           }
           onClick={() => {}}
         >
-          <WalletIcon className="w-5 h-5 text-white" />
+          {/* <WalletIcon className="w-5 h-5 text-white" /> */}
+          <img src="/urbit-wallet.svg" className="w-5 h-5" />
           <span className="ml-2" onClick={onClick}>
             Connect Wallet
           </span>

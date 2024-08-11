@@ -20,6 +20,36 @@ const Navbar = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showMetamaskModal, setShowMetamaskModal] = useState(false);
 
+  const renderWalletLogo = () => {
+    switch (walletLabel) {
+      case "MetaMask":
+        return (
+          <img
+            src="/MetaMask_Fox.svg"
+            alt="metamask logo"
+            className="w-[25px] h-[25px] mr-3 mb-2"
+          />
+        );
+      case "WalletConnect":
+        return (
+          <img
+            src="/wc.svg"
+            alt="WalletConnect logo"
+            className="w-[25px] h-[25px] mr-3 mb-2"
+          />
+        );
+      default:
+        return (
+          <img
+            src="/urbit-wallet-black.svg"
+            alt="Urbit Wallet logo"
+            className="w-[25px] h-[25px] mr-3 mb-2"
+          />
+        );
+        return null;
+    }
+  };
+
   // split as separate component
   const renderWalletInfo = () => {
     return (
@@ -27,19 +57,7 @@ const Navbar = () => {
         onClick={() => setShowMetamaskModal(true)}
         className="border border-x-black px-3 text-black bg-white h-full mr-[30px] w-[320px] font-bold text-[18px] flex items-center justify-start text-left cursor-pointer"
       >
-        {walletLabel === "WalletConnect" ? (
-          <img
-            src="/wc.svg"
-            alt="WalletConnect logo"
-            className="w-[25px] h-[25px] mr-3 mb-2"
-          />
-        ) : (
-          <img
-            src="/MetaMask_Fox.svg"
-            alt="metamask logo"
-            className="w-[25px] h-[25px] mr-3 mb-2"
-          />
-        )}
+        {renderWalletLogo()}
 
         <div className="w-full">
           <div className="text-bold">{formatAddress(walletAddress)}</div>
@@ -54,7 +72,7 @@ const Navbar = () => {
 
   const renderLoginButton = () => {
     return (
-      <div className="flex items-center justify-end w-full h-full pr-[30px]">
+      <div className="flex items-center justify-end h-full pr-[30px]">
         <button
           className="w-[115px] text-black text-[20px] font-bold flex items-center justify-center bg-white py-1 px-2 border border-x-black h-full"
           onClick={() => setShowLoginModal(true)}
@@ -159,12 +177,13 @@ const Navbar = () => {
       />
 
       <div className="h-[63px] bg-white flex items-center justify-start">
-        <div className="w-[400px] bg-black h-full text-white justify-between items-center flex text-[23px] px-4 text-bold">
+        <div className="w-[300px] bg-black h-full text-white justify-between items-center flex text-[23px] px-4 text-bold">
           <span className="cursor-pointer" onClick={() => navigate("/")}>
             ~&nbsp;&nbsp;&nbsp;Urbit ID
           </span>
           <span className="text-[23px]">↓</span>
         </div>
+
         <div className="text-black text-[23px] space-x-4 px-4 flex w-full">
           <span>Get Urbit ID</span>
           <span
@@ -173,7 +192,14 @@ const Navbar = () => {
           >
             Sigil Designer
           </span>
-          <span>Manage ID</span>
+          {walletAddress && (
+            <span
+              className="cursor-pointer"
+              onClick={() => navigate("/manage")}
+            >
+              Manage ID
+            </span>
+          )}
         </div>
 
         {/* {renderLoginButton()} */}

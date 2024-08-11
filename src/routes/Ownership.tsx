@@ -13,6 +13,7 @@ import { isAddress } from "web3-validator";
 import { GAS_LIMITS } from "../constants";
 import useTransaction from "../hooks/useTransaction";
 import Checkbox from "../components/Checkbox";
+import { MODAL_TEXT } from "../constants/content";
 
 const Ownership = () => {
   const { walletAddress, selectedShip, walletType, urbitWallet } =
@@ -54,6 +55,7 @@ const Ownership = () => {
   return (
     <Container>
       <ControlBox
+        infoModalText={MODAL_TEXT.TRANSFER_OWNERSHIP}
         txnHash={txHash}
         txnInProgress={txnLoading}
         headerContent={

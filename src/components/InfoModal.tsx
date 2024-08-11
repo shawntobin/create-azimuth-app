@@ -27,7 +27,7 @@ const customStyles = {
 
 Modal.setAppElement("#root");
 
-const InfoModal = ({ isOpen, handleClose }) => {
+const InfoModal = ({ text, isOpen, handleClose }) => {
   const navigate = useNavigate();
 
   return (
@@ -45,7 +45,7 @@ const InfoModal = ({ isOpen, handleClose }) => {
 
           <div className="font-[600] ml-1">Information</div>
         </div>
-        <div className="w-[400px]">Put helpful information here.</div>
+        <div className="w-[400px]">{text}</div>
       </div>
       <div className="text-right text-[16px]">
         <button
