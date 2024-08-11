@@ -45,7 +45,7 @@ const InfoModal = ({ text, isOpen, handleClose }) => {
 
           <div className="font-[600] ml-1">Information</div>
         </div>
-        <div className="w-[400px]">{text}</div>
+        <div className="w-[400px]" dangerouslySetInnerHTML={{ __html: text }} />
       </div>
       <div className="text-right text-[16px]">
         <button

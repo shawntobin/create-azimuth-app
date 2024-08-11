@@ -1,6 +1,7 @@
 export const MODAL_TEXT = {
   CHANGE_SPONSOR:
-    "This is an example of some helpful text to be displayed in the modal when the user is changing sponsors.",
+    "This is an <a href='https://www.urbit.org' target='_blank' rel='noopener noreferrer'>example</a> of some helpful text to be displayed in the modal when the user is changing sponsors.",
+
   SET_NETWORK_KEYS:
     "This is an example of some helpful text to be displayed in the modal when the user is resetting network keys.",
   TRANSFER_OWNERSHIP:
