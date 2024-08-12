@@ -14,7 +14,7 @@ const customStyles = {
     color: "#FFFFFF",
     font: 20,
     borderRadius: 10,
-    height: 200,
+    // height: 200,
     padding: 0,
   },
   overlay: {
@@ -45,7 +45,9 @@ const AlertModal = ({ isOpen, handleClose }) => {
           <div className="font-[600] ml-1">Caution</div>
         </div>
         <div className="w-[600px] p-3">
-          Changes made within Setttings are irreversible. They can effect the ownership of your Urbit ID and can interfere with your Urbit's performance and networking capabilities if not done correctly.
+          Changes made within Setttings are irreversible. They can effect the
+          ownership of your Urbit ID and can interfere with your Urbit's
+          performance and networking capabilities if not done correctly.
         </div>
       </div>
       <div className="text-right text-[16px] p-3">

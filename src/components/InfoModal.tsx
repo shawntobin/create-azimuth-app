@@ -39,17 +39,18 @@ const InfoModal = ({ text, isOpen, handleClose }) => {
       onRequestClose={handleClose}
       style={customStyles}
     >
-      <div className="w-[600px] text-[20px]">
-        <div className="flex align-center items-center">
+      <div className="w-[600px] text-[20px] p-2">
+        <div className="flex justify-start items-center mb-2">
           <InformationCircleIcon className="w-7 h-7 text-[yellow]" />
 
-          <div className="font-[600] ml-1">Information</div>
+          <div className="font-[600] ml-2">Information</div>
         </div>
-        <div className="w-[400px]" dangerouslySetInnerHTML={{ __html: text }} />
+
+        <div dangerouslySetInnerHTML={{ __html: text }} />
       </div>
       <div className="text-right text-[16px]">
         <button
-          className="rounded-[10px] items-center justify-center flex-col border border-primary-color bg-white text-black py-1 px-3 ml-2"
+          className="rounded-[10px] items-center justify-center flex-col border border-primary-color bg-white text-black py-1 px-3 mr-2"
           onClick={handleClose}
         >
           Dismiss
