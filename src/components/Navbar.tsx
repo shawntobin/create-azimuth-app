@@ -197,7 +197,7 @@ const Navbar = () => {
           {walletAddress && (
             <span
               className="cursor-pointer"
-              onClick={() => navigate("/manage")}
+              onClick={() => navigate("/wallet")}
             >
               Manage ID
             </span>
