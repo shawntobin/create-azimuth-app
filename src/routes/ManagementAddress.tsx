@@ -79,7 +79,7 @@ const ManagementAddress = () => {
         disabled={!isAddress(managerAddress)}
       >
         <div className="text-[20px] justify-start flex flex-col items-start px-[20px] h-full mt-2">
-          <div className="text-left pb-4 ">{`Your management proxy can configure networking settings (network keys and sponsorship).`}</div>
+          <div className="text-left pb-4 ">{`Setting a management proxy allows you to grant another address control over your network keys and sponsorship settings.`}</div>
 
           <div className="flex justify-between w-full pr-4 mr-0 font-bold">
             <div className="text-[20px] text-left ">Gas Fee</div>

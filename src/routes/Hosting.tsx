@@ -9,8 +9,7 @@ const Hosting = () => {
       <div className="flex flex-col items-center justify-center">
         {/* <BackButton /> */}
         <div className="mb-5 mt-[100px] w-[500px] flex justify-center items-center text-[20px]">
-          Choose between getting hosted by Red Horizon or running your own urbit
-          ship the decentralized way.
+          Please choose whether you want to run your Urbit yourself or have Red Horizon host it for you.
         </div>
         <div className="flex">
           <OptionBox
