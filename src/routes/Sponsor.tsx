@@ -216,6 +216,8 @@ const Sponsor = () => {
   const stepTwo = () => {
     return (
       <ControlBox
+        isStepBack
+        handleStepBack={() => setStep(step - 1)}
         infoModalText={MODAL_TEXT.CHANGE_SPONSOR}
         txnHash={txHash}
         txnInProgress={txnLoading}

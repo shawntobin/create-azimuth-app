@@ -22,6 +22,8 @@ interface ControlBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   height?: string;
   walletType?: symbol;
   infoModalText?: string;
+  isStepBack?: boolean;
+  handleStepBack?: () => void;
 }
 
 const ControlBox: React.FC<ControlBoxProps> = ({
@@ -40,6 +42,8 @@ const ControlBox: React.FC<ControlBoxProps> = ({
   height,
   walletType,
   infoModalText,
+  isStepBack,
+  handleStepBack,
 }) => {
   const [showInfo, setShowInfo] = useState(false);
   const renderButtonContent = () => {
@@ -82,7 +86,10 @@ const ControlBox: React.FC<ControlBoxProps> = ({
       <div className="w-full flex justify-between mb-[15px] mt-[100px]">
         {!hideBackButton && (
           <div>
-            <BackButton />
+            <BackButton
+              isStepBack={isStepBack}
+              handleStepBack={handleStepBack}
+            />
           </div>
         )}
         <div>

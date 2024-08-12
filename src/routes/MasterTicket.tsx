@@ -90,7 +90,8 @@ const MasterTicket = () => {
       <div>
         {renderStepBackButton()}
         <ControlBox
-          hideBackButton
+          isStepBack
+          handleStepBack={() => setStep(step - 1)}
           hideInfoButton
           headerContent={
             <div className="text-left w-full flex justify-between text-[20px] font-bold">
