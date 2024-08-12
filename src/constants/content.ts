@@ -17,9 +17,3 @@ export const MODAL_TEXT = {
   MANAGE_ID:
     "This page shows you your Urbit ID. You can see it’ place in the spawning hierarchy, it’s Azimuth point and whether your Urbit is currently online. It also is a gateway to your Settings.",
 };
-
-
-"This is an <a href='https://www.urbit.org' target='_blank' rel='noopener noreferrer'>example</a> of some helpful text to be displayed in the modal when the user is changing sponsors.",
-
-
-"Your star sponsor finds new peers on the network and keeps you in touch with reset peers. For your Urbit to function properly, it's essential that your sponsor is online."
