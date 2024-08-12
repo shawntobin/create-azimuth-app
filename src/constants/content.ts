@@ -11,11 +11,11 @@ export const MODAL_TEXT = {
   SET_SPAWN_PROXY:
     "Setting a spawn proxy allows you to grant another address control to create, or 'spawn', new Urbit identities on behalf of the owner. It allows the owner to delegate the spawning process to another entity while retaining overall control and ownership",
   TRANSACTION_HISTORY:
-    "This is an example of some helpful text to be displayed in the modal when the user is viewing transaction history.",
+    "This screen shows you the transaction history of your Urbit ID. It gets this data from Ethereum.",
   CONVERT_MASTER_TICKET:
     "Converting to a master ticket creates an Ethereum wallet using Urbit's HD Wallet system. This wallet manages all your Urbit ID keys with a single passphrase, making key management easier. Find out more about Urbit’s HD Wallet <a href='https://docs.urbit.org/manual/id/hd-wallet' target='_blank' rel='noopener noreferrer'>here.</a>.",
   MANAGE_ID:
-    "This is an example of some helpful text to be displayed in the modal when the user is managing their ID.",
+    "This page shows you your Urbit ID. You can see it’ place in the spawning hierarchy, it’s Azimuth point and whether your Urbit is currently online. It also is a gateway to your Settings.",
 };
 
 
