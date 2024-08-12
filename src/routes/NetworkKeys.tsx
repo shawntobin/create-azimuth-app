@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Container from "../components/Container";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import ControlBox from "../components/ControlBox";
@@ -11,10 +11,16 @@ import useGasEstimate from "../hooks/useGasEstimate";
 import Dropdown from "../components/Dropdown";
 import { GAS_LIMITS } from "../constants";
 import { useNavigate } from "react-router-dom";
+import * as txn from "../utils/transaction";
+import useTransaction from "../hooks/useTransaction";
+import { randomHex } from "web3-utils";
 
 const NetworkKeys = () => {
-  const { walletAddress, selectedShip } = useWalletStore();
+  const { walletAddress, selectedShip, walletType, urbitWallet } =
+    useWalletStore();
   const [factoryReset, setFactoryReset] = useState(false);
+  const { txHash, txnLoading, executeTransaction, txnComplete } =
+    useTransaction();
   const [customSeed, setCustomSeed] = useState(false);
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
@@ -27,11 +33,36 @@ const NetworkKeys = () => {
     handleSelect,
   } = useGasEstimate(GAS_LIMITS.ESCAPE);
 
-  const handleTransaction = () => {
-    // handle transaction
-    setStep(step + 1);
-  };
+  useEffect(() => {
+    if (txnComplete) {
+      setStep(3);
+    }
+  }, [txnComplete]);
 
+  const handleTransaction = async () => {
+    // walletType: symbol,
+    // patp: string,
+    // from: string,
+    // encryptionKey: string,
+    // authenticationKey: string,
+    // cryptoSuiteVersion: number,
+    // discontinuous: boolean,
+    // wallet: UrbitWallet,
+    // gasSelection: any,
+
+    const result = await executeTransaction(
+      txn.configureNetworkKeys,
+      walletType,
+      selectedShip.patp,
+      walletAddress,
+      randomHex(32),
+      randomHex(32),
+      1,
+      factoryReset,
+      urbitWallet,
+      selectedGasItem.value
+    );
+  };
   const handleDownloadKeyfile = () => {
     toast("Downloading keyfile is disabled");
   };
@@ -93,6 +124,8 @@ const NetworkKeys = () => {
   const stepTwo = () => {
     return (
       <ControlBox
+        txnHash={txHash}
+        txnInProgress={txnLoading}
         isStepBack
         handleStepBack={() => setStep(step - 1)}
         infoModalText={MODAL_TEXT.SET_NETWORK_KEYS}
@@ -160,8 +193,6 @@ const NetworkKeys = () => {
   const stepThree = () => {
     return (
       <ControlBox
-        isStepBack
-        handleStepBack={() => setStep(step - 1)}
         infoModalText={MODAL_TEXT.SET_NETWORK_KEYS}
         headerContent={
           <div className="text-left w-full flex justify-between">

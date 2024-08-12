@@ -147,3 +147,29 @@ export const spawnPoint = async (
     onTransactionComplete
   );
 };
+
+export const configureNetworkKeys = async (
+  walletType: symbol,
+  patp: string,
+  from: string,
+  encryptionKey: string,
+  authenticationKey: string,
+  cryptoSuiteVersion: number,
+  discontinuous: boolean,
+  wallet: UrbitWallet,
+  gasSelection: any,
+  onTransactionComplete: (receipt: any) => void
+) => {
+  return await layer.configureNetworkKeys(
+    walletType,
+    patp,
+    from,
+    encryptionKey,
+    authenticationKey,
+    cryptoSuiteVersion,
+    discontinuous,
+    wallet,
+    gasSelection,
+    onTransactionComplete
+  );
+};

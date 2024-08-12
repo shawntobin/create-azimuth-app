@@ -15,6 +15,7 @@ const LandingItem = ({ title, description, image, link }) => {
           </div>
         </div>
         <button
+          disabled
           className="mt-4 bg-primary-color text-black font-bold rounded-[10px] px-4 py-1 text-[18px]"
           onClick={() => (window.location.href = link)}
         >

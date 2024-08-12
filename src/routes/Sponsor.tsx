@@ -154,12 +154,6 @@ const Sponsor = () => {
               <div className="flex justify-center items-center">
                 <div className="font-[200] ml-3">{sponsorPatp}</div>
 
-                <div
-                  className="rounded-full text-black px-[3px] py-[3px] ml-1"
-                  style={{ backgroundColor: "#AAE68C" }}
-                >
-                  {" "}
-                </div>
                 {/* {escapeRequested && (
                   <span className="pl-2 text-[16px] text-light-green">{`*pending request to ${ob.patp(
                     escapeRequestedTo
@@ -229,12 +223,6 @@ const Sponsor = () => {
               <div className="flex justify-center items-center">
                 <div className="font-[200] ml-3">{sponsorPatp}</div>
 
-                <div
-                  className="rounded-full text-black px-[3px] py-[3px] ml-1"
-                  style={{ backgroundColor: "#AAE68C" }}
-                >
-                  {" "}
-                </div>
                 {/* {escapeRequested && (
                 <span className="pl-2 text-[16px] text-light-green">{`*pending request to ${ob.patp(
                   escapeRequestedTo

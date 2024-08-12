@@ -426,3 +426,58 @@ export const changeSpawnProxy = async (
     onTransactionComplete
   );
 };
+
+export const configureNetworkKeys = async (
+  walletType: symbol,
+  patp: string,
+  from: string,
+  encryptionKey: string,
+  authenticationKey: string,
+  cryptoSuiteVersion: number,
+  discontinuous: boolean,
+  wallet: UrbitWallet,
+  gasSelection: any,
+  onTransactionComplete: (receipt: any) => void
+) => {
+  const provider = new Web3.providers.HttpProvider(PROVIDER_URL);
+  const web3 = new Web3(provider);
+  const point = ob.patp2dec(patp);
+  const contracts = await azimuthConnection();
+  const txn = ecliptic.configureKeys(
+    contracts,
+    point,
+    encryptionKey,
+    authenticationKey,
+    cryptoSuiteVersion,
+    discontinuous
+  );
+  const { suggestedMaxPriorityFeePerGas, suggestedMaxFeePerGas } = gasSelection;
+  const nonce = await web3.eth.getTransactionCount(from); //"pending"?
+  const maxFeePerGas = "50000";
+  const maxPriorityFeePerGas = 1;
+  const gasLimit = 150000;
+  txn.from = from;
+
+  // is FeeMarketEIP1559TxData also used in metamask txns?
+  const txParams: FeeMarketEIP1559TxData = {
+    data: txn.data,
+    gasLimit: toHex(gasLimit),
+    maxFeePerGas: toHex(maxFeePerGas),
+    maxPriorityFeePerGas: toHex(maxPriorityFeePerGas),
+    nonce: toHex(nonce),
+    to: toHex(txn.to), // required?
+    // value: 0,
+    chainId: "0xaa36a7",
+    // accessList: [], // required?
+    type: "0x02",
+  };
+
+  return sendWalletTransaction(
+    txn,
+    txParams,
+    walletType,
+    wallet,
+    web3,
+    onTransactionComplete
+  );
+};
