@@ -75,7 +75,7 @@ const SpawnProxy = () => {
         }
         buttonTitle="Set Spawn Proxy"
         onSubmit={handleTransaction}
-        className="h-[330px] w-[500px]"
+        className="h-[360px] w-[500px]"
         disabled={!isAddress(spawnProxyAddress)}
       >
         <div className="text-[20px] justify-start flex flex-col items-start px-[20px] h-full mt-2">

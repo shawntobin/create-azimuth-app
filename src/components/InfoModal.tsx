@@ -48,6 +48,7 @@ const InfoModal = ({ text, isOpen, handleClose }) => {
 
         <div dangerouslySetInnerHTML={{ __html: text }} />
       </div>
+
       <div className="text-right text-[16px]">
         <button
           className="rounded-[10px] items-center justify-center flex-col border border-primary-color bg-white text-black py-1 px-3 mr-2"

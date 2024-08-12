@@ -45,7 +45,9 @@ const MasterTicket = () => {
     // Download passport
     // downloadWallet(newWallet.value.paper);
 
-    toast.error("Error downloading passport");
+    // toast.error("Error downloading passport");
+
+    toast("Passport Download is not available.");
 
     // console.log("new wallet", newWallet.value.paper);
 

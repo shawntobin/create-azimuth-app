@@ -26,7 +26,8 @@ const Advanced = () => {
   const [sponsorStatus, setSponsorStatus] = useState(false);
 
   const { showAlert, setShowAlert } = useAppStore();
-  const { selectedShip, walletAddress, urbitWallet } = useWalletStore();
+  const { selectedShip, walletAddress, urbitWallet, authToken, setAuthToken } =
+    useWalletStore();
 
   const provider = new Web3.providers.HttpProvider(PROVIDER_URL);
   const web3 = new Web3(provider);
@@ -47,6 +48,15 @@ const Advanced = () => {
     useAppStore.persist.clearStorage();
   }, [setShowAlert]);
 
+  // const { available, code, download, generating } = useSingleKeyfileGenerator(
+  //   {}
+  // );
+
+  // console.log("available", available);
+  // console.log("code", code);
+  // console.log("generating", generating);
+  // console.log("auth token", authToken);
+
   const {
     owner,
     spawnProxy,
@@ -58,12 +68,6 @@ const Advanced = () => {
     escapeRequestedTo,
   } = selectedShip;
 
-  // const sponsorPatp = hasSponsor ? ob.patp(sponsor) : "None";
-
-  // const { available, code, download, generating } = useSingleKeyfileGenerator(
-  //   {}
-  // );
-
   const handleDownloadKeyfile = async () => {
     const authToken = await getAuthToken({
       address: walletAddress,
@@ -71,7 +75,9 @@ const Advanced = () => {
       web3,
     });
 
+    toast("Downloading keyfile is disabled.");
     authToken && console.log("AUTH TOKEN", authToken);
+    authToken && setAuthToken(authToken);
   };
 
   const statusMessage = sponsorStatus
@@ -86,33 +92,35 @@ const Advanced = () => {
 
   const renderSponsor = () => {
     return (
-      <div className="flex w-full justify-center items-center">
-        <span className="pr-1">{ob.patp(sponsor)}</span>
-        <div
-          data-tooltip-id="my-tooltip"
-          data-tooltip-content={statusMessage}
-          className="rounded-full text-black px-[3px] py-[3px]"
-          style={{ backgroundColor: sponsorStatus ? "#AAE68C" : "#E72E2E" }}
-        ></div>
+      <div className="flex w-full justify-between items-center">
+        <div className="flex items-center">
+          <span className="pr-1">{ob.patp(sponsor)}</span>
+          <div
+            data-tooltip-id="my-tooltip"
+            data-tooltip-content={statusMessage}
+            className="rounded-full text-black px-[3px] py-[3px] w-[5px] h-[5px]"
+            style={{ backgroundColor: sponsorStatus ? "#AAE68C" : "#E72E2E" }}
+          />
 
-        <Tooltip
-          id="my-tooltip"
-          style={{
-            backgroundColor: "#212121",
-            color: "white",
-            fontWeight: 600,
-            fontSize: "18px",
-            borderRadius: "10px",
-          }}
-        />
-
-        {escapeRequested && (
-          <span className="text-[16px] text-light-green font-bold">
-            {/* // <span className="text-[16px] text-light-green">{`*pending request to ${ob.patp(
-          //   escapeRequestedTo
-          // )}`}</span> */}
-          </span>
-        )}
+          <Tooltip
+            id="my-tooltip"
+            style={{
+              backgroundColor: "#212121",
+              color: "white",
+              fontWeight: 600,
+              fontSize: "18px",
+              borderRadius: "10px",
+              zIndex: 1,
+            }}
+          />
+        </div>
+        <div className="ml-10">
+          {escapeRequested && (
+            <span className="text-[16px] text-light-green">{`pending request to ${ob.patp(
+              escapeRequestedTo
+            )}`}</span>
+          )}
+        </div>
       </div>
     );
   };
@@ -129,13 +137,17 @@ const Advanced = () => {
             <div className="text-left font-bold  pb-1 ml-5">OS Settings</div>
             <div className="flex flex-col gap-y-1">
               <SettingsItem
-                handleClick={() => navigate(`/manage/sponsor`)}
+                handleClick={() => navigate(`/manage/settings/sponsor`)}
                 title="Change Sponsor"
                 text={renderSponsor()}
               />
               <SettingsItem
-                handleClick={() => navigate(`/manage/network-keys`)}
-                title="Reset Network Keys"
+                handleClick={() => navigate(`/manage/settings/network-keys`)}
+                title={
+                  Number(keyRevisionNumber) === 0
+                    ? "Set Network Keys"
+                    : "Reset Network Keys"
+                }
                 text={`Revision ${keyRevisionNumber}`}
               />
 
@@ -147,7 +159,7 @@ const Advanced = () => {
 
                   <div
                     className="cursor-pointer font-[600] text-[22px] pb-0 pl-0 -mr-0.5 bg-primary-color text-base-color border-primary-color absolute right-0 flex items-center justify-center rounded-r-[10px] h-[36px] w-[36px] focus:outline-none focus:bg-transparent hover:bg-light-gray hover:border-primary-color"
-                    onClick={() => toast("Downloading keyfile is disabled")}
+                    onClick={handleDownloadKeyfile}
                   >
                     {`↓`}
                   </div>
@@ -160,7 +172,7 @@ const Advanced = () => {
 
                   <div
                     className="cursor-pointer font-[600] text-[28px] pb-1 pl-0.5 -mr-0.5 bg-primary-color text-base-color border-primary-color absolute right-0 flex items-center justify-center rounded-r-[10px] h-[36px] w-[36px] focus:outline-none focus:bg-transparent hover:bg-light-gray hover:border-primary-color"
-                    onClick={() => toast("Copying access key is disabled")}
+                    onClick={() => toast("Copying access key is disabled.")}
                   >
                     {`>`}
                   </div>
@@ -172,19 +184,19 @@ const Advanced = () => {
             <div className="text-left font-bold pb-1 ml-5">ID Settings</div>
             <div className="flex flex-col gap-y-1">
               <SettingsItem
-                handleClick={() => navigate(`/manage/ownership`)}
+                handleClick={() => navigate(`/manage/settings/ownership`)}
                 title="Transfer Ownership"
                 text={owner}
               />
               <SettingsItem
-                handleClick={() => navigate(`/manage/management-key`)}
+                handleClick={() => navigate(`/manage/settings/management-key`)}
                 title="Set Management Proxy"
                 text={
                   !isZeroAddress(managementProxy) ? managementProxy : "None"
                 }
               />
               <SettingsItem
-                handleClick={() => navigate(`/manage/master-ticket`)}
+                handleClick={() => navigate(`/manage/settings/master-ticket`)}
                 title="Master Ticket"
                 text="Convert to Master Ticket"
               />
@@ -192,12 +204,12 @@ const Advanced = () => {
                 <>
                   <div className="text-left font-bold pb-1">Star Settings</div>
                   <SettingsItem
-                    handleClick={() => navigate(`/star-scanner`)}
+                    handleClick={() => navigate(`/manage/settings/spawn`)}
                     title="Spawn Planets"
                     text=""
                   />
                   <SettingsItem
-                    handleClick={() => navigate(`/manage/spawn-proxy`)}
+                    handleClick={() => navigate(`/manage/settings/spawn-proxy`)}
                     title="Set Spawn Proxy"
                     text={!isZeroAddress(spawnProxy) ? spawnProxy : "None"}
                   />

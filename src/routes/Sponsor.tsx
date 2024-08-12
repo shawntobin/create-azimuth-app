@@ -175,9 +175,9 @@ const Sponsor = () => {
         <div className="text-[20px] justify-start flex flex-col items-start px-[20px] h-full mt-2">
           <div className="h-full">
             <div className="text-left pb-4 font-bold">
-              Your star sponsor finds new peers on the network and provides updates. 
-              For stable networking performance of your Urbit it is essential that your
-              sponsor is online.
+              Your star sponsor finds new peers on the network and provides
+              updates. For stable networking performance of your Urbit it is
+              essential that your sponsor is online.
             </div>
             <div className="text-left">
               If you're unsure which sponsor to choose, the Urbit Foundation's
@@ -290,7 +290,7 @@ const Sponsor = () => {
           </div>
         }
         buttonTitle="Return Home"
-        onSubmit={() => navigate("/manage/advanced")}
+        onSubmit={() => navigate("/manage/settings")}
         className="h-[280px] w-[500px]"
       >
         <div className="text-[20px] justify-start flex flex-col items-start px-[20px] h-full mt-2">

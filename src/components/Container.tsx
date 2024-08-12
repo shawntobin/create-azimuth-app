@@ -54,7 +54,7 @@ const Container: React.FC<ContainerProps> = ({
     return (
       <div className="flex">
         <button
-          onClick={() => navigate("/history")}
+          onClick={() => navigate("/manage/history")}
           className="w-[100px] border border-white rounded-[10px] text-[20px] bg-transparent h-[33px] flex items-center justify-center hover:bg-primary-color hover:text-base-color"
         >
           <div className="text-[16px] mr-2 ml-1"></div>
@@ -71,10 +71,13 @@ const Container: React.FC<ContainerProps> = ({
           <Navbar />
 
           <div className="w-full flex justify-between mt-6 px-6">
-            <div className="w-[300px]">
-              <Breadcrumbs walletAddress={walletAddress} />
+            <div className="w-[350px]">
+              <Breadcrumbs
+                walletAddress={walletAddress}
+                patp={selectedShip?.patp}
+              />
             </div>
-            <div className="text-center justify-center items-center flex text-[20px] ml-[-200px]">
+            <div className="text-center justify-center items-center flex text-[20px] ml-[-250px]">
               {dropdown && (
                 <Dropdown
                   onSelect={handleSelect}

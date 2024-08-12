@@ -157,6 +157,8 @@ const Navbar = () => {
   const handleLogOut = () => {
     navigate("/");
     clearState();
+    setShowLoginModal(false);
+    setShowMetamaskModal(false);
   };
 
   return (

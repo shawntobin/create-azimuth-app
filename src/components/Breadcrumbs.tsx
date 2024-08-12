@@ -11,9 +11,9 @@ const Breadcrumbs = ({ walletAddress }) => {
   return (
     <nav className="text-[20px] text-primary-color">
       <ol className="breadcrumb">
-        <li key="home" className="breadcrumb-item">
+        {/* <li key="home" className="breadcrumb-item">
           <Link to="/">{getBreadcrumbName("/", params)}</Link>
-        </li>
+        </li> */}
         {pathnames.map((value, index) => {
           const to = `/${pathnames.slice(0, index + 1).join("/")}`;
           const breadcrumbName = getBreadcrumbName(to, params);

@@ -7,7 +7,6 @@ const Hosting = () => {
   return (
     <Container dropdown={false}>
       <div className="flex flex-col items-center justify-center">
-        {/* <BackButton /> */}
         <div className="mb-5 mt-[100px] w-[500px] flex justify-center items-center text-[20px]">
           Please choose whether you want to run your Urbit yourself or have Red Horizon host it for you.
         </div>
@@ -15,7 +14,6 @@ const Hosting = () => {
           <OptionBox
             width="275px"
             height="480px"
-            hideBackButton
             headerContent={
               <div className="text-left w-full flex justify-between">
                 <div className="items-center justify-center flex text-[20px] ">

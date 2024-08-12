@@ -77,7 +77,7 @@ const Ownership = () => {
         }
         buttonTitle="Transfer"
         onSubmit={handleTransaction}
-        className="h-[488px] w-[500px]"
+        className="h-[500px] w-[500px]"
         disabled={!isAddress(newOwnerAddress)}
       >
         <div className="text-[20px] justify-start flex flex-col items-start px-[20px] h-full mt-2">

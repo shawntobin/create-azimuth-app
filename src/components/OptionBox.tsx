@@ -30,10 +30,12 @@ const OptionBox: React.FC<OptionBoxProps> = ({
   return (
     <div>
       <div className="w-full flex justify-between mb-[15px]">
-        {!hideBackButton && (
+        {!hideBackButton ? (
           <div>
             <BackButton />
           </div>
+        ) : (
+          <div className="h-[22px]" />
         )}
       </div>
       <div

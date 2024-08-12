@@ -39,7 +39,7 @@ const useWalletStore = create<WalletState>()(
         ethBalance: "",
         setUrbitWallet: (wallet: UrbitWallet | null) =>
           set({ urbitWallet: wallet }),
-        setAuthToken: (token: string) => set({ authToken }),
+        setAuthToken: (token: string) => set({ authToken: token }),
         setWalletType: (type: symbol) => set({ walletType: type }),
         setWalletLabel: (label: string) => set({ walletLabel: label }),
         setWalletAddress: (account: string) => set({ walletAddress: account }),

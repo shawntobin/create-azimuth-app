@@ -27,10 +27,13 @@ const Manage = () => {
       </div>
       <UrbitIdCard ship={selectedShip} className={"mb-[15px]"} />
       <div className="flex-row flex space-x-4">
-        <Button handleClick={() => navigate("/hosting")} text="Set up Planet" />
         <Button
-          handleClick={() => navigate(`/manage/advanced`)}
-          text="Control Panel"
+          handleClick={() => navigate("/manage/set-up")}
+          text="Set up Planet"
+        />
+        <Button
+          handleClick={() => navigate(`/manage/settings`)}
+          text="Settings"
         />
       </div>
     </Container>

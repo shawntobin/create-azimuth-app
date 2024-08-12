@@ -225,7 +225,7 @@ const Activation = () => {
           hideInfoButton
           buttonColor="bg-bright-green"
           buttonTitle="Set up planet"
-          onSubmit={() => navigate(`/hosting`)}
+          onSubmit={() => navigate(`/manage/set-up`)}
         >
           <div className="justify-start flex flex-col items-start pl-2 h-full mt-2">
             <div className="text-[20px] font-bold text-left p-4 ">{`Congratulations,`}</div>
