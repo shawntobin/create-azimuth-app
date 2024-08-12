@@ -175,8 +175,8 @@ const Sponsor = () => {
         <div className="text-[20px] justify-start flex flex-col items-start px-[20px] h-full mt-2">
           <div className="h-full">
             <div className="text-left pb-4 font-bold">
-              Your star sponsor finds new peers on the network. For stable
-              networking performance of your Urbit it is essential that your
+              Your star sponsor finds new peers on the network and provides updates. 
+              For stable networking performance of your Urbit it is essential that your
               sponsor is online.
             </div>
             <div className="text-left">

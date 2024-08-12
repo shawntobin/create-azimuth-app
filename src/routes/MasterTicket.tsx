@@ -74,11 +74,11 @@ const MasterTicket = () => {
         className="w-[500px] h-[305px]"
       >
         <div className="justify-start flex flex-col items-start p-4 h-full">
-          <div className="text-[20px] font-bold text-left ">{`Reticketing is the process of generating a completely fresh wallet and transferring ownership of your point to that wallet.`}</div>
+          <div className="text-[20px] font-bold text-left ">{`Converting to Master Ticket is the process of generating a completely fresh wallet and transferring ownership of your ID to that wallet.`}</div>
           <div className="text-[20px] mt-[20px] mb-1 text-left">
             Beware, this resets your proxy addresses; if you're using smart
             contracts, this might break them! It will also change your
-            networking keys!
+            network keys. Find out more in the info section above.
           </div>
         </div>
       </ControlBox>
@@ -101,7 +101,7 @@ const MasterTicket = () => {
               <span>{`Step ${step} of 4`}</span>
             </div>
           }
-          buttonTitle="Download Passport"
+          buttonTitle="Download Passport ↓"
           onSubmit={handleDownloadTicket}
           // className="h-[250px]"
         >
@@ -175,7 +175,7 @@ const MasterTicket = () => {
               <span>{`Step ${step} of 4`}</span>
             </div>
           }
-          buttonTitle="Login With New Master Ticket"
+          buttonTitle=" Login With New Master Ticket"
           onSubmit={() => navigate(`/`)}
         >
           <div className="justify-start flex flex-col items-start pl-2 border-b border-primary-color h-full mt-2">

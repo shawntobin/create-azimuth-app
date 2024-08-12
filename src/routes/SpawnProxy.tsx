@@ -79,7 +79,7 @@ const SpawnProxy = () => {
         disabled={!isAddress(spawnProxyAddress)}
       >
         <div className="text-[20px] justify-start flex flex-col items-start px-[20px] h-full mt-2">
-          <div className="text-left pb-8 ">{`Your spawn proxy can spawn planets on your behalf.`}</div>
+          <div className="text-left pb-8 ">{`Setting a spawn proxy allows you to grant another address control to spawn new Planets.`}</div>
 
           <div className="flex justify-between w-full pr-4 mr-0 font-bold">
             <div className="text-[20px] text-left ">Gas Fee</div>

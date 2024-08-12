@@ -101,7 +101,7 @@ const NetworkKeys = () => {
       >
         <div className="text-left pb-4 text-[20px] p-4">
           Network keys are needed to generate a keyfile. You may need to reset
-          network keys if X.
+          network keys if your keys have been compromised.
         </div>
         <div className="justify-start flex flex-col items-start text-left p-2">
           <div className="pb-4">
@@ -148,7 +148,7 @@ const NetworkKeys = () => {
         <div className="text-[20px] justify-start flex flex-col items-start px-[20px] h-full mt-2">
           <div className="h-full">
             <div className="text-left pb-4 font-bold">
-              {`Reset network keys for ${selectedShip.patp}`}
+              {`Set network keys for ${selectedShip.patp}`}
             </div>
           </div>
           <div className="flex justify-between w-full pr-4 mr-0">

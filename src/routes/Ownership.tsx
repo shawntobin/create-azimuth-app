@@ -93,7 +93,7 @@ const Ownership = () => {
             <div className="text-[20px] px-8 text-left">
               Select if you want to reset all keys and break all previous
               connections. This is recommended if your Urbit has been previously
-              online.
+              online and is now being transferred to a new owner.
             </div>
           </div>
 
