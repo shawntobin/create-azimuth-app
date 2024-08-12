@@ -5,6 +5,7 @@ import { useRefresh } from "./useRefresh";
 const useTransaction = () => {
   const [txHash, setTxHash] = useState(null);
   const [txnLoading, setTxnLoading] = useState(false);
+  const [txnComplete, setTxnComplete] = useState(false);
   const { refresh } = useRefresh();
 
   const executeTransaction = async (transactionFunction, ...args) => {
@@ -27,6 +28,7 @@ const useTransaction = () => {
   const handleTransactionComplete = () => {
     setTxnLoading(false);
     setTxHash(null);
+    setTxnComplete(true);
     toast.success("Transaction complete!");
     refresh("all");
   };
@@ -35,6 +37,7 @@ const useTransaction = () => {
     txHash,
     txnLoading,
     executeTransaction,
+    txnComplete,
   };
 };
 
