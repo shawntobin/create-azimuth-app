@@ -31,7 +31,7 @@ export const INFO_MODAL_TEXT = {
 
   CONVERT_MASTER_TICKET: {
     title: "Master Ticket",
-    body: "Converting to a master ticket creates an Ethereum wallet using Urbit's HD Wallet system. This wallet manages all your Urbit ID keys with a single passphrase, making key management easier. Find out more about Urbit’s HD Wallet <a href='https://docs.urbit.org/manual/id/hd-wallet' target='_blank' rel='noopener noreferrer'>here.</a>.",
+    body: "Converting to a master ticket creates an Ethereum wallet using Urbit's HD Wallet system. This wallet manages all your Urbit ID keys with a single passphrase, making key management easier. Find out more about Urbit’s HD Wallet <a href='https://docs.urbit.org/manual/id/hd-wallet' target='_blank' rel='noopener noreferrer'>here.</a>",
   },
   MANAGE_ID: {
     title: "Manage ID",
