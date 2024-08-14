@@ -92,6 +92,11 @@ const EIP1559_TRANSACTION_TYPE = 2;
 const ETHEREUM_MAINNET_CHAIN_ID = "0x1";
 const ETHEREUM_LOCAL_CHAIN_ID = "0x539";
 
+const SUGGESTED_SPONSORS = {
+  star: "~lapdeg",
+  galaxy: "~deg",
+};
+
 export {
   CHECK_BLOCK_EVERY_MS,
   DEFAULT_HD_PATH,
@@ -125,4 +130,5 @@ export {
   NONCUSTODIAL_WALLETS,
   WALLET_TYPES,
   LOGIN_METHODS,
+  SUGGESTED_SPONSORS,
 };

@@ -21,6 +21,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 import PulseLoader from "react-spinners/PulseLoader";
 import { useNavigate } from "react-router-dom";
 import AlertModal from "../components/AlertModal";
+import { SUGGESTED_SPONSORS } from "../constants";
 
 const Sponsor = () => {
   const { walletAddress, selectedShip, walletType, urbitWallet } =
@@ -46,10 +47,11 @@ const Sponsor = () => {
     selectedShip;
 
   const sponsorPatp = hasSponsor ? ob.patp(sponsor) : "None";
+  const sponsorTier = ob.clan(sponsorPatp);
+  const suggestedSponsor = SUGGESTED_SPONSORS[sponsorTier];
 
   const isValidInput =
-    ob.isValidPatp(newSponsorPatp) &&
-    ob.clan(newSponsorPatp) === ob.clan(sponsorPatp);
+    ob.isValidPatp(newSponsorPatp) && ob.clan(newSponsorPatp) === sponsorTier;
 
   useEffect(() => {
     const asyncFunction = async () => {
@@ -59,7 +61,6 @@ const Sponsor = () => {
       setNewSponsorStatus(onlineStatus?.online);
       setLoadingStatus(false);
     };
-    console.log("new patp", newSponsorPatp);
     ob.isValidPatp(newSponsorPatp) && asyncFunction();
 
     // ob.isValidPatp(newSponsorPatp) && asyncFunction();
@@ -195,8 +196,8 @@ const Sponsor = () => {
               essential that your sponsor is online.
             </div>
             <div className="text-left">
-              If you're unsure which sponsor to choose, the Urbit Foundation's
-              star, ~lapdeg, is consistently online and a reliable option.
+              {`If you're unsure which sponsor to choose, the Urbit Foundation's
+              star, ${suggestedSponsor}, is consistently online and a reliable option.`}
             </div>
           </div>
           <div className="flex items-center mb-2 ">
@@ -211,7 +212,7 @@ const Sponsor = () => {
             <input
               type="text"
               spellCheck="false"
-              placeholder="~lapdeg"
+              placeholder={suggestedSponsor}
               className="pl-4 pr-4 py-0 w-full h-[38px] font-[500] text-[20px] bg-transparent placeholder-secondary-color text-primary-color"
               onChange={handleTextChange}
               value={newSponsorPatp}
@@ -314,9 +315,9 @@ const Sponsor = () => {
               Your sponsorship request has been submitted successfully.
             </div>
             <div className="text-left">
-              The sponsor needs to accept the request before it takes effect. If
-              you requested sponsorship from ~lapdeg, please allow up to 24
-              hours for this process to complete.
+              {`The sponsor needs to accept the request before it takes effect. If
+              you requested sponsorship from ${suggestedSponsor}, please allow up to 24
+              hours for this process to complete.`}
             </div>
           </div>
         </div>
