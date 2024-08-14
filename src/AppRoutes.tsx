@@ -80,7 +80,7 @@ const AppRoutes = () => {
   return (
     <Routes>
       {/* <Route path="/" element={<Navigate to="/login" />} /> */}
-      {routeConfigs.map(({ path, element, protected: isProtected }) =>
+      {routeConfigs.map(({ path, element, protected: isProtected }, i) =>
         isProtected ? (
           <Route
             key={path}
@@ -88,7 +88,7 @@ const AppRoutes = () => {
             element={<ProtectedRoute>{element}</ProtectedRoute>}
           />
         ) : (
-          <Route key={path} path={path} element={element} />
+          <Route key={i} path={path} element={element} />
         )
       )}
     </Routes>
