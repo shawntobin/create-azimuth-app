@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 // import { downloadWallet } from "../lib/invite";
 // import PaperBuilder from "components/PaperBuilder";
 import { INFO_MODAL_TEXT } from "../constants/content";
+import { ROUTE_MAP } from "./routeMap";
 
 const MasterTicket = () => {
   const { walletAddress, selectedShip } = useWalletStore();
@@ -62,6 +63,7 @@ const MasterTicket = () => {
   const stepOne = () => {
     return (
       <ControlBox
+        targetRoute={ROUTE_MAP.SETTINGS}
         infoModalText={INFO_MODAL_TEXT.CONVERT_MASTER_TICKET}
         headerContent={
           <div className="text-left w-full flex justify-between text-[20px] font-bold">
@@ -168,6 +170,7 @@ const MasterTicket = () => {
       <div>
         {renderStepBackButton()}
         <ControlBox
+          targetRoute={ROUTE_MAP.SETTINGS}
           hideBackButton
           headerContent={
             <div className="text-left w-full flex justify-between text-[20px] font-bold">

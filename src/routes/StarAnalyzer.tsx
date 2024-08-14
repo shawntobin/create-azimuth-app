@@ -19,6 +19,7 @@ import BackButton from "../components/BackButton";
 import InfoButton from "../components/InfoButton";
 import { INFO_MODAL_TEXT } from "../constants/content";
 import InfoModal from "../components/InfoModal";
+import { ROUTE_MAP } from "./routeMap";
 
 type Planet = {
   patp: string;
@@ -196,7 +197,7 @@ const Wallet = () => {
         />
         <div className="mt-[75px] flex-col justify-start items-start h-full">
           <div className="flex justify-between items-center pb-4 mt-[75px]">
-            <BackButton />
+            <BackButton route={ROUTE_MAP.SETTINGS} />
 
             <InfoButton onClick={() => setShowInfo(true)} />
           </div>

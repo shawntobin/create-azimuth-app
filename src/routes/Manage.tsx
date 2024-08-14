@@ -23,7 +23,7 @@ const Manage = () => {
         handleClose={() => setShowInfo(false)}
       />
       <div className="mt-20 mb-5 w-[540px] flex justify-between">
-        <BackButton />
+        <BackButton route={ROUTE_MAP.IDS} />
         <InfoButton onClick={() => setShowInfo(true)} />
       </div>
       <UrbitIdCard ship={selectedShip} className={"mb-[15px]"} />

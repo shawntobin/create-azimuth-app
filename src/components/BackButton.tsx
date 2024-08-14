@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 const BackButton = (props) => {
   const navigate = useNavigate();
 
-  const { isStepBack = false, handleStepBack } = props;
+  const { isStepBack = false, handleStepBack, route } = props;
 
   const handleGoBack = () => {
     if (isStepBack) {
       //  step backwards in flow sequence rather than navigating back
       handleStepBack();
     } else {
-      navigate(-1);
+      route ? navigate(route) : navigate(-1);
     }
   };
 

@@ -159,6 +159,7 @@ const Sponsor = () => {
   const stepOne = () => {
     return (
       <ControlBox
+        targetRoute={ROUTE_MAP.SETTINGS}
         infoModalText={INFO_MODAL_TEXT.CHANGE_SPONSOR}
         txnHash={txHash}
         txnInProgress={txnLoading}
@@ -291,6 +292,7 @@ const Sponsor = () => {
   const stepThree = () => {
     return (
       <ControlBox
+        targetRoute={ROUTE_MAP.SETTINGS}
         infoModalText={INFO_MODAL_TEXT.CHANGE_SPONSOR}
         txnHash={txHash}
         txnInProgress={txnLoading}

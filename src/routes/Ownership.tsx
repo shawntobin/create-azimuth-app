@@ -68,6 +68,7 @@ const Ownership = () => {
   return (
     <Container>
       <ControlBox
+        targetRoute={ROUTE_MAP.SETTINGS}
         infoModalText={INFO_MODAL_TEXT.TRANSFER_OWNERSHIP}
         txnHash={txHash}
         txnInProgress={txnLoading}

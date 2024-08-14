@@ -156,7 +156,7 @@ const Advanced = () => {
       />
       <div className="flex-col items-center justify-center">
         <div className="ml-[3px]">
-          <BackButton />
+          <BackButton route={ROUTE_MAP.MANAGE} />
         </div>
         <div className="flex gap-x-8 h-[96px] mt-2">
           <div className="w-[484px]">

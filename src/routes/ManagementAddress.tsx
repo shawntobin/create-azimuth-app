@@ -14,6 +14,7 @@ import { isZeroAddress } from "../utils/address";
 import { useRefresh } from "../hooks/useRefresh";
 import useTransaction from "../hooks/useTransaction";
 import { INFO_MODAL_TEXT } from "../constants/content";
+import { ROUTE_MAP } from "./routeMap";
 
 const ManagementAddress = () => {
   const { walletAddress, selectedShip, walletType, urbitWallet } =
@@ -50,6 +51,7 @@ const ManagementAddress = () => {
   return (
     <Container>
       <ControlBox
+        targetRoute={ROUTE_MAP.SETTINGS}
         infoModalText={INFO_MODAL_TEXT.SET_MANAGEMENT_PROXY}
         txnHash={txHash}
         txnInProgress={txnLoading}

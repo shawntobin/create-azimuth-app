@@ -23,6 +23,7 @@ interface ControlBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   walletType?: symbol;
   infoModalText?: string;
   isStepBack?: boolean;
+  targetRoute?: string;
   handleStepBack?: () => void;
 }
 
@@ -43,6 +44,7 @@ const ControlBox: React.FC<ControlBoxProps> = ({
   walletType,
   infoModalText = "",
   isStepBack,
+  targetRoute,
   handleStepBack,
 }) => {
   const [showInfo, setShowInfo] = useState(false);
@@ -87,6 +89,7 @@ const ControlBox: React.FC<ControlBoxProps> = ({
         {!hideBackButton && (
           <div>
             <BackButton
+              route={targetRoute}
               isStepBack={isStepBack}
               handleStepBack={handleStepBack}
             />

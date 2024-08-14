@@ -15,6 +15,7 @@ import * as txn from "../utils/transaction";
 import useTransaction from "../hooks/useTransaction";
 import { randomHex } from "web3-utils";
 import AlertModal from "../components/AlertModal";
+import { ROUTE_MAP } from "./routeMap";
 
 const NetworkKeys = () => {
   const { walletAddress, selectedShip, walletType, urbitWallet } =
@@ -118,6 +119,7 @@ const NetworkKeys = () => {
   const stepOne = () => {
     return (
       <ControlBox
+        targetRoute={ROUTE_MAP.SETTINGS}
         infoModalText={INFO_MODAL_TEXT.SET_NETWORK_KEYS}
         headerContent={
           <div className="text-left w-full flex justify-between">
@@ -217,6 +219,7 @@ const NetworkKeys = () => {
     if (factoryReset) {
       return (
         <ControlBox
+          targetRoute={ROUTE_MAP.SETTINGS}
           infoModalText={INFO_MODAL_TEXT.SET_NETWORK_KEYS}
           headerContent={
             <div className="text-left w-full flex justify-between">
@@ -261,6 +264,7 @@ const NetworkKeys = () => {
     } else {
       return (
         <ControlBox
+          targetRoute={ROUTE_MAP.SETTINGS}
           infoModalText={INFO_MODAL_TEXT.SET_NETWORK_KEYS}
           headerContent={
             <div className="text-left w-full flex justify-between">

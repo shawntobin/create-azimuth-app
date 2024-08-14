@@ -1,6 +1,7 @@
 import React from "react";
 import BackButton from "./BackButton";
 import classNames from "classnames";
+import { ROUTE_MAP } from "../routes/routeMap";
 
 interface OptionBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -32,7 +33,7 @@ const OptionBox: React.FC<OptionBoxProps> = ({
       <div className="w-full flex justify-between mb-[15px]">
         {!hideBackButton ? (
           <div>
-            <BackButton />
+            <BackButton route={ROUTE_MAP.MANAGE} />
           </div>
         ) : (
           <div className="h-[22px]" />
