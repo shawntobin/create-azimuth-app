@@ -197,7 +197,7 @@ const Sponsor = () => {
             </div>
             <div className="text-left">
               {`If you're unsure which sponsor to choose, the Urbit Foundation's
-              star, ${suggestedSponsor}, is consistently online and a reliable option.`}
+              ${sponsorTier}, ${suggestedSponsor}, is consistently online and a reliable option.`}
             </div>
           </div>
           <div className="flex items-center mb-2 ">

@@ -37,14 +37,34 @@ const NetworkKeys = () => {
 
   const { keyRevisionNumber } = selectedShip;
 
-  const title =
-    Number(keyRevisionNumber) === 0 ? "Set Network Keys" : "Reset Network Keys";
+  const keysNeverSet = Number(keyRevisionNumber) === 0;
+
+  const title = keysNeverSet ? "Set Network Keys" : "Reset Network Keys";
 
   useEffect(() => {
     if (txnComplete) {
       setStep(3);
     }
   }, [txnComplete]);
+
+  const renderFactoryResetOption = () => {
+    return (
+      <div className="justify-start flex flex-col items-start text-left p-2">
+        <div className="pb-4">
+          <Checkbox
+            isBold
+            label="Factory Reset (Optional)"
+            checked={factoryReset}
+            onChange={() => setFactoryReset(!factoryReset)}
+          />
+          <div className="text-[20px] px-8 text-[#E72E2E]">
+            Select Factory Reset only if your ship is corrupt and you wish to
+            erase all of your data and break your connections.
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   const handleTransaction = async () => {
     // walletType: symbol,
@@ -113,26 +133,13 @@ const NetworkKeys = () => {
         }
         buttonTitle="Continue"
         onSubmit={handleWarning}
-        className="h-[320px] w-[500px]"
+        className="w-[500px]"
       >
         <div className="text-left pb-4 text-[20px] p-4">
           Network keys are needed to generate a keyfile. You may need to reset
           network keys if your keys have been compromised.
         </div>
-        <div className="justify-start flex flex-col items-start text-left p-2">
-          <div className="pb-4">
-            <Checkbox
-              isBold
-              label="Factory Reset (Optional)"
-              checked={factoryReset}
-              onChange={() => setFactoryReset(!factoryReset)}
-            />
-            <div className="text-[20px] px-8 text-[#E72E2E]">
-              Select Factory Reset only if your ship is corrupt and you wish to
-              erase all of your data and break your connections.
-            </div>
-          </div>
-        </div>
+        {!keysNeverSet && renderFactoryResetOption()}
       </ControlBox>
     );
   };

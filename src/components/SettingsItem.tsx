@@ -8,6 +8,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   handleClick: () => void;
   text: React.ReactNode;
   title: string;
+  disabled?: boolean;
 }
 
 const SettingsItem: React.FC<ButtonProps> = ({
@@ -15,6 +16,7 @@ const SettingsItem: React.FC<ButtonProps> = ({
   title,
   text,
   className = "",
+  disabled = false,
 }) => {
   return (
     <div
@@ -33,12 +35,13 @@ const SettingsItem: React.FC<ButtonProps> = ({
         </button>
       )}
 
-      <div
-        className="cursor-pointer font-[600] text-[28px] pb-1 pl-0.5 -mr-0.5 bg-primary-color text-base-color border-primary-color absolute right-0 flex items-center justify-center rounded-r-[10px] h-[36px] w-[36px] focus:outline-none focus:bg-transparent hover:bg-light-gray hover:border-primary-color"
+      <button
+        disabled={disabled}
+        className="cursor-pointer font-[600] text-[28px] border-none pr-0 pt-0 pb-1 pl-0.5 -mr-0.5 bg-primary-color text-base-color border-primary-color absolute right-0 flex items-center justify-center rounded-r-[10px] h-[36px] w-[36px] focus:outline-none hover:bg-light-gray hover:border-primary-color disabled:bg-light-gray"
         onClick={handleClick}
       >
         {`>`}
-      </div>
+      </button>
     </div>
   );
 };
