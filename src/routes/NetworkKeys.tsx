@@ -100,7 +100,7 @@ const NetworkKeys = () => {
   };
 
   const handleDownloadKeyfile = () => {
-    toast("Downloading keyfile is disabled");
+    toast("Coming soon!");
   };
   const renderFlow = () => {
     switch (step) {
@@ -239,7 +239,14 @@ const NetworkKeys = () => {
               <div className="text-left p-4">
                 Download your new Network Key to boot your Urbit. Be sure to
                 delete your old Urbit (pier) before booting with this new key.
-                Find a detailed guide <a href='https://docs.urbit.org/manual/id/guide-to-resets' target='_blank' rel='noopener noreferrer'>here.</a>
+                Find a detailed guide{" "}
+                <a
+                  href="https://docs.urbit.org/manual/id/guide-to-resets"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  here.
+                </a>
               </div>
               <div className="text-left p-4">
                 <b>Important:</b> it may take minutes to hours for the keys to

@@ -20,6 +20,7 @@ import { Tooltip } from "react-tooltip";
 import { formatDistance } from "date-fns";
 import { ALERT_MODAL_TEXT } from "../constants/content";
 import { ROUTE_MAP } from "./routeMap";
+import { isGalaxy } from "../utils/helper";
 // import { useSingleKeyfileGenerator } from "../lib/useKeyfileGenerator"; // xxxx
 
 const Advanced = () => {
@@ -42,7 +43,7 @@ const Advanced = () => {
       setSponsorStatus(onlineStatus?.online);
     };
 
-    asyncFunction();
+    !isGalaxy(selectedShip.patp) && asyncFunction();
   }, [selectedShip]);
 
   useEffect(() => {
@@ -108,15 +109,16 @@ const Advanced = () => {
     ? ""
     : "Network keys must be set to spawn planets.";
 
-  const statusMessage = sponsorStatus
-    ? `Your sponsor is online (last updated ${formatDistance(
-        new Date(sponsorStatus),
-        new Date(),
-        {
-          addSuffix: true,
-        }
-      )})`
-    : "Your sponsor is offline!";
+  const statusMessage =
+    !isGalaxy(selectedShip.patp) && sponsorStatus
+      ? `Your sponsor is online (last updated ${formatDistance(
+          new Date(sponsorStatus),
+          new Date(),
+          {
+            addSuffix: true,
+          }
+        )})`
+      : "Your sponsor is offline!";
 
   const renderSponsor = () => {
     return (
@@ -160,11 +162,13 @@ const Advanced = () => {
           <div className="w-[484px]">
             <div className="text-left font-bold  pb-1 ml-5">OS Settings</div>
             <div className="flex flex-col gap-y-1">
-              <SettingsItem
-                handleClick={() => navigate(ROUTE_MAP.SPONSOR)}
-                title="Change Sponsor"
-                text={renderSponsor()}
-              />
+              {!isGalaxy(selectedShip.patp) && (
+                <SettingsItem
+                  handleClick={() => navigate(ROUTE_MAP.SPONSOR)}
+                  title="Change Sponsor"
+                  text={renderSponsor()}
+                />
+              )}
               <SettingsItem
                 handleClick={() => navigate(ROUTE_MAP.NETWORK_KEYS)}
                 title={keysText.title}

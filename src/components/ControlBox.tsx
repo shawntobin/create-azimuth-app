@@ -41,7 +41,7 @@ const ControlBox: React.FC<ControlBoxProps> = ({
   width,
   height,
   walletType,
-  infoModalText,
+  infoModalText = "",
   isStepBack,
   handleStepBack,
 }) => {
