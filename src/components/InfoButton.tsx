@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
 const InfoButton = (props) => {
-  const navigate = useNavigate();
-
   return (
     <button
       onClick={props.onClick}

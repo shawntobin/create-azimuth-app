@@ -5,7 +5,7 @@ import useWalletStore from "../store/useWalletStore";
 import HistoryItem from "../components/HistoryItem";
 import { getEvents } from "../lib/networkEvents";
 import { formatDistance } from "date-fns";
-import { MODAL_TEXT } from "../constants/content";
+import { INFO_MODAL_TEXT } from "../constants/content";
 
 const TransactionHistory = () => {
   const [eventData, setEventData] = useState([]);
@@ -43,7 +43,7 @@ const TransactionHistory = () => {
   return (
     <Container hideHistory>
       <ControlBox
-        infoModalText={MODAL_TEXT.TRANSACTION_HISTORY}
+        infoModalText={INFO_MODAL_TEXT.TRANSACTION_HISTORY}
         headerContent={
           <div className="text-left w-full flex justify-between text-[20px]">
             <div className="items-center justify-center flex">

@@ -10,6 +10,7 @@ import ShadeSlider from "@uiw/react-color-shade-slider";
 import useSigilDownloader from "../hooks/useSigilDownloader";
 import { isValidHex } from "../utils/helper";
 import { useLocation } from "react-router-dom";
+import { INFO_MODAL_TEXT } from "../constants/content";
 
 const SigilGenerator = () => {
   const { selectedShip } = useWalletStore();
@@ -50,6 +51,7 @@ const SigilGenerator = () => {
   return (
     <Container hideHistory dropdown={false}>
       <ControlBox
+        infoModalText={INFO_MODAL_TEXT.SIGIL_DESIGNER}
         onSubmit={handleDownload}
         headerContent={
           <div className="text-left w-full flex justify-between text-[20px]">

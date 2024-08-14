@@ -7,7 +7,8 @@ import useWalletStore from "../store/useWalletStore";
 import BackButton from "../components/BackButton";
 import InfoButton from "../components/InfoButton";
 import InfoModal from "../components/InfoModal";
-import { MODAL_TEXT } from "../constants/content";
+import { INFO_MODAL_TEXT } from "../constants/content";
+import { ROUTE_MAP } from "./routeMap";
 
 const Manage = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const Manage = () => {
   return (
     <Container dropdown>
       <InfoModal
-        text={MODAL_TEXT.MANAGE_ID}
+        text={INFO_MODAL_TEXT.MANAGE_ID}
         isOpen={showInfo}
         handleClose={() => setShowInfo(false)}
       />
@@ -28,11 +29,11 @@ const Manage = () => {
       <UrbitIdCard ship={selectedShip} className={"mb-[15px]"} />
       <div className="flex-row flex space-x-4">
         <Button
-          handleClick={() => navigate("/manage/set-up")}
+          handleClick={() => navigate(ROUTE_MAP.SET_UP)}
           text="Set up Planet"
         />
         <Button
-          handleClick={() => navigate(`/manage/settings`)}
+          handleClick={() => navigate(ROUTE_MAP.SETTINGS)}
           text="Settings"
         />
       </div>

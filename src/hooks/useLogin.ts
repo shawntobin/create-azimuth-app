@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useWalletStore from "../store/useWalletStore";
 import * as txn from "../utils/transaction";
 import * as ob from "urbit-ob";
+import { ROUTE_MAP } from "../routes/routeMap";
 
 const useLogin = () => {
   const navigate = useNavigate();
@@ -41,16 +42,16 @@ const useLogin = () => {
         const keysSet = ship.keyRevisionNumber > 0;
 
         if (!keysSet) {
-          navigate(`/manage`); // change to 'onboarding' once implemented
+          navigate(ROUTE_MAP.MANAGE); // change to 'onboarding' once implemented
           return;
         } else {
-          navigate(`/manage`);
+          navigate(ROUTE_MAP.MANAGE);
           return;
         }
       } else if (ids.length > 1) {
-        navigate(`/wallet`);
+        navigate(ROUTE_MAP.IDS);
       } else {
-        navigate(`/wallet`);
+        navigate(ROUTE_MAP.IDS);
       }
     } catch (error) {
       toast.error("Error logging in");

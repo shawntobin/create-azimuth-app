@@ -11,6 +11,7 @@ import walletConnectModule from "@web3-onboard/walletconnect";
 import injectedModule from "@web3-onboard/injected-wallets";
 import { PROVIDER_URL, LOGIN_METHODS } from "../constants";
 import useLogin from "../hooks/useLogin";
+import { ROUTE_MAP } from "../routes/routeMap";
 
 const Navbar = () => {
   const { walletAddress, ethBalance, clearState, walletLabel } =
@@ -190,14 +191,14 @@ const Navbar = () => {
           <span>Get Urbit ID</span>
           <span
             className="cursor-pointer"
-            onClick={() => navigate("/sigil-designer")}
+            onClick={() => navigate(ROUTE_MAP.SIGIL_DESIGNER)}
           >
             Sigil Designer
           </span>
           {walletAddress && (
             <span
               className="cursor-pointer"
-              onClick={() => navigate("/manage")}
+              onClick={() => navigate(ROUTE_MAP.MANAGE)}
             >
               Manage ID
             </span>

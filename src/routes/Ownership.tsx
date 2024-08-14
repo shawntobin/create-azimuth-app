@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Container from "../components/Container";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import ControlBox from "../components/ControlBox";
@@ -13,13 +13,17 @@ import { isAddress } from "web3-validator";
 import { GAS_LIMITS } from "../constants";
 import useTransaction from "../hooks/useTransaction";
 import Checkbox from "../components/Checkbox";
-import { MODAL_TEXT } from "../constants/content";
+import { INFO_MODAL_TEXT } from "../constants/content";
+import { useNavigate } from "react-router-dom";
+import { ROUTE_MAP } from "./routeMap";
 
 const Ownership = () => {
+  const navigate = useNavigate();
   const { walletAddress, selectedShip, walletType, urbitWallet } =
     useWalletStore();
   const [newOwnerAddress, setNewOwnerAddress] = useState("");
-  const { txHash, txnLoading, executeTransaction } = useTransaction();
+  const { txHash, txnLoading, executeTransaction, txnComplete } =
+    useTransaction();
   const [resetKeys, setResetKeys] = useState(false);
 
   const {
@@ -36,6 +40,14 @@ const Ownership = () => {
   // how should we display txn hash?
   // repeat button pressing?
 
+  useEffect(() => {
+    if (txnComplete) {
+      setTimeout(() => {
+        navigate(ROUTE_MAP.IDS);
+      }, 1000);
+    }
+  }, [txnComplete]);
+
   const handleTransaction = async () => {
     const result = await executeTransaction(
       txn.transferPoint,
@@ -44,7 +56,8 @@ const Ownership = () => {
       walletAddress,
       newOwnerAddress,
       urbitWallet,
-      selectedGasItem.value
+      selectedGasItem.value,
+      resetKeys
     );
 
     if (result?.success) {
@@ -55,7 +68,7 @@ const Ownership = () => {
   return (
     <Container>
       <ControlBox
-        infoModalText={MODAL_TEXT.TRANSFER_OWNERSHIP}
+        infoModalText={INFO_MODAL_TEXT.TRANSFER_OWNERSHIP}
         txnHash={txHash}
         txnInProgress={txnLoading}
         headerContent={
@@ -90,7 +103,7 @@ const Ownership = () => {
               checked={resetKeys}
               onChange={() => setResetKeys(!resetKeys)}
             />
-            <div className="text-[20px] px-8 text-left">
+            <div className="text-[18px] px-8 text-left">
               Select if you want to reset all keys and break all previous
               connections. This is recommended if your Urbit has been previously
               online and is now being transferred to a new owner.

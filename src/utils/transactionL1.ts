@@ -293,6 +293,7 @@ export const transferPoint = async (
   to: string,
   wallet: UrbitWallet,
   gasSelection: any,
+  resetKeys: boolean,
   onTransactionComplete: (receipt: any) => void
 ) => {
   const provider = new Web3.providers.HttpProvider(PROVIDER_URL);
@@ -300,7 +301,7 @@ export const transferPoint = async (
   const point = ob.patp2dec(patp);
 
   const contracts = await azimuthConnection();
-  const txn = ecliptic.transferPoint(contracts, point, to, true);
+  const txn = ecliptic.transferPoint(contracts, point, to, resetKeys);
 
   console.log("txn", txn);
   const { suggestedMaxPriorityFeePerGas, suggestedMaxFeePerGas } = gasSelection;

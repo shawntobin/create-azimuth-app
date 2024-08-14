@@ -5,6 +5,7 @@ import ControlBox from "../components/ControlBox";
 import useWalletStore from "../store/useWalletStore";
 import { useNavigate } from "react-router-dom";
 import Sigil from "../components/Sigil";
+import { ROUTE_MAP } from "./routeMap";
 
 import { ReactComponent as SecretShapeOne } from "../assets/secret-input-1.svg";
 import { ReactComponent as SecretShapeTwo } from "../assets/secret-input-2.svg";
@@ -225,7 +226,7 @@ const Activation = () => {
           hideInfoButton
           buttonColor="bg-bright-green"
           buttonTitle="Set up planet"
-          onSubmit={() => navigate(`/manage/set-up`)}
+          onSubmit={() => navigate(ROUTE_MAP.SET_UP)}
         >
           <div className="justify-start flex flex-col items-start pl-2 h-full mt-2">
             <div className="text-[20px] font-bold text-left p-4 ">{`Congratulations,`}</div>

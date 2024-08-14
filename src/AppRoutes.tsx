@@ -19,57 +19,58 @@ import StarAnalyzer from "./routes/StarAnalyzer";
 import LandingPage from "./routes/LandingPage";
 import LandingPage2 from "./routes/LandingPage2";
 import SpawnProxy from "./routes/SpawnProxy";
+import { ROUTE_MAP } from "./routes/routeMap";
 
 const routeConfigs = [
   { path: "/", element: <LandingPage2 />, protected: false },
-  { path: "/login", element: <LandingPage2 />, protected: false },
-  { path: "/seed-login", element: <SeedLogin />, protected: false },
+  { path: ROUTE_MAP.LOGIN, element: <LandingPage2 />, protected: false },
+  { path: ROUTE_MAP.SEED_LOGIN, element: <SeedLogin />, protected: false },
   { path: "/ticket-login", element: <MasterTicketLogin />, protected: false },
-
   { path: "/activation", element: <Activation />, protected: false },
-  { path: "/wallet", element: <Wallet />, protected: true },
   { path: "/onboarding", element: <Onboarding />, protected: true },
-  { path: "/manage/set-up", element: <Hosting />, protected: true },
-  { path: "/manage", element: <Manage />, protected: true },
+  { path: ROUTE_MAP.IDS, element: <Wallet />, protected: true },
+
+  { path: ROUTE_MAP.SET_UP, element: <Hosting />, protected: true },
+  { path: ROUTE_MAP.MANAGE, element: <Manage />, protected: true },
   {
-    path: "/manage/settings/spawn-proxy",
+    path: ROUTE_MAP.SPAWN_PROXY,
     element: <SpawnProxy />,
     protected: true,
   },
   {
-    path: "/manage/settings/spawn",
+    path: ROUTE_MAP.SPAWN,
     element: <StarAnalyzer />,
     protected: false,
   },
-  { path: "/manage/settings", element: <Advanced />, protected: true },
-  { path: "/manage/settings/sponsor", element: <Sponsor />, protected: true },
+  { path: ROUTE_MAP.SETTINGS, element: <Advanced />, protected: true },
+  { path: ROUTE_MAP.SPONSOR, element: <Sponsor />, protected: true },
   {
-    path: "/manage/settings/ownership",
+    path: ROUTE_MAP.OWNERSHIP,
     element: <Ownership />,
     protected: true,
   },
   {
-    path: "manage/settings/master-ticket",
+    path: ROUTE_MAP.MASTER_TICKET,
     element: <MasterTicket />,
     protected: true,
   },
   {
-    path: "/manage/settings/network-keys",
+    path: ROUTE_MAP.NETWORK_KEYS,
     element: <NetworkKeys />,
     protected: true,
   },
   {
-    path: "/manage/history",
+    path: ROUTE_MAP.HISTORY,
     element: <TransactionHistory />,
     protected: true,
   },
   {
-    path: "/sigil-designer",
+    path: ROUTE_MAP.SIGIL_DESIGNER,
     element: <SigilGenerator />,
     protected: false,
   },
   {
-    path: "/manage/settings/management-key",
+    path: ROUTE_MAP.MANAGEMENT_KEY,
     element: <ManagementAddress />,
     protected: true,
   },

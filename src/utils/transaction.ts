@@ -55,6 +55,7 @@ export const transferPoint = async (
   to: string,
   wallet: UrbitWallet,
   gasSelection: any,
+  resetKeys: boolean,
   onTransactionComplete: (receipt: any) => void
 ) => {
   return await layer.transferPoint(
@@ -64,6 +65,7 @@ export const transferPoint = async (
     to,
     wallet,
     gasSelection,
+    resetKeys,
     onTransactionComplete
   );
 };

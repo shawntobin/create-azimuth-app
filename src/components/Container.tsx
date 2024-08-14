@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import Breadcrumbs from "./Breadcrumbs.tsx";
 import { formatAddress } from "../utils/address.ts";
 import Navbar from "./Navbar.tsx";
+import { ROUTE_MAP } from "../routes/routeMap.ts";
 
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   symbols?: boolean;
   dropdown?: boolean;
   hideHistory?: boolean;
+  dropdownForSpawning?: boolean;
 }
 
 const Container: React.FC<ContainerProps> = ({
@@ -25,6 +27,7 @@ const Container: React.FC<ContainerProps> = ({
   symbols = true,
   dropdown = true,
   hideHistory = false,
+  dropdownForSpawning = false,
   ...rest
 }) => {
   const navigate = useNavigate();
@@ -50,11 +53,20 @@ const Container: React.FC<ContainerProps> = ({
     }
   };
 
+  const getDropdownItems = () => {
+    return urbitIds
+      .filter((id) => !dropdownForSpawning || id < 65536)
+      .map((id) => ({
+        label: ob.patp(id),
+        value: ob.patp(id),
+      }));
+  };
+
   const renderHistory = () => {
     return (
       <div className="flex">
         <button
-          onClick={() => navigate("/manage/history")}
+          onClick={() => navigate(ROUTE_MAP.HISTORY)}
           className="w-[100px] border border-white rounded-[10px] text-[20px] bg-transparent h-[33px] flex items-center justify-center hover:bg-primary-color hover:text-base-color"
         >
           <div className="text-[16px] mr-2 ml-1"></div>
@@ -71,20 +83,19 @@ const Container: React.FC<ContainerProps> = ({
           <Navbar />
 
           <div className="w-full flex justify-between mt-6 px-6">
-            <div className="w-[350px]">
-              <Breadcrumbs
-                walletAddress={walletAddress}
-                patp={selectedShip?.patp}
-              />
+            <div className="w-[400px]">
+              {walletAddress && (
+                <Breadcrumbs
+                  walletAddress={walletAddress}
+                  patp={selectedShip?.patp}
+                />
+              )}
             </div>
-            <div className="text-center justify-center items-center flex text-[20px] ml-[-250px]">
+            <div className="text-center justify-center items-center flex text-[20px] ml-[-300px]">
               {dropdown && (
                 <Dropdown
                   onSelect={handleSelect}
-                  items={urbitIds.map((id) => ({
-                    label: ob.patp(id),
-                    value: ob.patp(id),
-                  }))} // to be changed
+                  items={getDropdownItems()}
                   focusedItem={selectedShip.patp}
                 />
               )}

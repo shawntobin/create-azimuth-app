@@ -6,7 +6,7 @@ import useWalletStore from "../store/useWalletStore";
 import toast from "react-hot-toast";
 import * as ob from "urbit-ob";
 import Checkbox from "../components/Checkbox";
-import { MODAL_TEXT } from "../constants/content";
+import { INFO_MODAL_TEXT, ALERT_MODAL_TEXT } from "../constants/content";
 import useGasEstimate from "../hooks/useGasEstimate";
 import Dropdown from "../components/Dropdown";
 import { GAS_LIMITS } from "../constants";
@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import * as txn from "../utils/transaction";
 import useTransaction from "../hooks/useTransaction";
 import { randomHex } from "web3-utils";
+import AlertModal from "../components/AlertModal";
 
 const NetworkKeys = () => {
   const { walletAddress, selectedShip, walletType, urbitWallet } =
@@ -22,6 +23,7 @@ const NetworkKeys = () => {
   const { txHash, txnLoading, executeTransaction, txnComplete } =
     useTransaction();
   const [customSeed, setCustomSeed] = useState(false);
+  const [showAlertModal, setShowAlertModal] = useState(false);
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
   const {
@@ -32,6 +34,11 @@ const NetworkKeys = () => {
     selectedGasItem,
     handleSelect,
   } = useGasEstimate(GAS_LIMITS.ESCAPE);
+
+  const { keyRevisionNumber } = selectedShip;
+
+  const title =
+    Number(keyRevisionNumber) === 0 ? "Set Network Keys" : "Reset Network Keys";
 
   useEffect(() => {
     if (txnComplete) {
@@ -63,6 +70,15 @@ const NetworkKeys = () => {
       selectedGasItem.value
     );
   };
+
+  const handleWarning = () => {
+    if (factoryReset) {
+      setShowAlertModal(true);
+    }
+
+    setStep(step + 1);
+  };
+
   const handleDownloadKeyfile = () => {
     toast("Downloading keyfile is disabled");
   };
@@ -82,11 +98,11 @@ const NetworkKeys = () => {
   const stepOne = () => {
     return (
       <ControlBox
-        infoModalText={MODAL_TEXT.SET_NETWORK_KEYS}
+        infoModalText={INFO_MODAL_TEXT.SET_NETWORK_KEYS}
         headerContent={
           <div className="text-left w-full flex justify-between">
             <div className="items-center justify-between w-full flex text-[20px] ">
-              <div className="font-bold">Set Network Keys</div>
+              <div className="font-bold">{title}</div>
 
               <div className="text-[20px] flex font-bold">
                 <span className="pr-1">{`Step ${step}`}</span>
@@ -96,7 +112,7 @@ const NetworkKeys = () => {
           </div>
         }
         buttonTitle="Continue"
-        onSubmit={() => setStep(step + 1)}
+        onSubmit={handleWarning}
         className="h-[320px] w-[500px]"
       >
         <div className="text-left pb-4 text-[20px] p-4">
@@ -128,11 +144,11 @@ const NetworkKeys = () => {
         txnInProgress={txnLoading}
         isStepBack
         handleStepBack={() => setStep(step - 1)}
-        infoModalText={MODAL_TEXT.SET_NETWORK_KEYS}
+        infoModalText={INFO_MODAL_TEXT.SET_NETWORK_KEYS}
         headerContent={
           <div className="text-left w-full flex justify-between">
             <div className="items-center justify-between w-full flex text-[20px] ">
-              <div className="font-bold">Set Network Keys</div>
+              <div className="font-bold">{title}</div>
 
               <div className="text-[20px] flex font-bold">
                 <span className="pr-1">{`Step ${step}`}</span>
@@ -141,7 +157,7 @@ const NetworkKeys = () => {
             </div>
           </div>
         }
-        buttonTitle="Set Network Keys"
+        buttonTitle={title}
         onSubmit={handleTransaction}
         className="h-[260px] w-[500px]"
       >
@@ -191,49 +207,97 @@ const NetworkKeys = () => {
   };
 
   const stepThree = () => {
-    return (
-      <ControlBox
-        infoModalText={MODAL_TEXT.SET_NETWORK_KEYS}
-        headerContent={
-          <div className="text-left w-full flex justify-between">
-            <div className="items-center justify-between w-full flex text-[20px] ">
-              <div className="font-bold">Set Network Keys</div>
+    if (factoryReset) {
+      return (
+        <ControlBox
+          infoModalText={INFO_MODAL_TEXT.SET_NETWORK_KEYS}
+          headerContent={
+            <div className="text-left w-full flex justify-between">
+              <div className="items-center justify-between w-full flex text-[20px] ">
+                <div className="font-bold">{title}</div>
 
-              <div className="text-[20px] flex font-bold">
-                <span className="pr-1">{`Step ${step}`}</span>
-                <span className="text-medium-gray">{` of 3`}</span>
+                <div className="text-[20px] flex font-bold">
+                  <span className="pr-1">{`Step ${step}`}</span>
+                  <span className="text-medium-gray">{` of 3`}</span>
+                </div>
+              </div>
+            </div>
+          }
+          buttonTitle="Download Network Key ↓"
+          onSubmit={handleDownloadKeyfile}
+          className="h-[360px] w-[500px]"
+        >
+          <div className="text-[20px] justify-start flex flex-col items-start px-[20px] h-full mt-0">
+            <div className="h-full">
+              <div className="text-left p-4">
+                Download your new Network Key to boot your Urbit. Be sure to
+                delete your old Urbit (pier) before booting with this new key.
+                Find a detailed guide here.
+              </div>
+              <div className="text-left p-4">
+                <b>Important:</b> it may take minutes to hours for the keys to
+                become usable. Please be patient, trying to use the new keys
+                during this period may result in an invalid keys error.
               </div>
             </div>
           </div>
-        }
-        buttonTitle="Download Network Key"
-        onSubmit={handleDownloadKeyfile}
-        className="h-[360px] w-[500px]"
-      >
-        <div className="text-[20px] justify-start flex flex-col items-start px-[20px] h-full mt-0">
-          <div className="h-full">
-            <div className="text-center p-4">
-              Copy the contents of the Network Key file and run
-              <p className="font-['UrbitSansMono'] w-full">
-                <span className="bg-medium-gray w-full">
-                  |rekey ‘keyfile_content’
-                </span>
-              </p>
-              using the dojo on your running Urbit
+          <div className="justify-start flex flex-col items-start text-left p-2"></div>
+        </ControlBox>
+      );
+    } else {
+      return (
+        <ControlBox
+          infoModalText={INFO_MODAL_TEXT.SET_NETWORK_KEYS}
+          headerContent={
+            <div className="text-left w-full flex justify-between">
+              <div className="items-center justify-between w-full flex text-[20px] ">
+                <div className="font-bold">{title}</div>
+
+                <div className="text-[20px] flex font-bold">
+                  <span className="pr-1">{`Step ${step}`}</span>
+                  <span className="text-medium-gray">{` of 3`}</span>
+                </div>
+              </div>
             </div>
-            <div className="text-left p-4">
-              <b>Important:</b> it may take minutes to hours for the keys to
-              become usable. Please be patient, trying to use the new keys
-              during this period may result in an invalid keys error.
+          }
+          buttonTitle="Download Network Key ↓"
+          onSubmit={handleDownloadKeyfile}
+          className="h-[360px] w-[500px]"
+        >
+          <div className="text-[20px] justify-start flex flex-col items-start px-[20px] h-full mt-0">
+            <div className="h-full">
+              <div className="text-center p-4">
+                Copy the contents of the Network Key file and run
+                <p className="font-['UrbitSansMono'] w-full">
+                  <span className="bg-medium-gray w-full">
+                    |rekey ‘keyfile_content’
+                  </span>
+                </p>
+                using the dojo on your running Urbit
+              </div>
+              <div className="text-left p-4">
+                <b>Important:</b> it may take minutes to hours for the keys to
+                become usable. Please be patient, trying to use the new keys
+                during this period may result in an invalid keys error.
+              </div>
             </div>
           </div>
-        </div>
-        <div className="justify-start flex flex-col items-start text-left p-2"></div>
-      </ControlBox>
-    );
+          <div className="justify-start flex flex-col items-start text-left p-2"></div>
+        </ControlBox>
+      );
+    }
   };
 
-  return <Container>{renderFlow()}</Container>;
+  return (
+    <Container>
+      <AlertModal
+        text={ALERT_MODAL_TEXT.FACTORY_RESET}
+        isOpen={showAlertModal}
+        handleClose={() => setShowAlertModal(false)}
+      />
+      {renderFlow()}
+    </Container>
+  );
 };
 
 export default NetworkKeys;

@@ -73,3 +73,10 @@ export const formatSpacedPatp = (patp: string) => {
     return `~ ${patp.toLowerCase()}`;
   }
 };
+
+export const formatEventString = (str) => {
+  return str
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};

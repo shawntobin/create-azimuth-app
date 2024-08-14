@@ -9,7 +9,8 @@ import Dropdown from "../components/Dropdown";
 import { GAS_LIMITS } from "../constants";
 import useTransaction from "../hooks/useTransaction";
 import { formatPatp } from "../utils/helper";
-import { MODAL_TEXT } from "../constants/content";
+import { INFO_MODAL_TEXT, ALERT_MODAL_TEXT } from "../constants/content";
+import { ROUTE_MAP } from "./routeMap";
 import {
   CheckBadgeIcon,
   CheckIcon,
@@ -19,6 +20,7 @@ import { getShipStatus } from "../lib/networkEvents";
 import BeatLoader from "react-spinners/BeatLoader";
 import PulseLoader from "react-spinners/PulseLoader";
 import { useNavigate } from "react-router-dom";
+import AlertModal from "../components/AlertModal";
 
 const Sponsor = () => {
   const { walletAddress, selectedShip, walletType, urbitWallet } =
@@ -28,6 +30,7 @@ const Sponsor = () => {
   const { txHash, txnLoading, executeTransaction, txnComplete } =
     useTransaction();
   const [loadingStatus, setLoadingStatus] = useState(false);
+  const [showAlertModal, setShowAlertModal] = useState(false);
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
   const {
@@ -43,6 +46,10 @@ const Sponsor = () => {
     selectedShip;
 
   const sponsorPatp = hasSponsor ? ob.patp(sponsor) : "None";
+
+  const isValidInput =
+    ob.isValidPatp(newSponsorPatp) &&
+    ob.clan(newSponsorPatp) === ob.clan(sponsorPatp);
 
   useEffect(() => {
     const asyncFunction = async () => {
@@ -91,7 +98,7 @@ const Sponsor = () => {
         null
       );
     } else {
-      if (ob.isValidPatp(newSponsorPatp)) {
+      if (isValidInput) {
         if (newSponsorStatus) {
           return (
             <span className="text-[#76E53E]">
@@ -107,6 +114,14 @@ const Sponsor = () => {
         }
       }
     }
+  };
+
+  const handleCheckSponsorStatus = () => {
+    if (!newSponsorStatus) {
+      setShowAlertModal(true);
+    }
+
+    setStep(step + 1);
   };
 
   const handleTransaction = async () => {
@@ -143,7 +158,7 @@ const Sponsor = () => {
   const stepOne = () => {
     return (
       <ControlBox
-        infoModalText={MODAL_TEXT.CHANGE_SPONSOR}
+        infoModalText={INFO_MODAL_TEXT.CHANGE_SPONSOR}
         txnHash={txHash}
         txnInProgress={txnLoading}
         headerContent={
@@ -168,9 +183,9 @@ const Sponsor = () => {
           </div>
         }
         buttonTitle="Continue"
-        onSubmit={() => setStep(step + 1)}
+        onSubmit={handleCheckSponsorStatus}
         className="h-[430px] w-[500px]"
-        disabled={!ob.isValidPatp(newSponsorPatp)}
+        disabled={!isValidInput}
       >
         <div className="text-[20px] justify-start flex flex-col items-start px-[20px] h-full mt-2">
           <div className="h-full">
@@ -212,7 +227,7 @@ const Sponsor = () => {
       <ControlBox
         isStepBack
         handleStepBack={() => setStep(step - 1)}
-        infoModalText={MODAL_TEXT.CHANGE_SPONSOR}
+        infoModalText={INFO_MODAL_TEXT.CHANGE_SPONSOR}
         txnHash={txHash}
         txnInProgress={txnLoading}
         headerContent={
@@ -275,7 +290,7 @@ const Sponsor = () => {
   const stepThree = () => {
     return (
       <ControlBox
-        infoModalText={MODAL_TEXT.CHANGE_SPONSOR}
+        infoModalText={INFO_MODAL_TEXT.CHANGE_SPONSOR}
         txnHash={txHash}
         txnInProgress={txnLoading}
         headerContent={
@@ -290,7 +305,7 @@ const Sponsor = () => {
           </div>
         }
         buttonTitle="Return Home"
-        onSubmit={() => navigate("/manage/settings")}
+        onSubmit={() => navigate(ROUTE_MAP.SETTINGS)}
         className="h-[280px] w-[500px]"
       >
         <div className="text-[20px] justify-start flex flex-col items-start px-[20px] h-full mt-2">
@@ -309,7 +324,16 @@ const Sponsor = () => {
     );
   };
 
-  return <Container>{renderFlow()}</Container>;
+  return (
+    <Container>
+      <AlertModal
+        text={ALERT_MODAL_TEXT.STAR_OFFLINE}
+        isOpen={showAlertModal}
+        handleClose={() => setShowAlertModal(false)}
+      />
+      {renderFlow()}
+    </Container>
+  );
 };
 
 export default Sponsor;

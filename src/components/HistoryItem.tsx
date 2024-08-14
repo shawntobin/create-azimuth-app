@@ -1,4 +1,5 @@
 import { formatAddress } from "../utils/address";
+import { formatEventString } from "../utils/helper";
 import UrbitIcon from "./UrbitIcon";
 
 const TRANSACTION_TYPES = [
@@ -84,7 +85,9 @@ const HistoryItem = ({ transaction }) => {
 
       <div className="flex-col flex w-full">
         <div className="justify-between flex items-center">
-          <div className="flex-1 flex text-[20px]">{type}</div>
+          <div className="flex-1 flex text-[20px]">
+            {formatEventString(type)}
+          </div>
           <div className="bg-[white] p-2 h-[16px] text-[12px] rounded-[5.53px] w-[25px] flex items-center justify-center text-black">
             {dominion.toUpperCase()}
           </div>

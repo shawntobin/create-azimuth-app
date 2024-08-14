@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 // import { downloadWallet } from "../lib/invite";
 // import PaperBuilder from "components/PaperBuilder";
-import { MODAL_TEXT } from "../constants/content";
+import { INFO_MODAL_TEXT } from "../constants/content";
 
 const MasterTicket = () => {
   const { walletAddress, selectedShip } = useWalletStore();
@@ -62,7 +62,7 @@ const MasterTicket = () => {
   const stepOne = () => {
     return (
       <ControlBox
-        infoModalText={MODAL_TEXT.CONVERT_MASTER_TICKET}
+        infoModalText={INFO_MODAL_TEXT.CONVERT_MASTER_TICKET}
         headerContent={
           <div className="text-left w-full flex justify-between text-[20px] font-bold">
             <div className="items-center justify-center flex">

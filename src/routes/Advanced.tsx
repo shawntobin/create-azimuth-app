@@ -18,6 +18,8 @@ import toast from "react-hot-toast";
 import { getShipStatus } from "../lib/networkEvents";
 import { Tooltip } from "react-tooltip";
 import { formatDistance } from "date-fns";
+import { ALERT_MODAL_TEXT } from "../constants/content";
+import { ROUTE_MAP } from "./routeMap";
 // import { useSingleKeyfileGenerator } from "../lib/useKeyfileGenerator"; // xxxx
 
 const Advanced = () => {
@@ -127,7 +129,11 @@ const Advanced = () => {
 
   return (
     <Container>
-      <AlertModal isOpen={showAlert} handleClose={() => setShowAlert(false)} />
+      <AlertModal
+        text={ALERT_MODAL_TEXT.SETTINGS}
+        isOpen={showAlert}
+        handleClose={() => setShowAlert(false)}
+      />
       <div className="flex-col items-center justify-center">
         <div className="ml-[3px]">
           <BackButton />
@@ -137,12 +143,12 @@ const Advanced = () => {
             <div className="text-left font-bold  pb-1 ml-5">OS Settings</div>
             <div className="flex flex-col gap-y-1">
               <SettingsItem
-                handleClick={() => navigate(`/manage/settings/sponsor`)}
+                handleClick={() => navigate(ROUTE_MAP.SPONSOR)}
                 title="Change Sponsor"
                 text={renderSponsor()}
               />
               <SettingsItem
-                handleClick={() => navigate(`/manage/settings/network-keys`)}
+                handleClick={() => navigate(ROUTE_MAP.NETWORK_KEYS)}
                 title={
                   Number(keyRevisionNumber) === 0
                     ? "Set Network Keys"
@@ -184,19 +190,19 @@ const Advanced = () => {
             <div className="text-left font-bold pb-1 ml-5">ID Settings</div>
             <div className="flex flex-col gap-y-1">
               <SettingsItem
-                handleClick={() => navigate(`/manage/settings/ownership`)}
+                handleClick={() => navigate(ROUTE_MAP.OWNERSHIP)}
                 title="Transfer Ownership"
                 text={owner}
               />
               <SettingsItem
-                handleClick={() => navigate(`/manage/settings/management-key`)}
+                handleClick={() => navigate(ROUTE_MAP.MANAGEMENT_KEY)}
                 title="Set Management Proxy"
                 text={
                   !isZeroAddress(managementProxy) ? managementProxy : "None"
                 }
               />
               <SettingsItem
-                handleClick={() => navigate(`/manage/settings/master-ticket`)}
+                handleClick={() => navigate(ROUTE_MAP.MASTER_TICKET)}
                 title="Master Ticket"
                 text="Convert to Master Ticket"
               />
@@ -204,12 +210,12 @@ const Advanced = () => {
                 <>
                   <div className="text-left font-bold pb-1">Star Settings</div>
                   <SettingsItem
-                    handleClick={() => navigate(`/manage/settings/spawn`)}
+                    handleClick={() => navigate(ROUTE_MAP.SPAWN)}
                     title="Spawn Planets"
                     text=""
                   />
                   <SettingsItem
-                    handleClick={() => navigate(`/manage/settings/spawn-proxy`)}
+                    handleClick={() => navigate(ROUTE_MAP.SPAWN_PROXY)}
                     title="Set Spawn Proxy"
                     text={!isZeroAddress(spawnProxy) ? spawnProxy : "None"}
                   />

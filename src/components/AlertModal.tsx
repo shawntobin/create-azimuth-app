@@ -24,7 +24,7 @@ const customStyles = {
 
 Modal.setAppElement("#root");
 
-const AlertModal = ({ isOpen, handleClose }) => {
+const AlertModal = ({ isOpen, handleClose, text }) => {
   const navigate = useNavigate();
 
   return (
@@ -42,13 +42,13 @@ const AlertModal = ({ isOpen, handleClose }) => {
 
           {/* <UrbitIcon name={"alert"} size={31} /> */}
 
-          <div className="font-[600] ml-1">Caution</div>
+          <div className="font-[600] ml-1">{text.title}</div>
         </div>
-        <div className="w-[600px] p-3">
-          Changes made within Setttings are irreversible. They can effect the
-          ownership of your Urbit ID and can interfere with your Urbit's
-          performance and networking capabilities if not done correctly.
-        </div>
+
+        <div
+          className="w-[600px] p-3"
+          dangerouslySetInnerHTML={{ __html: text.body }}
+        />
       </div>
       <div className="text-right text-[16px] p-3">
         <button

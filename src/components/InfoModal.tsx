@@ -3,7 +3,6 @@ import {
   ExclamationTriangleIcon,
   InformationCircleIcon,
 } from "@heroicons/react/24/outline";
-import { useNavigate } from "react-router-dom";
 
 const customStyles = {
   content: {
@@ -28,8 +27,6 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 const InfoModal = ({ text, isOpen, handleClose }) => {
-  const navigate = useNavigate();
-
   return (
     <Modal
       shouldCloseOnOverlayClick={true}
@@ -41,12 +38,12 @@ const InfoModal = ({ text, isOpen, handleClose }) => {
     >
       <div className="w-[600px] text-[20px] p-2">
         <div className="flex justify-start items-center mb-2">
-          <InformationCircleIcon className="w-7 h-7 text-[yellow]" />
+          {/* <InformationCircleIcon className="w-7 h-7 text-[yellow]" /> */}
 
-          <div className="font-[600] ml-2">Information</div>
+          <div className="font-[600] ml-0">{text.title}</div>
         </div>
 
-        <div dangerouslySetInnerHTML={{ __html: text }} />
+        <div dangerouslySetInnerHTML={{ __html: text.body }} />
       </div>
 
       <div className="text-right text-[16px]">

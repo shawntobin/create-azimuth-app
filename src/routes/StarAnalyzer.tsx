@@ -15,6 +15,10 @@ import Sigil from "../components/Sigil";
 import pluralize from "pluralize";
 import { isStar } from "../utils/helper";
 import useTransaction from "../hooks/useTransaction";
+import BackButton from "../components/BackButton";
+import InfoButton from "../components/InfoButton";
+import { INFO_MODAL_TEXT } from "../constants/content";
+import InfoModal from "../components/InfoModal";
 
 type Planet = {
   patp: string;
@@ -23,7 +27,6 @@ type Planet = {
 };
 
 const Wallet = () => {
-  const navigate = useNavigate();
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
@@ -34,13 +37,15 @@ const Wallet = () => {
   const [selectedFilter, setSelectedFilter] = useState("");
   const [spawned, setSpawned] = useState(0);
   const [keyRevision, setKeyRevision] = useState(0);
-  const { txHash, txnLoading, executeTransaction } = useTransaction();
+  const [showInfo, setShowInfo] = useState(false);
+  const { txHash, txnLoading, executeTransaction, txnComplete } =
+    useTransaction();
   const { walletAddress, selectedShip, walletType, urbitWallet } =
     useWalletStore();
 
   const star = isStar(selectedShip?.patp) ? selectedShip.patp : "~marzod";
 
-  const itemsPerPage = 28;
+  const itemsPerPage = 21;
 
   useEffect(() => {
     startAnalyzing(star);
@@ -130,7 +135,7 @@ const Wallet = () => {
     if (result) {
       toast.loading("Spawning Planet...");
     } else {
-      toast.error("Failed to spawn");
+      // toast.error("Failed to spawn");
     }
   };
 
@@ -183,92 +188,105 @@ const Wallet = () => {
 
   const renderContent = () => {
     return (
-      <div className="mt-[75px] flex-col justify-start items-start h-full">
-        <div className="border h-[86px] w-full rounded-[10px] flex justify-between items-center pr-8">
-          <div className="flex flex justify-start items-center">
-            <div className="ml-5 overflow-hidden h-[80px] w-[80px]">
-              <Sigil id={star} colors={["black", "white"]} size={86} />
+      <>
+        <InfoModal
+          text={INFO_MODAL_TEXT.SPAWNING}
+          isOpen={showInfo}
+          handleClose={() => setShowInfo(false)}
+        />
+        <div className="mt-[75px] flex-col justify-start items-start h-full">
+          <div className="flex justify-between items-center pb-4 mt-[75px]">
+            <BackButton />
+
+            <InfoButton onClick={() => setShowInfo(true)} />
+          </div>
+
+          <div className="border h-[86px] w-full rounded-[10px] flex justify-between items-center pr-8">
+            <div className="flex flex justify-start items-center">
+              <div className="ml-5 overflow-hidden h-[80px] w-[80px]">
+                <Sigil id={star} colors={["black", "white"]} size={86} />
+              </div>
+
+              <div className="text-[36px] font-[400] text-primary color pl-4">
+                {star}
+              </div>
+            </div>
+            <div className="flex font-[700] text-[16px]">
+              <div className="pr-4">
+                <div>
+                  Spawned Planets: <span className="font-[400]">{spawned}</span>
+                </div>
+                <div>
+                  Key Revision:{" "}
+                  <span className="font-[400]">{keyRevision}</span>
+                </div>
+              </div>
+              <div>
+                <div>
+                  Azimuth Point:{" "}
+                  <span className="font-[400]">{ob.patp2dec(star)}</span>
+                </div>
+                <div>
+                  Parent:{" "}
+                  <span className="font-[400]">{star && ob.sein(star)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div className="flex justify-left mt-5 pl-3 space-x-3">
+              <div className="relative flex items-center mb-3">
+                <input
+                  type="text"
+                  spellCheck="false"
+                  placeholder="Search"
+                  className="font-[600] pl-2 pr-8 py-2 rounded-full border border-primary-color text-light-gray w-[142px] text-[16px] h-[25px] bg-transparent placeholder-secondary-color"
+                  onChange={(e) => handleSearch(e)}
+                  value={inputValue}
+                />
+              </div>
+              <button
+                className={`h-[26px] px-2 m-0 flex justify-center items-center font-[600] rounded-full border border-primary-color text-[16px] ${
+                  selectedFilter === "doubles"
+                    ? "text-black bg-primary-color"
+                    : "text-primary-color bg-transparent"
+                }`}
+                onClick={() => handleFilterClick("doubles")}
+              >
+                Doubles
+                {selectedFilter === "doubles" && (
+                  <XMarkIcon className="h-3 w-3 ml-1" />
+                )}
+              </button>
+              <button
+                className={`h-[26px] px-2 m-0 flex justify-center items-center font-[600] rounded-full border border-primary-color text-[16px] ${
+                  selectedFilter === "words"
+                    ? "text-black bg-primary-color"
+                    : "text-primary-color bg-transparent"
+                }`}
+                onClick={() => handleFilterClick("words")}
+              >
+                Words
+                {selectedFilter === "words" && (
+                  <XMarkIcon className="h-3 w-3 ml-1" />
+                )}
+              </button>
             </div>
 
-            <div className="text-[36px] font-[400] text-primary color pl-4">
-              {star}
+            <div className="p-2 flex flex-row flex-wrap items-start justify-start w-[700px] h-full mb-[20px]">
+              {renderUrbitIds.length > 0 ? renderUrbitIds : renderNoIds()}
             </div>
           </div>
-          <div className="flex font-[700] text-[16px]">
-            <div className="pr-4">
-              <div>
-                Spawned Planets: <span className="font-[400]">{spawned}</span>
-              </div>
-              <div>
-                Key Revision: <span className="font-[400]">{keyRevision}</span>
-              </div>
-            </div>
-            <div>
-              <div>
-                Azimuth Point:{" "}
-                <span className="font-[400]">{ob.patp2dec(star)}</span>
-              </div>
-              <div>
-                Parent:{" "}
-                <span className="font-[400]">{star && ob.sein(star)}</span>
-              </div>
-            </div>
-          </div>
+          {renderPagination()}
+          <div className="text-secondary-color">{`${filteredItems.length.toLocaleString(
+            "en"
+          )} ${pluralize("Result", filteredItems.length)}`}</div>
         </div>
-        <div>
-          <div className="flex justify-left mt-5 pl-3 space-x-3">
-            <div className="relative flex items-center mb-3">
-              <input
-                type="text"
-                spellCheck="false"
-                placeholder="Search"
-                className="font-[600] pl-2 pr-8 py-2 rounded-full border border-primary-color text-light-gray w-[142px] text-[16px] h-[25px] bg-transparent placeholder-secondary-color"
-                onChange={(e) => handleSearch(e)}
-                value={inputValue}
-              />
-            </div>
-            <button
-              className={`h-[26px] px-2 m-0 flex justify-center items-center font-[600] rounded-full border border-primary-color text-[16px] ${
-                selectedFilter === "doubles"
-                  ? "text-black bg-primary-color"
-                  : "text-primary-color bg-transparent"
-              }`}
-              onClick={() => handleFilterClick("doubles")}
-            >
-              Doubles
-              {selectedFilter === "doubles" && (
-                <XMarkIcon className="h-3 w-3 ml-1" />
-              )}
-            </button>
-            <button
-              className={`h-[26px] px-2 m-0 flex justify-center items-center font-[600] rounded-full border border-primary-color text-[16px] ${
-                selectedFilter === "words"
-                  ? "text-black bg-primary-color"
-                  : "text-primary-color bg-transparent"
-              }`}
-              onClick={() => handleFilterClick("words")}
-            >
-              Words
-              {selectedFilter === "words" && (
-                <XMarkIcon className="h-3 w-3 ml-1" />
-              )}
-            </button>
-          </div>
-
-          <div className="p-2 flex flex-row flex-wrap items-start justify-start w-[700px] h-full mb-[20px]">
-            {renderUrbitIds.length > 0 ? renderUrbitIds : renderNoIds()}
-          </div>
-        </div>
-
-        {renderPagination()}
-        <div className="text-secondary-color">{`${filteredItems.length.toLocaleString(
-          "en"
-        )} ${pluralize("Result", filteredItems.length)}`}</div>
-      </div>
+      </>
     );
   };
   return (
-    <Container dropdown={false} symbols={false}>
+    <Container dropdownForSpawning symbols={false}>
       {renderContent()}
     </Container>
   );

@@ -11,6 +11,7 @@ import ShipTypeMenuSelection from "../components/ShipTypeMenuSelection";
 import * as ob from "urbit-ob";
 import { XCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { getShipStatus } from "../lib/networkEvents";
+import { ROUTE_MAP } from "./routeMap";
 
 const Wallet = () => {
   const { urbitIds, setSelectedShip, walletAddress } = useWalletStore();
@@ -88,7 +89,7 @@ const Wallet = () => {
       const keysSet = ship.keyRevisionNumber > 0;
 
       toast.dismiss(loadingToastId);
-      navigate(`/manage`); // change to 'onboarding' once implemented
+      navigate(ROUTE_MAP.MANAGE); // change to 'onboarding' once implemented
     } catch (error) {
       toast.error("Failed to load ship", {
         id: loadingToastId,
