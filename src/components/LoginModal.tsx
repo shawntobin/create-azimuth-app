@@ -18,23 +18,20 @@ import { PROVIDER_URL } from "../constants";
 
 const customStyles = {
   content: {
-    top: "30%",
-    left: "83%",
-    right: "auto",
+    position: "fixed",
+    top: "75px",
+    right: "136px",
+    left: "auto",
     bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
     backgroundColor: "#FFFFFF",
     color: "#000000",
     font: 20,
     borderRadius: 10,
-    // height: 193,
     padding: 10,
     paddingBottom: 40,
-    // width: 361,
   },
   overlay: {
-    backgroundColor: "rgba(0,0,0,0.7)",
+    backgroundColor: "transparent",
   },
 };
 

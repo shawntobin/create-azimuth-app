@@ -13,6 +13,7 @@ const MasterTicket = () => {
   const { walletAddress, selectedShip } = useWalletStore();
   const [newAddress, setNewAddress] = useState("");
   const [step, setStep] = useState(1);
+  const [masterTicketInput, setMasterTicketInput] = useState("");
   const navigate = useNavigate();
 
   const { managementProxy, layer } = selectedShip;
@@ -27,6 +28,8 @@ const MasterTicket = () => {
         return stepThree();
       case 4:
         return stepFour();
+      case 5:
+        return stepFive();
       default:
         return stepOne();
     }
@@ -48,11 +51,11 @@ const MasterTicket = () => {
 
     // toast.error("Error downloading passport");
 
-    toast("Coming soon!");
+    // toast("Coming soon!");
 
     // console.log("new wallet", newWallet.value.paper);
 
-    // setStep(step + 1);
+    setStep(step + 1);
   };
 
   const handleVerifyReticket = () => {
@@ -70,15 +73,22 @@ const MasterTicket = () => {
             <div className="items-center justify-center flex">
               <span>Convert to Master Ticket</span>
             </div>
-            <span>{`Step ${step} of 4`}</span>
+            <div className="text-[20px] flex font-bold">
+              <span className="pr-1">{`Step ${step}`}</span>
+              <span className="text-medium-gray">{` of 5`}</span>
+            </div>
           </div>
         }
         buttonTitle="I Understand, Continue"
         onSubmit={() => setStep(step + 1)}
-        className="w-[500px] h-[335px]"
+        className="w-[500px]"
       >
-        <div className="justify-start flex flex-col items-start p-4 h-full">
-          <div className="text-[20px] font-bold text-left ">{`Converting to Master Ticket is the process of generating a completely fresh wallet and transferring ownership of your ID to that wallet.`}</div>
+        <div className="justify-start flex flex-col items-start p-5 h-full">
+          <div className="text-[20px] font-bold text-left ">
+            Converting to Master Ticket is the process of generating a
+            completely fresh wallet and transferring ownership of your ID to
+            that wallet.
+          </div>
           <div className="text-[20px] mt-[20px] mb-1 text-left">
             Beware, this resets your proxy addresses; if you're using smart
             contracts, this might break them! It will also change your network
@@ -102,15 +112,20 @@ const MasterTicket = () => {
               <div className="items-center justify-center flex">
                 <span>Convert to Master Ticket</span>
               </div>
-              <span>{`Step ${step} of 4`}</span>
+              <div className="text-[20px] flex font-bold">
+                <span className="pr-1">{`Step ${step}`}</span>
+                <span className="text-medium-gray">{` of 5`}</span>
+              </div>
             </div>
           }
           buttonTitle="Download Passport ↓"
           onSubmit={handleDownloadTicket}
           // className="h-[250px]"
         >
-          <div className="justify-start flex flex-col items-start p-4 h-full">
-            <div className="text-[20px] h-[50px] font-bold text-left ">{`Download the new passport, and keep it somewhere safe!`}</div>
+          <div className="justify-start flex flex-col items-start p-5 h-full">
+            <div className="text-[20px] h-[50px] font-bold text-left ">
+              Download the new passport, and keep it somewhere safe!
+            </div>
           </div>
         </ControlBox>
       </div>
@@ -122,42 +137,44 @@ const MasterTicket = () => {
       <div>
         {renderStepBackButton()}
         <ControlBox
-          hideBackButton
+          isStepBack
+          hideInfoButton
+          handleStepBack={() => setStep(step - 1)}
           headerContent={
             <div className="text-left w-full flex justify-between text-[20px] font-bold">
               <div className="items-center justify-center flex">
                 <span>Convert to Master Ticket</span>
               </div>
-              <span>{`Step ${step} of 4`}</span>
+              <div className="text-[20px] flex font-bold">
+                <span className="pr-1">{`Step ${step}`}</span>
+                <span className="text-medium-gray">{` of 5`}</span>
+              </div>
             </div>
           }
-          buttonTitle="Continue"
+          buttonTitle="Confirm"
           onSubmit={handleVerifyReticket}
-          // className="h-[250px]"
+          // className="h-[450px]"
         >
-          <div className="justify-between flex flex-col items-start pl-2 border-b border-primary-color h-full">
-            <div className="text-[20px] font-bold ">{`Verify New Master Ticket`}</div>
+          <div className="justify-start flex flex-col items-start p-5 h-full text-left">
+            <div className="text-[20px]">
+              Please enter your new Master Ticket, which you can find on your
+              passport.
+            </div>
 
-            <div className="text-[20px] mt-[20px] mb-1 flex justify-between w-full pr-2">
-              <span className="text-[200]">{"New Master Ticket:"}</span>
-
-              <span className="flex items-center justify-center">
-                <span>Show:</span>
-                <div className="relative ml-2">
-                  <input
-                    type="checkbox"
-                    spellCheck="false"
-                    id="customCheckbox"
-                    className="opacity-0 absolute h-4 w-4 "
-                  />
-                  <label
-                    htmlFor="customCheckbox"
-                    className="flex items-center cursor-pointer"
-                  >
-                    <span className="block w-4 h-4 bg-black border border-primary-color rounded-sm"></span>
-                  </label>
-                </div>
-              </span>
+            <div className="text-[20px] mt-[50px] mb-2 flex justify-between w-full pr-2">
+              <span className="text-[200]">New Master Ticket:</span>
+            </div>
+            <div className="w-full justify-center items-center flex">
+              <div className="flex items-center border w-[455px] rounded-[10px] mb-0">
+                <input
+                  type="text"
+                  spellCheck="false"
+                  placeholder={"~sampel-ticlyt-migfun-falmel"}
+                  className="px-4 py-0 w-full h-[38px] font-[500] text-[20px] bg-transparent placeholder-secondary-color text-primary-color"
+                  onChange={(e) => setMasterTicketInput(e.currentTarget.value)}
+                  value={masterTicketInput}
+                />
+              </div>
             </div>
           </div>
         </ControlBox>
@@ -171,20 +188,76 @@ const MasterTicket = () => {
         {renderStepBackButton()}
         <ControlBox
           targetRoute={ROUTE_MAP.SETTINGS}
-          hideBackButton
+          isStepBack
+          handleStepBack={() => setStep(step - 1)}
+          hideInfoButton
           headerContent={
             <div className="text-left w-full flex justify-between text-[20px] font-bold">
               <div className="items-center justify-center flex">
                 <span>Convert to Master Ticket</span>
               </div>
-              <span>{`Step ${step} of 4`}</span>
+              <div className="text-[20px] flex font-bold">
+                <span className="pr-1">{`Step ${step}`}</span>
+                <span className="text-medium-gray">{` of 5`}</span>
+              </div>
+            </div>
+          }
+          disabled={false}
+          buttonTitle="Continue"
+          onSubmit={() => setStep(step + 1)}
+        >
+          <div className="justify-start flex flex-col items-start p-5 h-full mt-2">
+            <div className="text-[20px] text-left">
+              Please enter your new Master Ticket.
+            </div>
+            <div className="text-[20px] text-left text-[#E72E2E] py-5">
+              Never give your Master Ticket to anyone.
+            </div>
+            <div className="text-[20px] text-left pb-2">Transferring...</div>
+
+            <div className="w-full bg-transparent border border-primary-color h-3 overflow-hidden">
+              <div
+                className="bg-primary-color h-3"
+                style={{ width: "45%" }}
+              ></div>
+            </div>
+          </div>
+        </ControlBox>
+      </div>
+    );
+  };
+
+  const stepFive = () => {
+    return (
+      <div>
+        {renderStepBackButton()}
+        <ControlBox
+          targetRoute={ROUTE_MAP.SETTINGS}
+          handleStepBack={() => setStep(step - 1)}
+          isStepBack
+          hideInfoButton
+          headerContent={
+            <div className="text-left w-full flex justify-between text-[20px] font-bold">
+              <div className="items-center justify-center flex">
+                <span>Convert to Master Ticket</span>
+              </div>
+              <div className="text-[20px] flex font-bold">
+                <span className="pr-1">{`Step ${step}`}</span>
+                <span className="text-medium-gray">{` of 5`}</span>
+              </div>
             </div>
           }
           buttonTitle=" Login With New Master Ticket"
           onSubmit={() => navigate(`/`)}
         >
-          <div className="justify-start flex flex-col items-start pl-2 border-b border-primary-color h-full mt-2">
-            <div className="text-[20px] font-bold text-left ">{`Download the new passport, and keep it somewhere safe!`}</div>
+          <div className="justify-start flex flex-col items-start p-5 h-full mt-2">
+            <div className="text-[20px] font-bold text-left ">
+              Conversion complete.
+            </div>
+            <div className="text-[20px] text-left ">
+              Your changes are now reflected on-chain and you can use the new
+              ticket to manage your point.
+            </div>
             <div className="text-[20px] mt-[20px] mb-1 text-left"></div>
           </div>
         </ControlBox>

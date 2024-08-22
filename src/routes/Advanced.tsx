@@ -81,8 +81,8 @@ const Advanced = () => {
       };
 
   const toolTipStyle = {
-    backgroundColor: "#212121",
-    color: "white",
+    backgroundColor: "white",
+    color: "black",
     fontWeight: 600,
     fontSize: "18px",
     borderRadius: "10px",
@@ -103,11 +103,7 @@ const Advanced = () => {
 
   const keyfileMessage = keysSet
     ? ""
-    : "Network keys must be set to download keyfile or copy access code.";
-
-  const spawnMessage = keysSet
-    ? ""
-    : "Network keys must be set to spawn planets.";
+    : "Network keys must be set for this action.";
 
   const statusMessage =
     !isGalaxy(selectedShip.patp) && sponsorStatus
@@ -134,7 +130,6 @@ const Advanced = () => {
 
           <Tooltip id="sponsor-status-tooltip" style={toolTipStyle} />
           <Tooltip id="keyfile-tooltip" style={toolTipStyle} />
-          <Tooltip id="spawn-tooltip" style={toolTipStyle} />
         </div>
         <div className="ml-10">
           {escapeRequested && (
@@ -234,8 +229,8 @@ const Advanced = () => {
                 <>
                   <div className="text-left font-bold pb-1">Star Settings</div>
                   <div
-                    data-tooltip-id="spawn-tooltip"
-                    data-tooltip-content={spawnMessage}
+                    data-tooltip-id="keyfile-tooltip"
+                    data-tooltip-content={keyfileMessage}
                   >
                     <SettingsItem
                       handleClick={() => navigate(ROUTE_MAP.SPAWN)}

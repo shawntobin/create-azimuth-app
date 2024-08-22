@@ -29,6 +29,7 @@ export default defineConfig({
   resolve: {
     alias: {
       stream: "stream-browserify",
+      util: "util/",
     },
   },
   worker: {
