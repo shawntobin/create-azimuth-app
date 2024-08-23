@@ -175,5 +175,6 @@ export const getPlanets = (patp: string) => {
 export const ENGLISH_LIKE = "words";
 export const DOUBLES = "doubles";
 export const BOTH_ENGLISH = "both english";
+export const SPAWNED = "spawned";
 
-export const filters = [ENGLISH_LIKE, DOUBLES, BOTH_ENGLISH];
+export const filters = [ENGLISH_LIKE, DOUBLES, BOTH_ENGLISH, SPAWNED];

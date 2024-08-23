@@ -20,6 +20,7 @@ import InfoButton from "../components/InfoButton";
 import { INFO_MODAL_TEXT } from "../constants/content";
 import InfoModal from "../components/InfoModal";
 import { ROUTE_MAP } from "./routeMap";
+import FilterButton from "./FilterButton";
 
 type Planet = {
   patp: string;
@@ -36,8 +37,7 @@ const Wallet = () => {
   const [planets, setPlanets] = useState<Planet[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedFilter, setSelectedFilter] = useState("");
-  const [spawned, setSpawned] = useState(0);
-  const [keyRevision, setKeyRevision] = useState(0);
+  const [spawnedCount, setSpawnedCount] = useState([]);
   const [showInfo, setShowInfo] = useState(false);
   const { txHash, txnLoading, executeTransaction, txnComplete } =
     useTransaction();
@@ -49,22 +49,26 @@ const Wallet = () => {
   const itemsPerPage = 21;
 
   useEffect(() => {
-    startAnalyzing(star);
-  }, []);
-
-  useEffect(() => {
     const asyncFunction = async () => {
-      const result = await txn.getSpawnCount("~marzod");
-      const spawnedPlanets = result.toString();
-      setSpawned(spawnedPlanets);
-      // note this info already available when logged in
-      const shipDetails = await txn.getShip(star);
-      const keyRev = shipDetails.keyRevisionNumber;
-      setKeyRevision(keyRev);
+      const ids = utils.getPlanets(star);
+
+      const spawnedPlanets = await txn.getSpawned(star);
+
+      setSpawnedCount(spawnedPlanets.length);
+
+      const planetsWithSpawned = ids.map((item) => {
+        const spawned = spawnedPlanets.includes(item.point);
+
+        return { ...item, tags: [...item.tags, spawned && utils.SPAWNED] };
+      });
+
+      console.log(planetsWithSpawned.slice(0, 10));
+
+      setPlanets(planetsWithSpawned);
     };
 
     asyncFunction();
-  }, []);
+  }, [star]);
 
   useEffect(() => {
     const filteredData = planets.filter(
@@ -99,14 +103,6 @@ const Wallet = () => {
     setCurrentItems(filteredItems.slice(customOffset, endOffset));
     setPageCount(Math.ceil(filteredItems.length / itemsPerPage));
   }, [filteredItems, itemOffset]);
-
-  const startAnalyzing = (_star: string) => {
-    const ids = utils.getPlanets(_star);
-
-    setPlanets(ids);
-    // setLoading(false);
-    // setShowTextInput(false);
-  };
 
   const handleSearch = (event) => {
     setInputValue(event.target.value);
@@ -173,7 +169,7 @@ const Wallet = () => {
       urbitId={pl.point}
       key={pl.point}
       handleClick={handleItemClick}
-      spawnable
+      isSpawned={pl.tags.includes("spawned")}
     />
   ));
 
@@ -215,11 +211,14 @@ const Wallet = () => {
             <div className="flex font-[700] text-[16px]">
               <div className="pr-4">
                 <div>
-                  Spawned Planets: <span className="font-[400]">{spawned}</span>
+                  Spawned Planets:{" "}
+                  <span className="font-[400]">{spawnedCount}</span>
                 </div>
                 <div>
                   Key Revision:{" "}
-                  <span className="font-[400]">{keyRevision}</span>
+                  <span className="font-[400]">
+                    {selectedShip?.keyRevisionNumber}
+                  </span>
                 </div>
               </div>
               <div>
@@ -246,32 +245,25 @@ const Wallet = () => {
                   value={inputValue}
                 />
               </div>
-              <button
-                className={`h-[26px] px-2 m-0 flex justify-center items-center font-[600] rounded-full border border-primary-color text-[16px] ${
-                  selectedFilter === "doubles"
-                    ? "text-black bg-primary-color"
-                    : "text-primary-color bg-transparent"
-                }`}
-                onClick={() => handleFilterClick("doubles")}
-              >
-                Doubles
-                {selectedFilter === "doubles" && (
-                  <XMarkIcon className="h-3 w-3 ml-1" />
-                )}
-              </button>
-              <button
-                className={`h-[26px] px-2 m-0 flex justify-center items-center font-[600] rounded-full border border-primary-color text-[16px] ${
-                  selectedFilter === "words"
-                    ? "text-black bg-primary-color"
-                    : "text-primary-color bg-transparent"
-                }`}
-                onClick={() => handleFilterClick("words")}
-              >
-                Words
-                {selectedFilter === "words" && (
-                  <XMarkIcon className="h-3 w-3 ml-1" />
-                )}
-              </button>
+
+              <FilterButton
+                filterName={utils.DOUBLES}
+                selectedFilter={selectedFilter}
+                handleFilterClick={handleFilterClick}
+                buttonName="Doubles"
+              />
+              <FilterButton
+                filterName={utils.ENGLISH_LIKE}
+                selectedFilter={selectedFilter}
+                handleFilterClick={handleFilterClick}
+                buttonName="Words"
+              />
+              <FilterButton
+                filterName={utils.SPAWNED}
+                selectedFilter={selectedFilter}
+                handleFilterClick={handleFilterClick}
+                buttonName="Spawned"
+              />
             </div>
 
             <div className="p-2 flex flex-row flex-wrap items-start justify-start w-[700px] h-full mb-[20px]">
