@@ -1,9 +1,33 @@
 import { NETWORK } from "./config";
 import { ETHEREUM_NETWORK } from "./constants";
 
+// For local deploy
+
+import AzimuthArtifact from "../../build/contracts/Azimuth.json";
+import EclipticArtifact from "../../build/contracts/Ecliptic.json";
+import PollsArtifact from "../../build/contracts/Polls.json";
+import ClaimsArtifact from "../../build/contracts/Claims.json";
+
+import Web3 from "web3";
+
 type ContractAddresses = {
   [key: string]: string;
 };
+
+const web3 = new Web3(window.ethereum);
+const networkId = await web3.eth.net.getId();
+
+let azimuthAddress = "";
+let eclipticAddress = "";
+let pollsAddress = "";
+let claimsAddress = "";
+
+if (Number(networkId) === 5) {
+  azimuthAddress = AzimuthArtifact?.networks[Number(networkId)]?.address;
+  eclipticAddress = EclipticArtifact?.networks[Number(networkId)]?.address;
+  pollsAddress = PollsArtifact?.networks[Number(networkId)]?.address;
+  claimsAddress = ClaimsArtifact?.networks[Number(networkId)]?.address;
+}
 
 let currentEnvironment;
 
@@ -41,10 +65,10 @@ const CONTRACT_ADDRESSES: { [env: string]: ContractAddresses } = {
     urbit_L2: "0x0",
   },
   [ETHEREUM_NETWORK.LOCAL]: {
-    azimuth: "0x0",
-    ecliptic: "0x0",
-    polls: "0x0",
-    claims: "0x0",
+    azimuth: azimuthAddress,
+    ecliptic: eclipticAddress,
+    polls: pollsAddress,
+    claims: claimsAddress,
     linearStarRelease: "0x0",
     conditionalStarRelease: "0x0",
     urbit_L2: "0x0",

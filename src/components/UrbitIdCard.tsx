@@ -1,8 +1,6 @@
 import * as ob from "urbit-ob";
 import Sigil from "../components/Sigil";
 import { formatNumber, formatSpacedPatp } from "../utils/helper";
-import { Tooltip } from "react-tooltip";
-import { formatDistance } from "date-fns";
 
 const UrbitIdCard = (props) => {
   const { ship, className } = props;
@@ -12,19 +10,6 @@ const UrbitIdCard = (props) => {
   const point = ob.patp2dec(patp);
   const parent = ob.sein(patp);
   const shipType = ob.clan(patp);
-  const isOnline = ship?.online;
-
-  const statusMessage = isOnline
-    ? `This ship is online (last updated ${formatDistance(
-        new Date(ship?.online),
-        new Date(),
-        {
-          addSuffix: true,
-        }
-      )})`
-    : "This ship has never been online.";
-
-  const statusColor = !isOnline ? "bg-[#E72E2E]" : "bg-[#AAE68C]";
 
   const renderShipSymbol = (shipType) => {
     switch (shipType) {
@@ -46,22 +31,6 @@ const UrbitIdCard = (props) => {
       <div className="flex-1">
         <div className="ml-[-5px] flex justify-between items-center mr-4">
           <Sigil id={patp} size={60} colors={["white", "black"]} />
-
-          <span
-            className={`h-2.5 w-2.5 ${statusColor} rounded-[10px]`}
-            data-tooltip-id="my-tooltip"
-            data-tooltip-content={statusMessage}
-          ></span>
-          <Tooltip
-            id="my-tooltip"
-            style={{
-              backgroundColor: "#212121",
-              color: "white",
-              fontWeight: 600,
-              fontSize: "18px",
-              borderRadius: "10px",
-            }}
-          />
         </div>
         <div className="flex items-center justify-start text-left  mt-[35px]">
           {renderShipSymbol(shipType)}

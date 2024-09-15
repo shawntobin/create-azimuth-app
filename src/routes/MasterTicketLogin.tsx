@@ -5,8 +5,10 @@ import { urbitWalletFromTicket } from "../lib/wallet";
 import * as ob from "urbit-ob";
 import Sigil from "../components/Sigil";
 import BackButton from "../components/BackButton";
-import { WALLET_TYPES } from "../constants";
+import { PROVIDER_URL, LOGIN_METHODS } from "../constants";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import Web3 from "web3";
+import { fromWei } from "web3-utils";
 
 const MainLogin = () => {
   const [urbitIdInput, setUrbitIdInput] = useState("");
@@ -16,18 +18,25 @@ const MainLogin = () => {
   const { loginCommon } = useLogin();
 
   const handleTicketLogin = async () => {
-    // navigate("/activation");
-
     try {
       const point = ob.patp2dec(urbitIdInput);
       const urbitWallet = await urbitWalletFromTicket(masterTicket, point);
       const walletAddress = urbitWallet.ownership.keys.address;
 
-      console.log("urbitWallet", urbitWallet);
+      const provider = new Web3.providers.HttpProvider(PROVIDER_URL);
+      const web3 = new Web3(provider);
+      const balanceWei = await web3.eth.getBalance(walletAddress);
+      const balanceEth = fromWei(balanceWei, "ether");
 
       if (urbitWallet) {
         toast.success("Connected using Master Ticket");
-        loginCommon(walletAddress, WALLET_TYPES.TICKET, "", urbitWallet);
+        loginCommon(
+          walletAddress,
+          LOGIN_METHODS.TICKET,
+          "",
+          balanceEth,
+          urbitWallet
+        );
       } else {
         toast.error("Invalid wallet credentials");
       }
@@ -56,8 +65,6 @@ const MainLogin = () => {
           {ob.isValidPatp(urbitIdInput) && (
             <div className="absolute right-0 flex items-center justify-center bg-primary-color border-primary-color rounded-full p-0 h-[36px] w-[36px]">
               <Sigil id={urbitIdInput} size={25} colors={["white", "black"]} />
-
-              {/* {urbitIdInput && <Sigil id={urbitIdInput} colors={["black", "white"]} size={80} />} */}
             </div>
           )}
         </div>
@@ -87,7 +94,6 @@ const MainLogin = () => {
           <button
             className="text-base-color border-primary-color absolute inset-y-0 right-0 flex items-center justify-center bg-primary-color rounded-full h-[36px] w-[36px] text-[40px] p-2 pt-0 font-[300] focus:outline-none hover:border-light-gray hover:bg-light-gray"
             onClick={() => handleTicketLogin()}
-            // disabled
           >
             &gt;
           </button>

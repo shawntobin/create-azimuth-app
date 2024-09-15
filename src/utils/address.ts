@@ -1,7 +1,6 @@
 import { toChecksumAddress } from "web3-utils";
 import { pubToAddress } from "@ethereumjs/util";
 import { ETH_ZERO_ADDR, ETH_ZERO_ADDR_SHORT } from "../constants/constants";
-import { isAddress } from "web3-validator";
 
 export const stripHexPrefix = (hex: string) => {
   return hex.startsWith("0x") ? hex.slice(2) : hex;
@@ -9,18 +8,6 @@ export const stripHexPrefix = (hex: string) => {
 
 export const addHexPrefix = (hex: string) => {
   return hex.startsWith("0x") ? hex : `0x${hex}`;
-};
-
-// export const isAddressString = (text: string) => {
-//   return text.startsWith("0x") && text.length === 42;
-// };
-
-export const isValidAddress = (a: string | boolean | undefined) => {
-  if (!a || typeof a !== "string") {
-    return;
-  }
-
-  return "0x0" === a || isAddress(a);
 };
 
 export const abbreviateAddress = (address: string) =>

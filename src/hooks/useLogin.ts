@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import useWalletStore from "../store/useWalletStore";
 import * as txn from "../utils/transaction";
 import * as ob from "urbit-ob";
-import { ROUTE_MAP } from "../routes/routeMap";
 
 const useLogin = () => {
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ const useLogin = () => {
     try {
       clearState();
 
-      const ids = await txn.getPoints(walletAddress); // note if master ticket then could just use getPoint
+      const ids = await txn.getPoints(walletAddress);
       setWalletAddress(walletAddress);
       setWalletType(walletType);
       setWalletLabel(walletLabel || "Master Ticket");
@@ -39,19 +38,9 @@ const useLogin = () => {
       if (ids.length === 1) {
         const ship = await txn.getShip(ob.patp(ids[0]));
         setSelectedShip(ship);
-        const keysSet = ship.keyRevisionNumber > 0;
-
-        if (!keysSet) {
-          navigate(ROUTE_MAP.MANAGE); // change to 'onboarding' once implemented
-          return;
-        } else {
-          navigate(ROUTE_MAP.MANAGE);
-          return;
-        }
-      } else if (ids.length > 1) {
-        navigate(ROUTE_MAP.IDS);
+        navigate("/my-app");
       } else {
-        navigate(ROUTE_MAP.IDS);
+        navigate("/ids");
       }
     } catch (error) {
       toast.error("Error logging in");

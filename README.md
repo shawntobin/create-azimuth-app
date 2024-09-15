@@ -1,30 +1,40 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a template for creating web apps using Azimuth login.
 
-Currently, two official plugins are available:
+It can be launched using mainnet, sepolia, or a local testnet.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Make sure to switch your Metamask to whichever network you launch the app with.
 
-## Expanding the ESLint configuration
+Works with L1 points only, no L2.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+# Mainnet
 
-- Configure the top-level `parserOptions` property like this:
+use "yarn dev:mainnet"
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+# Local Testnet
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+use "yarn dev:local"
+
+This will deploy the contracts and populate the following ethereum address with some azimuth points for you to use and 1000 ETH.
+
+WALLET ADDRESS: 0x6DEfFb0caFDB11D175F123F6891AA64F01c24F7d
+PRIVATE KEY: a44de2416ee6beb2f323fab48b432925c9785808d33a6ca6d7ba00b45e9370c3
+(Obviously, only use this address for testing!!)
+
+This address can then be imported into Metamask using "Add Account or Hardware Wallet" -> "Import Account".
+
+To add the local testnet network to Metamask (if it's not already there) go to Settings -> Networks:
+
+(Note that the testnet should be running in your terminal when you go to add this to metamask, otherwise Metamask might show an error saying that your RPC URL isn't correct)
+
+Network Name: Local Testnet
+RPC URL: http://127.0.0.1:8545
+Chain ID: 1337
+Currency Symbol: ETH
+
+# Sepolia
+
+use "yarn dev:sepolia"
+
+The Ethereum address listed above in "Local Testnet" also contains some Sepolia Azimuth points. Contact ~rolryx for more.

@@ -29,31 +29,3 @@
 *:focus {
   outline: 0;
 }
-
-.breadcrumb {
-  list-style: none;
-  display: flex;
-}
-
-.breadcrumb-item {
-  margin-right: 0px;
-}
-
-.breadcrumb-item a {
-  text-decoration: none;
-  color: #fff;
-  margin-left: 5px;
-}
-
-.breadcrumb-item a:hover {
-  color: #ccc;
-}
-
-.breadcrumb-item::after {
-  content: "/";
-  margin-left: 5px;
-}
-
-.breadcrumb-item:last-child::after {
-  content: "";
-}

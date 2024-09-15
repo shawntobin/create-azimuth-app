@@ -2,20 +2,15 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import Ship from "../types/Ship";
 
-// selectedWallet: EIP6963ProviderDetail | null;
-// setSelectedWallet: (wallet: EIP6963ProviderDetail | null) => void;
-
 interface WalletState {
   urbitWallet: UrbitWallet | null;
-  authToken: string;
   walletType: symbol;
   walletLabel: string;
-  walletAddress: string; // may not be preserving checksum format?
+  walletAddress: string;
   urbitIds: number[];
   selectedShip: Ship;
   ethBalance: string;
   setUrbitWallet: (wallet: UrbitWallet | null) => void;
-  setAuthToken: (token: string) => void;
   setWalletAddress: (account: string) => void;
   setUrbitIds: (urbitIds: number[]) => void;
   setSelectedShip: (ship: Ship) => void;
@@ -30,7 +25,6 @@ const useWalletStore = create<WalletState>()(
     persist(
       (set) => ({
         urbitWallet: null,
-        authToken: "",
         walletType: Symbol("UNINITIALIZED"),
         walletLabel: "",
         walletAddress: "",
@@ -39,7 +33,6 @@ const useWalletStore = create<WalletState>()(
         ethBalance: "",
         setUrbitWallet: (wallet: UrbitWallet | null) =>
           set({ urbitWallet: wallet }),
-        setAuthToken: (token: string) => set({ authToken: token }),
         setWalletType: (type: symbol) => set({ walletType: type }),
         setWalletLabel: (label: string) => set({ walletLabel: label }),
         setWalletAddress: (account: string) => set({ walletAddress: account }),
@@ -49,7 +42,6 @@ const useWalletStore = create<WalletState>()(
         clearState: () =>
           set({
             urbitWallet: null,
-            authToken: "",
             walletType: Symbol("UNINITIALIZED"),
             walletLabel: "",
             walletAddress: "",

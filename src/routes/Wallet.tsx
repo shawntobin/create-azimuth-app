@@ -6,12 +6,8 @@ import { useNavigate } from "react-router-dom";
 import * as txn from "../utils/transaction";
 import ReactPaginate from "react-paginate";
 import toast from "react-hot-toast";
-import { formatAddress } from "../utils/address";
 import ShipTypeMenuSelection from "../components/ShipTypeMenuSelection";
 import * as ob from "urbit-ob";
-import { XCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { getShipStatus } from "../lib/networkEvents";
-import { ROUTE_MAP } from "./routeMap";
 
 const Wallet = () => {
   const { urbitIds, setSelectedShip, walletAddress } = useWalletStore();
@@ -33,26 +29,6 @@ const Wallet = () => {
 
     setFilteredItems(filteredData);
   }, [urbitIds, inputValue]);
-
-  useEffect(() => {
-    const asyncFunction = async () => {
-      const onlineStatus = await Promise.all(
-        urbitIds.map((id) => getShipStatus(ob.patp(id)))
-      );
-
-      let idsMapped = [];
-      urbitIds.forEach((id, index) => {
-        idsMapped.push({
-          id,
-          status: onlineStatus[index]?.online ? true : false,
-        });
-      });
-
-      setIdsWithStatus(idsMapped);
-    };
-
-    asyncFunction();
-  }, []);
 
   useEffect(() => {
     const filterItems = () => {
@@ -86,10 +62,10 @@ const Wallet = () => {
     try {
       const ship = await txn.getShip(patp);
       setSelectedShip(ship);
-      const keysSet = ship.keyRevisionNumber > 0;
 
       toast.dismiss(loadingToastId);
-      navigate(ROUTE_MAP.MANAGE); // change to 'onboarding' once implemented
+      navigate("/my-app");
+      // navigate
     } catch (error) {
       toast.error("Failed to load ship", {
         id: loadingToastId,
@@ -139,7 +115,6 @@ const Wallet = () => {
       urbitId={id}
       key={id}
       handleClick={(patp: string) => handleSelectUrbitId(patp)}
-      online={idsWithStatus.find((item) => item.id === id)?.status}
     />
   ));
 
@@ -182,11 +157,7 @@ const Wallet = () => {
       </div>
     );
   };
-  return (
-    <Container hideHistory dropdown={false}>
-      {renderWallet()}
-    </Container>
-  );
+  return <Container>{renderWallet()}</Container>;
 };
 
 export default Wallet;

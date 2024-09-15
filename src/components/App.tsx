@@ -40,7 +40,7 @@ function App() {
             },
             error: {
               style: {
-                background: "#E72E2E", //"#d9534f",
+                background: "#E72E2E",
                 color: "black",
                 borderRadius: "10px",
               },

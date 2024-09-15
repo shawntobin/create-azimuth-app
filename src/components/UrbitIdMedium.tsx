@@ -7,17 +7,8 @@ const UrbitIdMedium = (props: {
   handleClick: (patp: string, id: number) => void;
   size?: number;
   textSize?: number;
-  spawnable?: boolean;
-  online?: boolean;
 }) => {
-  const {
-    urbitId,
-    handleClick,
-    size = 100,
-    textSize = 16,
-    spawnable = false,
-    online = false,
-  } = props;
+  const { urbitId, handleClick, size = 100, textSize = 16 } = props;
 
   const patp = ob.patp(urbitId);
 
@@ -31,19 +22,12 @@ const UrbitIdMedium = (props: {
     >
       <div
         style={{ width: size, height: size }}
-        className={`relative mb-[3px] rounded-[13px] overflow-hidden border justify-center items-center flex transform transition-transform duration-300 ease-in-out hover:scale-110 group ${
-          spawnable && "hover:border-[#FAFF00]"
-        }
+        className={`relative mb-[3px] rounded-[13px] overflow-hidden border justify-center items-center flex transform transition-transform duration-300 ease-in-out hover:scale-110 group         
         }`}
       >
         <Sigil id={patp} colors={["black", "white"]} size={size * 0.8} />
 
-        <div className="absolute right-2 top-2 flex items-center justify-center bg-black bg-opacity-0 text-white text-center text-sm rounded ">
-          <div
-            className="rounded-full text-black px-[3px] py-[3px]"
-            style={{ backgroundColor: online ? "#AAE68C" : "gray" }}
-          ></div>
-        </div>
+        <div className="absolute right-2 top-2 flex items-center justify-center bg-black bg-opacity-0 text-white text-center text-sm rounded "></div>
       </div>
       <div>
         <div
