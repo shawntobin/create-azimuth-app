@@ -5,6 +5,9 @@
   "engines": {
     "node": "^20.12.0"
   },
+  "bin": {
+    "create-react-azimuth-app": "./bin/create-azimuth-app.js"
+  },
   "scripts": {
     "dev": "vite --clearScreen false",
     "dev:cleanup": "pkill -f ganache",
