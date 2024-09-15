@@ -12,13 +12,14 @@ execSync(
   { stdio: "inherit" }
 );
 
-execSync(`cd ${projectName} && yarn install`, { stdio: "inherit" });
+execSync(`cd ${projectName}`, { stdio: "inherit" });
 
 console.log("Your React Azimuth app is ready!");
-console.log("\n Make sure to add your Infura ID to the .env file, then:");
 console.log(`\n  cd ${projectName}`);
-console.log("  npm dev:mainnet");
-console.log("\n Or for Yarn:");
-console.log(`\n  cd ${projectName}`);
-console.log("  yarn dev:mainnet");
+console.log("  yarn install (or npm install)");
+console.log("  yarn dev:local (or npm run dev:local)");
+console.log(
+  "\n Make sure to add your Infura ID to the .env file when using mainnet or sepolia."
+);
 console.log("\n Check the readme for more information.");
+console.log("\n ");

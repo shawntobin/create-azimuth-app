@@ -1,8 +1,9 @@
 # Quick Start
 
-npx create-react-azimuth-app my-app
-cd my-app
-yarn start
+npx create-react-azimuth-app my-app  
+cd my-app  
+yarn install  
+yarn dev:local
 
 # React + TypeScript + Vite
 
@@ -10,7 +11,7 @@ This is a template for creating web apps using Azimuth login.
 
 It can be launched using mainnet, sepolia, or local testnet.
 
-You'll need to enter your Infura ID in the .env file (VITE_REACT_APP_INFURA_API).
+When using mainnet or sepolia, you'll need to enter your Infura ID in the .env file (VITE_REACT_APP_INFURA_API).
 
 Make sure to switch your Metamask network to whichever one you launch the app with (mainnet, sepolia, local).
 
