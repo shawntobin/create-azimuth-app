@@ -1,6 +1,6 @@
 import Modal from "react-modal";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
-import { formatAddress } from "../utils/address";
+import { formatAddress } from "../utils/helper";
 import { copy } from "../utils/helper";
 
 const customStyles = {

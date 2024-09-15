@@ -1,11 +1,9 @@
-import { ecliptic, azimuth, initContractsPartial } from "azimuth-js";
-import Web3, { Bytes } from "web3";
-import { LOGIN_METHODS, PROVIDER_URL } from "../constants";
+import { azimuth, initContractsPartial } from "azimuth-js";
+import Web3 from "web3";
+import { PROVIDER_URL } from "../constants";
 import { CONTRACT } from "../constants/contracts";
 import * as ob from "urbit-ob";
-import { isGalaxy, hexify } from "./helper";
-
-// Using patp instead of point number for parameters since that's what L2 uses, then convert using ob.patp2dec
+import { isGalaxy } from "./helper";
 
 const azimuthConnection = async () => {
   const provider = new Web3.providers.HttpProvider(PROVIDER_URL);

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { formatAddress } from "../utils/address";
+import { formatAddress } from "../utils/helper";
 import useWalletStore from "../store/useWalletStore";
 import { useNavigate } from "react-router-dom";
 import WalletModal from "./WalletModal";

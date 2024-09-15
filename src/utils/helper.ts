@@ -40,3 +40,7 @@ export const formatSpacedPatp = (patp: string) => {
     return `~ ${patp.toLowerCase()}`;
   }
 };
+
+export const formatAddress = (address: string) => {
+  return `${address.slice(0, 6)}...${address.slice(-4)}`;
+};

@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Wallet from "./routes/Wallet";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import MasterTicketLogin from "./routes/MasterTicketLogin";

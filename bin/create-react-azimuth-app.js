@@ -17,4 +17,5 @@ execSync(`cd ${projectName} && yarn install`, { stdio: "inherit" });
 console.log("Your React Azimuth app is ready! To start, run:");
 console.log(`\n  cd ${projectName}`);
 console.log("  yarn dev:mainnet");
+console.log("Make sure to add your Infura ID to the .env file");
 console.log("Check the readme file for more information");

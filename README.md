@@ -1,3 +1,9 @@
+# Quick Start
+
+npx create-react-azimuth-app my-app
+cd my-app
+yarn start
+
 # React + TypeScript + Vite
 
 This is a template for creating web apps using Azimuth login.
