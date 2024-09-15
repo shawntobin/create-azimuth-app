@@ -1,9 +1,8 @@
 {
-  "name": "azimuth-app",
-  "private": true,
+  "name": "create-react-azimuth-app",
+  "private": false,
   "version": "0.0.0",
   "engines": {
-    "npm": "only-use-yarn",
     "node": "^20.12.0"
   },
   "scripts": {
