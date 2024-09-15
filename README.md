@@ -3,7 +3,10 @@
 npx create-react-azimuth-app my-app  
 cd my-app  
 yarn install  
-yarn dev:local
+yarn dev:local  
+<br>
+
+if using npm instead of yarn, you may need to do "npm install --legacy-peer-deps".
 
 # React + TypeScript + Vite
 
