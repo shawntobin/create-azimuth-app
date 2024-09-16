@@ -49,4 +49,11 @@ Currency Symbol: ETH
 
 use "yarn dev:sepolia"
 
-The Ethereum address listed above in "Local Testnet" also contains some Sepolia Azimuth points. Contact ~rolryx for more.
+The Ethereum address listed above in "Local Testnet" also contains some Sepolia Azimuth points. Contact ~sarlev-sarsen or ~rolryx for more.
+
+The contracts are deployed on Sepolia here:
+
+Azimuth: 0x6EB93da65d19a3e4501210C1B289A0734487ed84
+Ecliptic: 0xf81109BE13862261234c24659aF412Fe70a683e4
+Claims: 0xA769ec2433A95DBaC11d36e1d015e9e982F0067a
+Polls: 0x78eC6D601A88489bDe5AbDbFA748aBe9487703ce
